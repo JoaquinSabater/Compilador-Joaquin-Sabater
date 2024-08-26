@@ -3,31 +3,57 @@ package AnalizadorLexico;
 import sourcemanager.SourceManager;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class analizadorLexico {
     String lexema;
     char caracterActual;
     SourceManager gestorDeFuente;
 
+    private Map<String, String> palabrasClave;
+
     public analizadorLexico(SourceManager gestor) throws IOException {
         gestorDeFuente = gestor;
         actualizarCaracterActual();
+
+        palabrasClave = new HashMap<>();
+        palabrasClave.put("class", "pr_class");
+        palabrasClave.put("interface", "pr_interface");
+        palabrasClave.put("extends", "pr_extends");
+        palabrasClave.put("implements", "pr_implements");
+        palabrasClave.put("public", "pr_public");
+        palabrasClave.put("static", "pr_static");
+        palabrasClave.put("void", "pr_void");
+        palabrasClave.put("boolean", "pr_boolean");
+        palabrasClave.put("char", "pr_char");
+        palabrasClave.put("int", "pr_int");
+        palabrasClave.put("if", "pr_if");
+        palabrasClave.put("else", "pr_else");
+        palabrasClave.put("while", "pr_while");
+        palabrasClave.put("return", "pr_return");
+        palabrasClave.put("var", "pr_var");
+        palabrasClave.put("this", "pr_this");
+        palabrasClave.put("new", "pr_new");
+        palabrasClave.put("null", "pr_null");
+        palabrasClave.put("true", "pr_true");
+        palabrasClave.put("false", "pr_false");
     }
 
-    public Token proximoToken() throws IOException {
+    public Token proximoToken() throws IOException, ExcepcionLexica {
         lexema = "";
         return e0();
     }
 
-    private void actualizarLexema(){
-        lexema = lexema+caracterActual;
+    private void actualizarLexema() {
+        lexema = lexema + caracterActual;
     }
 
     private void actualizarCaracterActual() throws IOException {
         caracterActual = gestorDeFuente.getNextChar();
     }
 
-    private Token e0() throws IOException {
+    private Token e0() throws IOException, ExcepcionLexica {
         if (Character.isDigit(caracterActual)) {
             actualizarLexema();
             actualizarCaracterActual();
@@ -112,68 +138,225 @@ public class analizadorLexico {
             actualizarLexema();
             actualizarCaracterActual();
             return e31();
+        }else if (caracterActual == -1) {
+            return e32();
         }
         return null;
     }
 
-    private Token e1() {
-        return null;
+    private Token e1() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_segundoDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e2() {
-        return null;
+    private Token e1_segundoDigito() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_tercerDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e1_tercerDigito() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_cuartoDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e1_cuartoDigito() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_quintoDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e1_quintoDigito() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_sextoDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e1_sextoDigito() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_septimoDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e1_septimoDigito() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_octavoDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e1_octavoDigito() throws IOException, ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1_novenoDigito();
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e1_novenoDigito() throws ExcepcionLexica {
+        if (Character.isDigit(this.caracterActual)) {
+            this.actualizarLexema();
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + " tiene mas de 9 digitos");
+        } else
+            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
+
+    private Token e2() throws IOException {
+        if (Character.isUpperCase(caracterActual)) {
+            return esMayuscula();
+        } else {
+            return esMinuscula();
+        }
+    }
+
+    private Token esMinuscula() throws IOException {
+        if (Character.isLetter(this.caracterActual) || Character.isDigit(this.caracterActual) || this.caracterActual == '_') {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.esMinuscula();
+        } else if (palabrasClave.containsKey(this.lexema))
+            return new Token(palabrasClave.get(lexema), this.lexema, gestorDeFuente.getLineNumber());
+        else
+            return new Token("IdMetVar", this.lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token esMayuscula() throws IOException {
+        if (Character.isLetter(this.caracterActual) || Character.isDigit(this.caracterActual) || this.caracterActual == '_') {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return esMayuscula();
+        } else
+            return new Token("idClase", this.lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e3() {
-        return null;
+        return new Token("parentesisAbierto", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e4() {
-        return null;
+        return new Token("parentesiscerrado", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e5() {
-        return null;
+        return new Token("llaveAbierta", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e6() {
-        return null;
+        return new Token("llaveCerrada", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e7() {
-        return null;
+        return new Token("puntoComa", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e8() {
-        return null;
+        return new Token("coma", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e9() {
-        return null;
+        return new Token("punto", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e10() {
-        return null;
+    private Token e10() throws IOException {
+        if (this.caracterActual == '=') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e11();
+        } else
+            return new Token("mayor", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e12() {
-        return null;
+    private Token e11() {
+        return new Token("mayorIgual", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e14() {
-        return null;
+    private Token e12() throws IOException {
+        if (caracterActual == '=') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e13();
+        } else
+            return new Token("menor", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e16() {
-        return null;
+    private Token e13() {
+        return new Token("menorIgual", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e18() {
-        return null;
+    private Token e14() throws IOException {
+        if (caracterActual == '=') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e15();
+        } else
+            return new Token("negado", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e20() {
-        return null;
+    private Token e15() {
+        return new Token("distinto", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e16() throws IOException {
+        if (caracterActual == '=') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e17();
+        } else
+            return new Token("asignacion", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e17() {
+        return new Token("comparacion", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e18() throws IOException {
+        if (caracterActual == '=') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e19();
+        } else
+            return new Token("suma", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e19() {
+        return new Token("sumaAsignacion", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e20() throws IOException {
+        if (caracterActual == '=') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e21();
+        } else
+            return new Token("resta", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e21() {
+        return new Token("restaAsignacion", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e22() {
@@ -184,22 +367,40 @@ public class analizadorLexico {
         return null;
     }
 
-    private Token e26() {
-        return null;
+    private Token e26() throws IOException, ExcepcionLexica {
+        if (caracterActual == '&') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e27();
+        } else
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "& no es un caracter valido");
     }
 
-    private Token e28() {
-        return null;
+    private Token e27() {
+        return new Token("and", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    private Token e28() throws IOException, ExcepcionLexica {
+        if (caracterActual == '|') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e29();
+        } else
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "| no es un caracter valido");
+    }
+
+    private Token e29() {
+        return new Token("or", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e30() {
-        return null;
+        return new Token("dosPuntos", lexema, gestorDeFuente.getLineNumber());
     }
     private Token e31() {
-        return null;
+        return new Token("porcentaje", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e32() {
-        return null;
+        return new Token("eof", lexema, gestorDeFuente.getLineNumber());
     }
 }
