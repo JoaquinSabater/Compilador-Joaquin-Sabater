@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class analizadorLexico {
+
+    //Arreglar la parte de " para hacer los strings
+
     String lexema;
     char caracterActual;
     SourceManager gestorDeFuente;
@@ -138,10 +141,94 @@ public class analizadorLexico {
             actualizarLexema();
             actualizarCaracterActual();
             return e31();
-        }else if (caracterActual == -1) {
+        }else if (caracterActual == '"') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e34();
+        }else if (caracterActual == '\'') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e37();
+        }else if (caracterActual == gestorDeFuente.END_OF_FILE) {
             return e32();
         }
         return null;
+    }
+
+    private Token e37() throws IOException, ExcepcionLexica {
+        if(this.caracterActual == '\\'){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e40();
+        }
+        else
+        if(this.caracterActual == '\n' || this.caracterActual == '\'' || this.caracterActual == -1){
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+        }
+        else {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e38();
+        }
+    }
+    private Token e38() throws IOException, ExcepcionLexica {
+        if(this.caracterActual == '\''){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e39();
+        }
+        else
+        if(this.caracterActual != gestorDeFuente.END_OF_FILE && this.caracterActual != '\n')
+            this.actualizarLexema();
+        throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+    }
+    private Token e39(){
+        return new Token("charLiteral", this.lexema, gestorDeFuente.getLineNumber());
+    }
+    private Token e40() throws IOException, ExcepcionLexica {
+        if(this.caracterActual !=  gestorDeFuente.END_OF_FILE && this.caracterActual != '\n'){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e5();
+        }
+        else
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+    }
+
+    private Token e34() throws IOException, ExcepcionLexica {
+        if(this.caracterActual == '"'){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e35();
+        }else if(caracterActual == '\\'){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return e36();
+        } else if(this.caracterActual == '\n' || this.caracterActual == gestorDeFuente.END_OF_FILE){
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+        }
+        else {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return e34();
+        }
+    }
+
+    private Token e36() throws IOException, ExcepcionLexica {
+        if(caracterActual == '\\'){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return e34();
+        }
+        else {
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return e36();
+        }
+    }
+
+    private Token e35() {
+        return new Token("stringLiteral", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e1() throws IOException, ExcepcionLexica {
@@ -359,12 +446,57 @@ public class analizadorLexico {
         return new Token("restaAsignacion", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e22() {
-        return null;
+    private Token e22() throws IOException {
+        return new Token("multiplicacion", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e24() {
-        return null;
+    private Token e24() throws IOException, ExcepcionLexica {
+        if (caracterActual == '/') {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e25();
+        }else if(caracterActual == '*'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e33();
+        }
+        else{
+            return new Token("division", lexema, gestorDeFuente.getLineNumber());
+        }
+    }
+
+    private Token e33() throws IOException, ExcepcionLexica {
+        if(caracterActual == '*'){
+            actualizarCaracterActual();
+            if(caracterActual == '/'){
+                actualizarCaracterActual();
+                lexema = "";
+                return e0();
+            } else{
+                actualizarCaracterActual();
+                return e33();
+            }
+        }
+        if(caracterActual == gestorDeFuente.END_OF_FILE){
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "Comentario sin cerrar");
+        } else{
+            actualizarCaracterActual();
+            return e33();
+        }
+    }
+
+    private Token e25() throws IOException, ExcepcionLexica {
+        if(this.caracterActual != '\n' && this.caracterActual != gestorDeFuente.END_OF_FILE){
+            this.actualizarCaracterActual();
+            return this.e25();
+        }else {
+            if(this.caracterActual == gestorDeFuente.END_OF_FILE){
+                return this.e32();
+            }else{
+                this.actualizarCaracterActual();
+                return this.e0();
+            }
+        }
     }
 
     private Token e26() throws IOException, ExcepcionLexica {
