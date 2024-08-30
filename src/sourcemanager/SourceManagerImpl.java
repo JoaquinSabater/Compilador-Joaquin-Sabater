@@ -61,4 +61,7 @@ public class SourceManagerImpl implements SourceManager{
         return lineNumber;
     }
 
+    public int getLineIndexNumber() {
+        return lineIndexNumber;
+    }
 }

@@ -220,7 +220,7 @@ public class analizadorLexico {
     }
 
     private Token e36() throws IOException, ExcepcionLexica {
-        if(caracterActual == '\\'){
+        if(caracterActual == '"'){
             this.actualizarLexema();
             this.actualizarCaracterActual();
             return e34();
@@ -228,8 +228,9 @@ public class analizadorLexico {
         else {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return e36();
+            return e34();
         }
+        //Enter es error
     }
 
     private Token e35() {
@@ -496,9 +497,11 @@ public class analizadorLexico {
             return this.e25();
         }else {
             if(this.caracterActual == gestorDeFuente.END_OF_FILE){
+                lexema = "";
                 return this.e32();
             }else{
                 this.actualizarCaracterActual();
+                lexema = "";
                 return this.e0();
             }
         }
