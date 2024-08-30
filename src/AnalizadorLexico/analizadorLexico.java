@@ -151,8 +151,13 @@ public class analizadorLexico {
             return e37();
         }else if (caracterActual == gestorDeFuente.END_OF_FILE) {
             return e32();
+        }else if (Character.isWhitespace(caracterActual)) {
+            actualizarCaracterActual();
+            return e0();
+        }else {
+            actualizarLexema();
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + " no es un caracter valido");
         }
-        return null;
     }
 
     private Token e37() throws IOException, ExcepcionLexica {

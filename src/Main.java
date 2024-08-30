@@ -11,14 +11,16 @@ public class Main {
             SourceManager gestorDeArchivos = null;
 
             gestorDeArchivos = new SourceManagerImpl();
+            gestorDeArchivos.open(args[0]);
             AL = new analizadorLexico(gestorDeArchivos);
 
-            gestorDeArchivos.open(args[0]);
+            Token t = AL.proximoToken();;
 
-            while (!Objects.equals(AL.proximoToken().getToken_id(), "eof")){
-                AL.proximoToken();
+            while (!Objects.equals(t.getToken_id(), "eof")){
+                t = AL.proximoToken();
             }
 
+            gestorDeArchivos.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ExcepcionLexica e) {
