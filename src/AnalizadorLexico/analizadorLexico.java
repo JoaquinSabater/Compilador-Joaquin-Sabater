@@ -167,8 +167,8 @@ public class analizadorLexico {
             return this.e40();
         }
         else
-        if(this.caracterActual == '\n' || this.caracterActual == '\'' || this.caracterActual == -1){
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + "error en el salto de linea", gestorDeFuente.getCurrentLine());
+        if(this.caracterActual == '\n' || this.caracterActual == '\'' || this.caracterActual == gestorDeFuente.END_OF_FILE){
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + "No es un caracter valido", gestorDeFuente.getCurrentLine());
         }
         else {
             this.actualizarLexema();
@@ -182,14 +182,8 @@ public class analizadorLexico {
             this.actualizarCaracterActual();
             return this.e39();
         }
-        else{
-            if(this.caracterActual != gestorDeFuente.END_OF_FILE && this.caracterActual != '\n'){
-                this.actualizarLexema();
-                throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " error en el salto de linea ", gestorDeFuente.getCurrentLine());
-            }
-            else
-                throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " error en el salto de linea ", gestorDeFuente.getCurrentLine());
-        }
+        else
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " un char literal no puede tener mas de un elemento ", gestorDeFuente.getCurrentLine());
     }
     private Token e39(){
         return new Token("charLiteral", this.lexema, gestorDeFuente.getLineNumber());
@@ -201,7 +195,7 @@ public class analizadorLexico {
             return this.e5();
         }
         else
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " error en el salto de linea ", gestorDeFuente.getCurrentLine());
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " No es un caracter valido ", gestorDeFuente.getCurrentLine());
     }
 
     private Token e34() throws IOException, ExcepcionLexica {
