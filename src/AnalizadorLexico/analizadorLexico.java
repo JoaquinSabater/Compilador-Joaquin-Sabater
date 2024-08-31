@@ -156,7 +156,7 @@ public class analizadorLexico {
             return e0();
         }else {
             actualizarLexema();
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + " no es un caracter valido");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es un caracter valido", gestorDeFuente.getCurrentLine());
         }
     }
 
@@ -168,7 +168,7 @@ public class analizadorLexico {
         }
         else
         if(this.caracterActual == '\n' || this.caracterActual == '\'' || this.caracterActual == -1){
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + "error en el salto de linea", gestorDeFuente.getCurrentLine());
         }
         else {
             this.actualizarLexema();
@@ -182,10 +182,14 @@ public class analizadorLexico {
             this.actualizarCaracterActual();
             return this.e39();
         }
-        else
-        if(this.caracterActual != gestorDeFuente.END_OF_FILE && this.caracterActual != '\n')
-            this.actualizarLexema();
-        throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+        else{
+            if(this.caracterActual != gestorDeFuente.END_OF_FILE && this.caracterActual != '\n'){
+                this.actualizarLexema();
+                throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " error en el salto de linea ", gestorDeFuente.getCurrentLine());
+            }
+            else
+                throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " error en el salto de linea ", gestorDeFuente.getCurrentLine());
+        }
     }
     private Token e39(){
         return new Token("charLiteral", this.lexema, gestorDeFuente.getLineNumber());
@@ -197,7 +201,7 @@ public class analizadorLexico {
             return this.e5();
         }
         else
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " error en el salto de linea ", gestorDeFuente.getCurrentLine());
     }
 
     private Token e34() throws IOException, ExcepcionLexica {
@@ -210,7 +214,7 @@ public class analizadorLexico {
             this.actualizarCaracterActual();
             return e36();
         } else if(this.caracterActual == '\n' || this.caracterActual == gestorDeFuente.END_OF_FILE){
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "error en salto de linea");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " error en el salto de linea ", gestorDeFuente.getCurrentLine());
         }
         else {
             this.actualizarLexema();
@@ -312,7 +316,7 @@ public class analizadorLexico {
     private Token e1_novenoDigito() throws ExcepcionLexica {
         if (Character.isDigit(this.caracterActual)) {
             this.actualizarLexema();
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + " tiene mas de 9 digitos");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " tiene mas de 9 digitos ", gestorDeFuente.getCurrentLine());
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -484,7 +488,7 @@ public class analizadorLexico {
             }
         }
         if(caracterActual == gestorDeFuente.END_OF_FILE){
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "Comentario sin cerrar");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " es el final del archivo ", gestorDeFuente.getCurrentLine());
         } else{
             actualizarCaracterActual();
             return e33();
@@ -513,7 +517,7 @@ public class analizadorLexico {
             actualizarCaracterActual();
             return e27();
         } else
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "& no es un caracter valido");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " & no es un caracter valido ", gestorDeFuente.getCurrentLine());
     }
 
     private Token e27() {
@@ -526,7 +530,7 @@ public class analizadorLexico {
             actualizarCaracterActual();
             return e29();
         } else
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), 1, lexema, this.lexema + "| no es un caracter valido");
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " | no es un error valido ", gestorDeFuente.getCurrentLine());
     }
 
     private Token e29() {
