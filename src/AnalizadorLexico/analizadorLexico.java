@@ -8,7 +8,11 @@ import java.util.Map;
 
 public class analizadorLexico {
 
-    //Arreglar la parte de " para hacer los strings
+    /**
+     * Preguntar lo del doble asterisco en los comentarios
+     * Preguntar sobre \\ en los chars y ' en los chars
+     * '\\' y '\''
+     */
 
     String lexema;
     char caracterActual;
@@ -222,13 +226,11 @@ public class analizadorLexico {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             return e34();
-        }
-        else {
+        } else {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             return e34();
         }
-        //Enter es error
     }
 
     private Token e35() {

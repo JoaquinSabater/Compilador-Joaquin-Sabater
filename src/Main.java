@@ -14,19 +14,23 @@ public class Main {
             gestorDeArchivos.open(args[0]);
             AL = new analizadorLexico(gestorDeArchivos);
 
-            Token t = AL.proximoToken();
-            System.out.println(t.getToken_id() + t.getLexema() + t.getNro_linea());
-            while (!Objects.equals(t.getToken_id(), "eof")){
-                t = AL.proximoToken();
-                System.out.println(t.getToken_id() + t.getLexema() + t.getNro_linea());
-            }
+            Token t = null;
+
+            do {
+                try {
+                    t = AL.proximoToken();
+                    System.out.println("Token ID: " + t.getToken_id() + ", Lexema: " + t.getLexema() + ", Linea: " + t.getNro_linea());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ExcepcionLexica e) {
+                    throw new RuntimeException(e);
+                }
+            } while (!Objects.equals(t.getToken_id(), "eof"));
 
             System.out.println("[SinErrores]");
 
             gestorDeArchivos.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ExcepcionLexica e) {
             throw new RuntimeException(e);
         }
     }
