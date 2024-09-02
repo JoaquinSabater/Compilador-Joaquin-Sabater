@@ -12,17 +12,21 @@ public class analizadorLexico {
      * Preguntar lo del doble asterisco en los comentarios
      * Preguntar sobre \\ en los chars y ' en los chars
      * '\\' y '\''
+     * Los parantesis y corchetes que abren tienen que buscar uno que cierra ?
      */
 
     String lexema;
+
     char caracterActual;
     SourceManager gestorDeFuente;
 
     private Map<String, String> palabrasClave;
 
-    public analizadorLexico(SourceManager gestor) throws IOException {
+
+    public analizadorLexico(SourceManager gestor) throws ExcepcionLexica {
         gestorDeFuente = gestor;
         actualizarCaracterActual();
+
 
         palabrasClave = new HashMap<>();
         palabrasClave.put("class", "pr_class");
@@ -47,17 +51,25 @@ public class analizadorLexico {
         palabrasClave.put("false", "pr_false");
     }
 
-    public Token proximoToken() throws IOException, ExcepcionLexica {
-        lexema = "";
-        return e0();
+    public Token proximoToken() throws ExcepcionLexica {
+        try {
+            lexema = "";
+            return e0();
+        } catch (IOException e) {
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), "", "IO Error", gestorDeFuente.getCurrentLine());
+        }
     }
 
     private void actualizarLexema() {
         lexema = lexema + caracterActual;
     }
 
-    private void actualizarCaracterActual() throws IOException {
-        caracterActual = gestorDeFuente.getNextChar();
+    private void actualizarCaracterActual() throws ExcepcionLexica {
+        try {
+            caracterActual = gestorDeFuente.getNextChar();
+        } catch (IOException e) {
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), "", "IO Error", gestorDeFuente.getCurrentLine());
+        }
     }
 
     private Token e0() throws IOException, ExcepcionLexica {
@@ -164,14 +176,14 @@ public class analizadorLexico {
         }
     }
 
-    private Token e37() throws IOException, ExcepcionLexica {
+    private Token e37() throws ExcepcionLexica {
         if(this.caracterActual == '\\'){
             this.actualizarLexema();
             this.actualizarCaracterActual();
             return this.e40();
         }
         else
-        if(this.caracterActual == '\n' || this.caracterActual == '\'' || this.caracterActual == gestorDeFuente.END_OF_FILE){
+        if(this.caracterActual == '\n' || this.caracterActual == gestorDeFuente.END_OF_FILE){
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + "No es un caracter valido", gestorDeFuente.getCurrentLine());
         }
         else {
@@ -180,7 +192,7 @@ public class analizadorLexico {
             return this.e38();
         }
     }
-    private Token e38() throws IOException, ExcepcionLexica {
+    private Token e38() throws ExcepcionLexica {
         if(this.caracterActual == '\''){
             this.actualizarLexema();
             this.actualizarCaracterActual();
@@ -192,11 +204,11 @@ public class analizadorLexico {
     private Token e39(){
         return new Token("charLiteral", this.lexema, gestorDeFuente.getLineNumber());
     }
-    private Token e40() throws IOException, ExcepcionLexica {
-        if(this.caracterActual !=  gestorDeFuente.END_OF_FILE && this.caracterActual != '\n'){
+    private Token e40() throws ExcepcionLexica {
+        if(this.caracterActual ==  'n' || this.caracterActual == '\\' || this.caracterActual == '\'' || this.caracterActual == 't'){
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e5();
+            return this.e38();
         }
         else
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " No es un caracter valido ", gestorDeFuente.getCurrentLine());
@@ -318,7 +330,7 @@ public class analizadorLexico {
     }
 
 
-    private Token e2() throws IOException {
+    private Token e2() throws ExcepcionLexica {
         if (Character.isUpperCase(caracterActual)) {
             return esMayuscula();
         } else {
@@ -326,7 +338,7 @@ public class analizadorLexico {
         }
     }
 
-    private Token esMinuscula() throws IOException {
+    private Token esMinuscula() throws ExcepcionLexica {
         if (Character.isLetter(this.caracterActual) || Character.isDigit(this.caracterActual) || this.caracterActual == '_') {
             this.actualizarLexema();
             this.actualizarCaracterActual();
@@ -337,7 +349,7 @@ public class analizadorLexico {
             return new Token("IdMetVar", this.lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token esMayuscula() throws IOException {
+    private Token esMayuscula() throws ExcepcionLexica {
         if (Character.isLetter(this.caracterActual) || Character.isDigit(this.caracterActual) || this.caracterActual == '_') {
             this.actualizarLexema();
             this.actualizarCaracterActual();
@@ -374,7 +386,7 @@ public class analizadorLexico {
         return new Token("punto", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e10() throws IOException {
+    private Token e10() throws ExcepcionLexica {
         if (this.caracterActual == '=') {
             actualizarLexema();
             actualizarCaracterActual();
@@ -387,7 +399,7 @@ public class analizadorLexico {
         return new Token("mayorIgual", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e12() throws IOException {
+    private Token e12() throws ExcepcionLexica {
         if (caracterActual == '=') {
             actualizarLexema();
             actualizarCaracterActual();
@@ -400,7 +412,7 @@ public class analizadorLexico {
         return new Token("menorIgual", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e14() throws IOException {
+    private Token e14() throws ExcepcionLexica {
         if (caracterActual == '=') {
             actualizarLexema();
             actualizarCaracterActual();
@@ -413,7 +425,7 @@ public class analizadorLexico {
         return new Token("distinto", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e16() throws IOException {
+    private Token e16() throws ExcepcionLexica {
         if (caracterActual == '=') {
             actualizarLexema();
             actualizarCaracterActual();
@@ -426,7 +438,7 @@ public class analizadorLexico {
         return new Token("comparacion", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e18() throws IOException {
+    private Token e18() throws ExcepcionLexica {
         if (caracterActual == '=') {
             actualizarLexema();
             actualizarCaracterActual();
@@ -439,7 +451,7 @@ public class analizadorLexico {
         return new Token("sumaAsignacion", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e20() throws IOException {
+    private Token e20() throws ExcepcionLexica {
         if (caracterActual == '=') {
             actualizarLexema();
             actualizarCaracterActual();
@@ -544,3 +556,4 @@ public class analizadorLexico {
         return new Token("eof", lexema, gestorDeFuente.getLineNumber());
     }
 }
+

@@ -1,8 +1,23 @@
 package AnalizadorLexico;
 
 public class ExcepcionLexica extends Exception {
+
+    private int numeroLinea;
+    private int numeroColumna;
+    private String lexema;
+    private String tipoError;
+    private String lineaContenido;
+
     public ExcepcionLexica(int numeroLinea, int numeroColumna, String lexema, String tipoError, String lineaContenido) {
-        super("\n" + formatearMensaje(numeroLinea, numeroColumna, lexema, tipoError, lineaContenido));
+        this.numeroLinea = numeroLinea;
+        this.numeroColumna = numeroColumna;
+        this.lexema = lexema;
+        this.tipoError = tipoError;
+        this.lineaContenido = lineaContenido;
+    }
+
+    public String getMessage(){
+        return '\n' + this.formatearMensaje(numeroLinea,numeroColumna,lexema,tipoError,lineaContenido);
     }
 
     private static String formatearMensaje(int numeroLinea, int numeroColumna, String lexema, String tipoError, String lineaContenido) {

@@ -16,6 +16,7 @@ identVar IdentClass
 
 123
 "hola"
+        'c' '\n'  '\\' '\''
 
         /**
          * Clase que representa un token

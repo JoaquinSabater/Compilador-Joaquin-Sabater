@@ -20,8 +20,6 @@ public class Main {
                 try {
                     t = AL.proximoToken();
                     System.out.println("Token ID: " + t.getToken_id() + ", Lexema: " + t.getLexema() + ", Linea: " + t.getNro_linea());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 } catch (ExcepcionLexica e) {
                     throw new RuntimeException(e);
                 }
@@ -30,7 +28,7 @@ public class Main {
             System.out.println("[SinErrores]");
 
             gestorDeArchivos.close();
-        } catch (IOException e) {
+        } catch (IOException | ExcepcionLexica e) {
             throw new RuntimeException(e);
         }
     }
