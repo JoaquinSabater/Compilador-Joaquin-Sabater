@@ -23,7 +23,7 @@ public class Main {
                 } catch (ExcepcionLexica e) {
                     System.err.println(e.getMessage());
                 }
-            } while (!Objects.equals(t.getToken_id(), "eof"));
+            } while (!AL.esEOF());
 
             System.out.println("[SinErrores]");
 

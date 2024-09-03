@@ -200,6 +200,7 @@ public class analizadorLexico {
             return this.e39();
         }
         else{
+            actualizarLexema();
             actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " un char literal no puede tener mas de un elemento ", gestorDeFuente.getCurrentLine());
         }
@@ -214,6 +215,7 @@ public class analizadorLexico {
             return this.e38();
         }
         else{
+            actualizarLexema();
             actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es un caracter valido ", gestorDeFuente.getCurrentLine());
         }
@@ -317,7 +319,7 @@ public class analizadorLexico {
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e1_octavoDigito() throws IOException, ExcepcionLexica {
+    private Token e1_octavoDigito() throws ExcepcionLexica {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
@@ -329,6 +331,7 @@ public class analizadorLexico {
     private Token e1_novenoDigito() throws ExcepcionLexica {
         if (Character.isDigit(this.caracterActual)) {
             this.actualizarLexema();
+            this.actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " tiene mas de 9 digitos ", gestorDeFuente.getCurrentLine());
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
@@ -530,6 +533,7 @@ public class analizadorLexico {
             actualizarCaracterActual();
             return e27();
         } else{
+            actualizarLexema();
             actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " & no es un error valido ", gestorDeFuente.getCurrentLine());
         }
@@ -545,6 +549,7 @@ public class analizadorLexico {
             actualizarCaracterActual();
             return e29();
         } else{
+            actualizarLexema();
             actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " | no es un error valido ", gestorDeFuente.getCurrentLine());
         }
@@ -563,6 +568,10 @@ public class analizadorLexico {
 
     private Token e32() {
         return new Token("eof", lexema, gestorDeFuente.getLineNumber());
+    }
+
+    public boolean esEOF(){
+        return caracterActual == gestorDeFuente.END_OF_FILE;
     }
 }
 
