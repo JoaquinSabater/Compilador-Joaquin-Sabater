@@ -172,6 +172,7 @@ public class analizadorLexico {
             return e0();
         }else {
             actualizarLexema();
+            actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es un caracter valido", gestorDeFuente.getCurrentLine());
         }
     }
@@ -198,8 +199,10 @@ public class analizadorLexico {
             this.actualizarCaracterActual();
             return this.e39();
         }
-        else
+        else{
+            actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " un char literal no puede tener mas de un elemento ", gestorDeFuente.getCurrentLine());
+        }
     }
     private Token e39(){
         return new Token("charLiteral", this.lexema, gestorDeFuente.getLineNumber());
@@ -210,8 +213,10 @@ public class analizadorLexico {
             this.actualizarCaracterActual();
             return this.e38();
         }
-        else
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " No es un caracter valido ", gestorDeFuente.getCurrentLine());
+        else{
+            actualizarCaracterActual();
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es un caracter valido ", gestorDeFuente.getCurrentLine());
+        }
     }
 
     private Token e34() throws IOException, ExcepcionLexica {
@@ -464,7 +469,7 @@ public class analizadorLexico {
         return new Token("restaAsignacion", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e22() throws IOException {
+    private Token e22()  {
         return new Token("multiplicacion", lexema, gestorDeFuente.getLineNumber());
     }
 
@@ -519,26 +524,30 @@ public class analizadorLexico {
         }
     }
 
-    private Token e26() throws IOException, ExcepcionLexica {
+    private Token e26() throws ExcepcionLexica {
         if (caracterActual == '&') {
             actualizarLexema();
             actualizarCaracterActual();
             return e27();
-        } else
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " & no es un caracter valido ", gestorDeFuente.getCurrentLine());
+        } else{
+            actualizarCaracterActual();
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " & no es un error valido ", gestorDeFuente.getCurrentLine());
+        }
     }
 
     private Token e27() {
         return new Token("and", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e28() throws IOException, ExcepcionLexica {
+    private Token e28() throws ExcepcionLexica {
         if (caracterActual == '|') {
             actualizarLexema();
             actualizarCaracterActual();
             return e29();
-        } else
+        } else{
+            actualizarCaracterActual();
             throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " | no es un error valido ", gestorDeFuente.getCurrentLine());
+        }
     }
 
     private Token e29() {

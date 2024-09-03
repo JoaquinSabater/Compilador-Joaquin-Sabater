@@ -21,7 +21,7 @@ public class Main {
                     t = AL.proximoToken();
                     System.out.println("Token ID: " + t.getToken_id() + ", Lexema: " + t.getLexema() + ", Linea: " + t.getNro_linea());
                 } catch (ExcepcionLexica e) {
-                    throw new RuntimeException(e);
+                    System.err.println(e.getMessage());
                 }
             } while (!Objects.equals(t.getToken_id(), "eof"));
 
