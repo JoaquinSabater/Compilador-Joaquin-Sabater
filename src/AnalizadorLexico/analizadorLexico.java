@@ -8,13 +8,6 @@ import java.util.Map;
 
 public class analizadorLexico {
 
-    /**
-     * Preguntar lo del doble asterisco en los comentarios
-     * Preguntar sobre \\ en los chars y ' en los chars
-     * '\\' y '\''
-     * Los parantesis y corchetes que abren tienen que buscar uno que cierra ?
-     */
-
     String lexema;
 
     char caracterActual;

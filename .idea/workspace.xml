@@ -98,12 +98,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/AnalizadorLexico/analizadorLexico.java</url>
-          <line>56</line>
+          <line>49</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/AnalizadorLexico/analizadorLexico.java</url>
-          <line>323</line>
+          <line>316</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

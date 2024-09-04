@@ -1,2 +1,4 @@
 ///[Error:"hola|3]
-'ca'
+
+"hola "
+        chau"
