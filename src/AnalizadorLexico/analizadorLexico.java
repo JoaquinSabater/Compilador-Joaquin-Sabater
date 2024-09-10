@@ -70,11 +70,15 @@ public class analizadorLexico {
             actualizarLexema();
             actualizarCaracterActual();
             return e1();
-        } else if (Character.isLetter(caracterActual)) {
+        } else if (Character.isLetter(caracterActual) && Character.isLowerCase(caracterActual)) {
             actualizarLexema();
             actualizarCaracterActual();
-            return e2();
-        } else if (caracterActual == '(') {
+            return e2_minuscula();
+        }else if (Character.isLetter(caracterActual) && Character.isUpperCase(caracterActual)) {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2_mayuscula();
+        }else if (caracterActual == '(') {
             actualizarLexema();
             actualizarCaracterActual();
             return e3();
@@ -329,32 +333,22 @@ public class analizadorLexico {
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
-
-
-    private Token e2() throws ExcepcionLexica {
-        if (Character.isUpperCase(caracterActual)) {
-            return esMayuscula();
-        } else {
-            return esMinuscula();
-        }
-    }
-
-    private Token esMinuscula() throws ExcepcionLexica {
+    private Token e2_minuscula() throws ExcepcionLexica {
         if (Character.isLetter(this.caracterActual) || Character.isDigit(this.caracterActual) || this.caracterActual == '_') {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.esMinuscula();
+            return this.e2_minuscula();
         } else if (palabrasClave.containsKey(this.lexema))
             return new Token(palabrasClave.get(lexema), this.lexema, gestorDeFuente.getLineNumber());
         else
             return new Token("IdMetVar", this.lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token esMayuscula() throws ExcepcionLexica {
+    private Token e2_mayuscula() throws ExcepcionLexica {
         if (Character.isLetter(this.caracterActual) || Character.isDigit(this.caracterActual) || this.caracterActual == '_') {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return esMayuscula();
+            return e2_mayuscula();
         } else
             return new Token("idClase", this.lexema, gestorDeFuente.getLineNumber());
     }

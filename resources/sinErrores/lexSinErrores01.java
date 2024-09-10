@@ -1,2 +1,3 @@
-///[SinErrores]
-{
+class Prueba1{
+
+}
