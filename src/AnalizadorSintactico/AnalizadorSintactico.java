@@ -32,7 +32,6 @@ public class AnalizadorSintactico {
     private void ListaClases() throws ExcepcionLexica, ExcepcionSintactica {
         System.out.println("Lista Clases");
         if (this.tokenActual.getToken_id().equals("pr_class") || this.tokenActual.getToken_id().equals("pr_interface")) {
-            System.out.println("hola");
             Clase();
             ListaClases();
         }else {
@@ -54,9 +53,9 @@ public class AnalizadorSintactico {
         System.out.println("Interface");
         match("pr_interface");
         match("idClase");
-        match("llave_izq");
+        match("llaveAbierta");
         ListaMiembros();
-        match("llave_der");
+        match("llaveCerrada");
     }
 
     private void ListaMiembros() {
@@ -68,8 +67,8 @@ public class AnalizadorSintactico {
         match("pr_class");
         match("idClase");
         //HerenciaOpcional
-        match("llave_izq");
+        match("llaveAbierta");
         ListaMiembros();
-        match("llave_der");
+        match("llaveCerrada");
     }
 }

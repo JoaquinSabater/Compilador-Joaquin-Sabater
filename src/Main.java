@@ -17,7 +17,7 @@ public class Main {
             gestorDeArchivos.open(args[0]);
             AL = new analizadorLexico(gestorDeArchivos);
 
-            //AS = new AnalizadorSintactico(AL);
+            AS = new AnalizadorSintactico(AL);
 
             Token t = null;
 
@@ -35,6 +35,8 @@ public class Main {
             gestorDeArchivos.close();
         } catch (IOException | ExcepcionLexica e) {
             throw new RuntimeException(e);
+        } catch (ExcepcionSintactica e) {
+            System.err.println(e.getMessage());
         }
     }
 }
