@@ -341,7 +341,7 @@ public class analizadorLexico {
         } else if (palabrasClave.containsKey(this.lexema))
             return new Token(palabrasClave.get(lexema), this.lexema, gestorDeFuente.getLineNumber());
         else
-            return new Token("IdMetVar", this.lexema, gestorDeFuente.getLineNumber());
+            return new Token("idMetVar", this.lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e2_mayuscula() throws ExcepcionLexica {
@@ -358,7 +358,7 @@ public class analizadorLexico {
     }
 
     private Token e4() {
-        return new Token("parentesiscerrado", lexema, gestorDeFuente.getLineNumber());
+        return new Token("parentesisCerrado", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e5() {

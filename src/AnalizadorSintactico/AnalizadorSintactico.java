@@ -44,6 +44,7 @@ public class AnalizadorSintactico {
     private void match(String tokenId) throws ExcepcionSintactica, ExcepcionLexica {
         if (this.tokenActual.getToken_id().equals(tokenId)) {
             this.tokenActual = this.lexico.proximoToken();
+            System.out.println("Token ID: " + this.tokenActual.getToken_id() + ", Lexema: " + this.tokenActual.getLexema() + ", Linea: " + this.tokenActual.getNro_linea());
         } else {
             throw new ExcepcionSintactica(this.tokenActual, tokenId);
         }
@@ -52,6 +53,7 @@ public class AnalizadorSintactico {
     // <Inicial> ::= <ListaClases>
     private void Inicial() throws ExcepcionSintactica, ExcepcionLexica {
         System.out.println("Inicial");
+        System.out.println("Token ID: " + this.tokenActual.getToken_id() + ", Lexema: " + this.tokenActual.getLexema() + ", Linea: " + this.tokenActual.getNro_linea());
         ListaClases();
     }
 
@@ -200,7 +202,7 @@ public class AnalizadorSintactico {
     private void ArgFormal() throws ExcepcionSintactica, ExcepcionLexica {
         System.out.println("ArgFormal");
         Tipo();
-        match("idMetVar");
+        match("idMetVar"); //Llego
     }
 
     // <Bloque> ::= { <ListaSentencias> }
@@ -214,8 +216,8 @@ public class AnalizadorSintactico {
     // <ListaSentencias> ::= <Sentencia> <ListaSentencias> | ε
     private void ListaSentencias() throws ExcepcionSintactica, ExcepcionLexica {
         System.out.println("ListaSentencias");
-        if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta")) {
-            Sentencia();
+        if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta") || tokenActual.getToken_id().equals("pr_this")) {
+            Sentencia(); //Aca es el error
             ListaSentencias();
         }
     }
