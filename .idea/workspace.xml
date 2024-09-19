@@ -44,7 +44,7 @@
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TesterDeCasosSinErrores">
+  <component name="RunManager" selected="JUnit.TesterDeCasosConErrores">
     <configuration name="TesterDeCasosConErrores" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demos" />
       <option name="PACKAGE_NAME" value="" />
@@ -98,9 +98,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (2)" />
-        <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (1)" />
       </list>
     </recent_temporary>
@@ -115,17 +115,6 @@
       <updated>1724509790490</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AnalizadorSintactico/AnalizadorSintactico.java</url>
-          <line>219</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
