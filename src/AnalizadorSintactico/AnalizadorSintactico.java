@@ -554,7 +554,7 @@ public class AnalizadorSintactico {
                 AccesoThis();
                 break;
             case "idMetVar":
-                AccesoVar();
+                AccesoVarMetodo();
                 break;
             case "pr_new":
                 AccesoConstructor();
@@ -564,9 +564,6 @@ public class AnalizadorSintactico {
                 break;
             case "pr_static":
                 AccesoMetodoEstatico();
-                break;
-            case "idClase":
-                AccesoMetodo();
                 break;
             default:
                 throw new ExcepcionSintactica(tokenActual, "primario válido");
@@ -579,10 +576,17 @@ public class AnalizadorSintactico {
         match("pr_this");
     }
 
-    //<AccesoVar> ::= idMetVar
-    private void AccesoVar() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("AccesoVar");
+    private void AccesoVarMetodo() throws ExcepcionSintactica, ExcepcionLexica {
+        System.out.println("AccesoVarMetodo");
         match("idMetVar");
+        AccesoVarMetodoPrima();
+    }
+
+    // <AccesoVarMetodoPrima> ::= <ArgsActuales> | ε
+    private void AccesoVarMetodoPrima() throws ExcepcionSintactica, ExcepcionLexica {
+        if (tokenActual.getToken_id().equals("parentesisAbierto")) {
+            ArgsActuales();
+        }
     }
 
     //<AccesoConstructor> ::= new idClase <ArgsActuales>
@@ -599,13 +603,6 @@ public class AnalizadorSintactico {
         match("parentesisAbierto");
         Expresion();
         match("parentesisCerrado");
-    }
-
-    //<AccesoMetodo> ::= idMetVar <ArgsActuales>
-    private void AccesoMetodo() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("AccesoMetodo");
-        match("idMetVar");
-        ArgsActuales();
     }
 
     //<AccesoMetodoEstatico> ::= idClase . idMetVar <ArgsActuales>

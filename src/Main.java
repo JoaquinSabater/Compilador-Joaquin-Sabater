@@ -21,22 +21,27 @@ public class Main {
 
             Token t = null;
 
+            boolean bandera = false;
+
             do {
                 try {
                     t = AL.proximoToken();
                     System.out.println("Token ID: " + t.getToken_id() + ", Lexema: " + t.getLexema() + ", Linea: " + t.getNro_linea());
                 } catch (ExcepcionLexica e) {
-                    System.err.println(e.getMessage());
+                    System.out.println(e.getMessage());
+                    bandera = true;
                 }
             } while (!AL.esEOF());
 
-            System.out.println("[SinErrores]");
+            if(!bandera){
+                System.out.println("[SinErrores]");
+            }
 
             gestorDeArchivos.close();
         } catch (IOException | ExcepcionLexica e) {
             throw new RuntimeException(e);
         } catch (ExcepcionSintactica e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }
