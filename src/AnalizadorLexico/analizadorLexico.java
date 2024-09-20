@@ -42,6 +42,10 @@ public class analizadorLexico {
         palabrasClave.put("null", "pr_null");
         palabrasClave.put("true", "pr_true");
         palabrasClave.put("false", "pr_false");
+        palabrasClave.put("switch", "pr_switch");
+        palabrasClave.put("case", "pr_case");
+        palabrasClave.put("default", "pr_default");
+        palabrasClave.put("break", "pr_break");
     }
 
     public Token proximoToken() throws ExcepcionLexica {
@@ -547,10 +551,10 @@ public class analizadorLexico {
     }
 
     private Token e30() {
-        return new Token("dosPuntos", lexema, gestorDeFuente.getLineNumber());
+        return new Token("porcentaje", lexema, gestorDeFuente.getLineNumber());
     }
     private Token e31() {
-        return new Token("porcentaje", lexema, gestorDeFuente.getLineNumber());
+        return new Token("dosPuntos", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e32() {
