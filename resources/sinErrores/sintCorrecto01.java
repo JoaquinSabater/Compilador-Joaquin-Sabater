@@ -1,6 +1,8 @@
 ///[SinErrores]
 // Prueba una Clase vacia
 
-class Prueba1{
-
+class MyClass {
+    void myMethod() {
+       a = b();
+    }
 }

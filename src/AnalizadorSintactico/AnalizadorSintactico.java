@@ -27,7 +27,6 @@ public class AnalizadorSintactico {
     // <Inicial> ::= <ListaClases>
     private void Inicial() throws ExcepcionSintactica, ExcepcionLexica {
         System.out.println("Inicial");
-        System.out.println("Token ID: " + this.tokenActual.getToken_id() + ", Lexema: " + this.tokenActual.getLexema() + ", Linea: " + this.tokenActual.getNro_linea());
         ListaClases();
     }
 
