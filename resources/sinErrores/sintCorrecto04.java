@@ -5,15 +5,15 @@ class Prueba1{
 
     int x;
 
-    static  void prueba1(int a) 
+    static  void prueba1(int a)
     {
-        this.b().a = 5; 
-    
+        this.b().a = 5;
+
     }
 
     public Prueba1(int y){
 
     }
-    
+
 }
 

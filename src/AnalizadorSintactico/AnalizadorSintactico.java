@@ -210,52 +210,43 @@ public class AnalizadorSintactico {
     */
     private void Sentencia() throws ExcepcionSintactica, ExcepcionLexica {
         System.out.println("Sentencia");
-        if(esExpresion(tokenActual) && !Objects.equals(tokenActual.getToken_id(), "idMetVar")){
+        if(esExpresion(tokenActual)){ //Aca esta el problema, no llega al break que esta en el swith
             Expresion();
             match("puntoComa");
-        }else {
-            switch (tokenActual.getToken_id()) {
-                case "puntoComa":
-                    match("puntoComa");
-                    break;
-                case "idMetVar":
-                    Asignacion();
-                    match("puntoComa");
-                    break;
-                case "pr_var":
-                    VarLocal();
-                    match("puntoComa");
-                    break;
-                case "pr_return":
-                    Return();
-                    match("puntoComa");
-                    break;
-                case "pr_break":
-                    Break();
-                    match("puntoComa");
-                    break;
-                case "pr_if":
-                    If();
-                    break;
-                case "pr_while":
-                    While();
-                    break;
-                case "pr_switch":
-                    Switch();
-                    break;
-                case "llaveAbierta":
-                    Bloque();
-                    break;
-                default:
-                    throw new ExcepcionSintactica(tokenActual, "sentencia invalida");
-            }
         }
-    }
-
-    // <Asignacion> ::= <Expresion>
-    private void Asignacion() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Asignacion");
-        Expresion();
+        switch (tokenActual.getToken_id()) {
+            case "puntoComa":
+                match("puntoComa");
+                break;
+            case "pr_var":
+                VarLocal();
+                match("puntoComa");
+                break;
+            case "pr_return":
+                Return();
+                match("puntoComa");
+                break;
+            case "pr_break":
+                Break();
+                match("puntoComa");
+                break;
+            case "pr_if":
+                If();
+                break;
+            case "pr_while":
+                While();
+                break;
+            case "pr_switch":
+                Switch();
+                break;
+            case "llaveAbierta":
+                Bloque();
+                break;
+            case "llaveCerrada":
+                break;
+            default:
+                throw new ExcepcionSintactica(tokenActual, "sentencia invalida");
+        }
     }
 
     // <VarLocal> ::= var idMetVar = <ExpresionCompuesta>
@@ -345,7 +336,7 @@ public class AnalizadorSintactico {
         if (tokenActual.getToken_id().equals("pr_case")) {
             match("pr_case");
             LiteralPrimitivo();
-            match("dosPuntos");
+            match("dosPuntos"); //Aca le llega un porsentaje y no un dos puntos
             SentenciaOpcional();
         } else if (tokenActual.getToken_id().equals("pr_default")) {
             match("pr_default");
@@ -482,7 +473,7 @@ public class AnalizadorSintactico {
     private void Operando() throws ExcepcionSintactica, ExcepcionLexica {
         System.out.println("Operando");
         if (tokenActual.getToken_id().equals("intLiteral") || tokenActual.getToken_id().equals("charLiteral") || tokenActual.getToken_id().equals("pr_true") || tokenActual.getToken_id().equals("pr_false") || tokenActual.getToken_id().equals("pr_null") || tokenActual.getToken_id().equals("stringLiteral")) {
-            Literal();//Aca no esta entrando
+            Literal();
         } else {
             Acceso();
         }
@@ -546,7 +537,7 @@ public class AnalizadorSintactico {
     // <Acceso> ::= <Primario> <EncadenadoOpcional>
     private void Acceso() throws ExcepcionSintactica, ExcepcionLexica {
         System.out.println("Acceso");
-        Primario();
+        Primario(); //Porque cambia aca
         EncadenadoOpcional();
     }
 
@@ -656,7 +647,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    // <EncadenadoOpcional>::= idMetVar<EncadenadoOpcionalPrima> | ε
+    // <EncadenadoOpcional>::= . idMetVar<EncadenadoOpcionalPrima> | ε
     private void EncadenadoOpcional() throws ExcepcionLexica, ExcepcionSintactica {
         if (tokenActual.getToken_id().equals("punto")) {
             match("punto");
