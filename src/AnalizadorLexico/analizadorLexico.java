@@ -23,9 +23,7 @@ public class analizadorLexico {
 
         palabrasClave = new HashMap<>();
         palabrasClave.put("class", "pr_class");
-        palabrasClave.put("interface", "pr_interface");
         palabrasClave.put("extends", "pr_extends");
-        palabrasClave.put("implements", "pr_implements");
         palabrasClave.put("public", "pr_public");
         palabrasClave.put("static", "pr_static");
         palabrasClave.put("void", "pr_void");
@@ -261,7 +259,13 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_segundoDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_segundoDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -270,7 +274,13 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_tercerDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_tercerDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -279,7 +289,13 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_cuartoDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_cuartoDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -288,7 +304,13 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_quintoDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_quintoDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -297,7 +319,13 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_sextoDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_sextoDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -306,7 +334,13 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_septimoDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_septimoDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -315,7 +349,13 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_octavoDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_octavoDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
@@ -324,19 +364,71 @@ public class analizadorLexico {
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            return this.e1_novenoDigito();
+            if (caracterActual == '.'){
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                return this.e1f();
+            }else {
+                return this.e1_novenoDigito();
+            }
         } else
             return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e1_novenoDigito() throws ExcepcionLexica {
-        if (Character.isDigit(this.caracterActual)) {
+        if (caracterActual == '.'){
             this.actualizarLexema();
             this.actualizarCaracterActual();
-            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " tiene mas de 9 digitos ", gestorDeFuente.getCurrentLine());
-        } else
-            return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+            return this.e1f();
+        }else {
+            if (Character.isDigit(this.caracterActual)) {
+                this.actualizarLexema();
+                this.actualizarCaracterActual();
+                throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " tiene mas de 9 digitos ", gestorDeFuente.getCurrentLine());
+            } else
+                return new Token("intLiteral", lexema, gestorDeFuente.getLineNumber());
+        }
     }
+
+    private Token e1f() throws ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }else {
+            if (Character.isDigit(caracterActual)) {
+                actualizarLexema();
+                actualizarCaracterActual();
+                return e1f();
+            } else
+                return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
+        }
+    }
+
+    private Token e2f() throws ExcepcionLexica {
+        if (caracterActual == '+' || caracterActual == '-'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e3f();
+        }else {
+            if (Character.isDigit(caracterActual)) {
+                actualizarLexema();
+                actualizarCaracterActual();
+                return e2f();
+            } else
+                return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
+        }
+    }
+
+    private Token e3f() throws ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e3f();
+        } else
+            return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
+    }
+
     private Token e2_minuscula() throws ExcepcionLexica {
         if (Character.isLetter(this.caracterActual) || Character.isDigit(this.caracterActual) || this.caracterActual == '_') {
             this.actualizarLexema();
@@ -381,8 +473,14 @@ public class analizadorLexico {
         return new Token("coma", lexema, gestorDeFuente.getLineNumber());
     }
 
-    private Token e9() {
-        return new Token("punto", lexema, gestorDeFuente.getLineNumber());
+    private Token e9() throws ExcepcionLexica {
+        if(Character.isDigit(caracterActual)){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1f();
+        }else {
+            return new Token("punto", lexema, gestorDeFuente.getLineNumber());
+        }
     }
 
     private Token e10() throws ExcepcionLexica {
