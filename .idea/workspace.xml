@@ -33,18 +33,21 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater",
+    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/sinErrores",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src\AnalizadorLexico\AutomataFinito" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TesterDeCasosSinErrores">
+  <component name="RunManager" selected="JUnit.TesterDeCasosConErrores">
     <configuration name="TesterDeCasosConErrores" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demos" />
       <option name="PACKAGE_NAME" value="" />
@@ -98,8 +101,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TesterDeCasosSinErrores" />
         <item itemvalue="JUnit.TesterDeCasosConErrores" />
+        <item itemvalue="JUnit.TesterDeCasosSinErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (2)" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (1)" />
       </list>
@@ -121,8 +124,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/AnalizadorSintactico/AnalizadorSintactico.java</url>
-          <line>337</line>
-          <option name="timeStamp" value="32" />
+          <line>14</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

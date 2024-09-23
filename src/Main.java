@@ -23,25 +23,13 @@ public class Main {
 
             boolean bandera = false;
 
-            do {
-                try {
-                    t = AL.proximoToken();
-                    System.out.println("Token ID: " + t.getToken_id() + ", Lexema: " + t.getLexema() + ", Linea: " + t.getNro_linea());
-                } catch (ExcepcionLexica e) {
-                    System.out.println(e.getMessage());
-                    bandera = true;
-                }
-            } while (!AL.esEOF());
-
             if(!bandera){
                 System.out.println("[SinErrores]");
             }
 
             gestorDeArchivos.close();
-        } catch (IOException | ExcepcionLexica e) {
-            throw new RuntimeException(e);
-        } catch (ExcepcionSintactica e) {
-            System.out.println(e.getMessage());
+        } catch (IOException | ExcepcionLexica | ExcepcionSintactica e) {
+            throw new RuntimeException("\n" + e);
         }
     }
 }

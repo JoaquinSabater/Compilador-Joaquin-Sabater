@@ -243,8 +243,8 @@ public class AnalizadorSintactico {
                 break;
             case "llaveCerrada":
                 break;
-            default:
-                throw new ExcepcionSintactica(tokenActual, "sentencia invalida");
+            case "idMetVar":
+                break;
         }
     }
 
@@ -335,7 +335,7 @@ public class AnalizadorSintactico {
         if (tokenActual.getToken_id().equals("pr_case")) {
             match("pr_case");
             LiteralPrimitivo();
-            match("dosPuntos"); //Aca le llega un porsentaje y no un dos puntos
+            match("dosPuntos");
             SentenciaOpcional();
         } else if (tokenActual.getToken_id().equals("pr_default")) {
             match("pr_default");
@@ -440,8 +440,6 @@ public class AnalizadorSintactico {
             case "porcentaje":
                 match("porcentaje");
                 break;
-            default:
-                throw new ExcepcionSintactica(tokenActual, "operador binario válido");
         }
     }
 
@@ -506,8 +504,6 @@ public class AnalizadorSintactico {
             case "charLiteral":
                 match("charLiteral");
                 break;
-            default:
-                throw new ExcepcionSintactica(tokenActual, "literal primitivo válido");
         }
     }
 
@@ -517,8 +513,6 @@ public class AnalizadorSintactico {
             match("pr_null");
         } else if (tokenActual.getToken_id().equals("stringLiteral")) {
             match("stringLiteral");
-        } else {
-            throw new ExcepcionSintactica(tokenActual, "literal objeto válido");
         }
     }
 
@@ -565,8 +559,6 @@ public class AnalizadorSintactico {
             case "pr_static":
                 AccesoMetodoEstatico();
                 break;
-            default:
-                throw new ExcepcionSintactica(tokenActual, "primario válido");
         }
     }
 
