@@ -17,18 +17,23 @@ public class Main {
             gestorDeArchivos.open(args[0]);
             AL = new analizadorLexico(gestorDeArchivos);
 
-            AS = new AnalizadorSintactico(AL);
-
             Token t = null;
 
-            boolean bandera = false;
+            boolean bandera = true;
 
-            if(!bandera){
+            try {
+                AS = new AnalizadorSintactico(AL);
+            } catch (ExcepcionSintactica e) {
+                bandera = false;
+                System.out.println(e.getMessage());
+            }
+
+            if(bandera){
                 System.out.println("[SinErrores]");
             }
 
             gestorDeArchivos.close();
-        } catch (IOException | ExcepcionLexica | ExcepcionSintactica e) {
+        } catch (IOException | ExcepcionLexica e) {
             throw new RuntimeException("\n" + e);
         }
     }

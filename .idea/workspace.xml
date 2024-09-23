@@ -33,12 +33,13 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/sinErrores",
+    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/conErrores",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -118,17 +119,6 @@
       <updated>1724509790490</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AnalizadorSintactico/AnalizadorSintactico.java</url>
-          <line>14</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -18,7 +18,6 @@ public class AnalizadorSintactico {
     private void match(String tokenId) throws ExcepcionSintactica, ExcepcionLexica {
         if (this.tokenActual.getToken_id().equals(tokenId)) {
             this.tokenActual = this.lexico.proximoToken();
-            System.out.println("Token ID: " + this.tokenActual.getToken_id() + ", Lexema: " + this.tokenActual.getLexema() + ", Linea: " + this.tokenActual.getNro_linea());
         } else {
             throw new ExcepcionSintactica(this.tokenActual, tokenId);
         }
@@ -26,13 +25,11 @@ public class AnalizadorSintactico {
 
     // <Inicial> ::= <ListaClases>
     private void Inicial() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Inicial");
         ListaClases();
     }
 
     // <ListaClases> ::= <Clase> <ListaClases> | ε
     private void ListaClases() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ListaClases");
         if (tokenActual.getToken_id().equals("pr_class")) {
             Clase();
             ListaClases();
@@ -41,7 +38,6 @@ public class AnalizadorSintactico {
 
     // <Clase> ::= class idClase <HerenciaOpcional> { <ListaMiembros> }
     private void Clase() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Clase");
         match("pr_class");
         match("idClase");
         HerenciaOpcional();
@@ -52,7 +48,6 @@ public class AnalizadorSintactico {
 
     // <HerenciaOpcional> ::= extends idClase | ε
     private void HerenciaOpcional() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("HerenciaOpcional");
         if (tokenActual.getToken_id().equals("pr_extends")) {
             match("pr_extends");
             match("idClase");
@@ -61,7 +56,6 @@ public class AnalizadorSintactico {
 
     // <ListaMiembros> ::= <Miembro> <ListaMiembros> | ε
     private void ListaMiembros() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ListaMiembros");
         if (tokenActual.getToken_id().equals("pr_public") || tokenActual.getToken_id().equals("pr_static") || tokenActual.getToken_id().equals("idClase") || tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int") || tokenActual.getToken_id().equals("pr_void")) {
             Miembro();
             ListaMiembros();
@@ -70,7 +64,6 @@ public class AnalizadorSintactico {
 
     // <Miembro> ::= public <Constructor> | <EstaticoOpcional> <TipoMiembro> idMetVar <RestoAtributoMetodo>
     private void Miembro() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Miembro");
         if (tokenActual.getToken_id().equals("pr_public")) {
             Constructor();
         } else {
@@ -83,7 +76,6 @@ public class AnalizadorSintactico {
 
     // <RestoAtributoMetodo> ::= ; | <ArgsFormales> <Bloque>
     private void RestoAtributoMetodo() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("RestoAtributoMetodo");
         if (tokenActual.getToken_id().equals("puntoComa")) {
             match("puntoComa");
         } else {
@@ -94,7 +86,6 @@ public class AnalizadorSintactico {
 
     // <Constructor> ::= public idClase <ArgsFormales> <Bloque>
     private void Constructor() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Constructor");
         match("pr_public");
         match("idClase");
         ArgsFormales();
@@ -103,7 +94,6 @@ public class AnalizadorSintactico {
 
     // <TipoMiembro> ::= void | <Tipo>
     private void TipoMiembro() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("TipoMiembro");
         if (tokenActual.getToken_id().equals("pr_void")) {
             match("pr_void");
         } else {
@@ -113,7 +103,6 @@ public class AnalizadorSintactico {
 
     //<Tipo> ::= <TipoPrimitivo> | idClase
     private void Tipo() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Tipo");
         if (tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int")) {
             TipoPrimitivo();
         } else {
@@ -123,7 +112,6 @@ public class AnalizadorSintactico {
 
     // <TipoPrimitivo> ::= boolean | char | int
     private void TipoPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("TipoPrimitivo");
         if (tokenActual.getToken_id().equals("pr_boolean")) {
             match("pr_boolean");
         } else if (tokenActual.getToken_id().equals("pr_char")) {
@@ -135,7 +123,6 @@ public class AnalizadorSintactico {
 
     //<EstaticoOpcional> ::= static | e
     private void EstaticoOpcional() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("EstaticoOpcional");
         if (tokenActual.getToken_id().equals("pr_static")) {
             match("pr_static");
         }
@@ -150,7 +137,6 @@ public class AnalizadorSintactico {
 
     // <ListaArgsFormalesOpcional> ::= <ListaArgsFormales> | ε
     private void ListaArgsFormalesOpcional() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ListaArgsFormalesOpcional");
         if (tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int") || tokenActual.getToken_id().equals("idClase")) {
             ListaArgsFormales();
         }
@@ -164,7 +150,6 @@ public class AnalizadorSintactico {
 
     // <RestoListaArgFormal> ::= , <ListaArgsFormales> | ε
     private void RestoListaArgFormal() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("RestoListaArgFormal");
         if (tokenActual.getToken_id().equals("coma")) {
             match("coma");
             ListaArgsFormales();
@@ -173,14 +158,12 @@ public class AnalizadorSintactico {
 
     // <ArgFormal> ::= <Tipo> idMetVar
     private void ArgFormal() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ArgFormal");
         Tipo();
         match("idMetVar"); //Llego
     }
 
     // <Bloque> ::= { <ListaSentencias> }
     private void Bloque() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Bloque");
         match("llaveAbierta");
         ListaSentencias();
         match("llaveCerrada");
@@ -188,7 +171,6 @@ public class AnalizadorSintactico {
 
     // <ListaSentencias> ::= <Sentencia> <ListaSentencias> | ε
     private void ListaSentencias() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ListaSentencias");
         if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta") || esExpresion(tokenActual)) {
             Sentencia(); //Aca tenia el primer debug
             ListaSentencias();
@@ -208,7 +190,6 @@ public class AnalizadorSintactico {
 
     */
     private void Sentencia() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Sentencia");
         if(esExpresion(tokenActual)){ //Aca esta el problema, no llega al break que esta en el swith
             Expresion();
             match("puntoComa");
@@ -250,7 +231,6 @@ public class AnalizadorSintactico {
 
     // <VarLocal> ::= var idMetVar = <ExpresionCompuesta>
     private void VarLocal() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("VarLocal");
         match("pr_var");
         match("idMetVar");
         match("asignacion");
@@ -259,20 +239,17 @@ public class AnalizadorSintactico {
 
     //<Return> ::= return <ExpresionOpcional>
     private void Return() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Return");
         match("pr_return");
         ExpresionOpcional();
     }
 
     // <Break> ::= break
     private void Break() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Break");
         match("pr_break");
     }
 
     // <ExpresionOpcional> ::= <Expresion> | ε
     private void ExpresionOpcional() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ExpresionOpcional");
         if (tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("intLiteral") || tokenActual.getToken_id().equals("charLiteral") || tokenActual.getToken_id().equals("pr_true") || tokenActual.getToken_id().equals("pr_false") || tokenActual.getToken_id().equals("pr_null") || tokenActual.getToken_id().equals("stringLiteral") || tokenActual.getToken_id().equals("parentesisAbierto") || tokenActual.getToken_id().equals("pr_this") || tokenActual.getToken_id().equals("pr_new") || tokenActual.getToken_id().equals("suma") || tokenActual.getToken_id().equals("resta") || tokenActual.getToken_id().equals("not")) {
             Expresion();
         }
@@ -280,7 +257,6 @@ public class AnalizadorSintactico {
 
     // <If> ::= if ( <Expresion> ) <Sentencia> <IfPrima>
     private void If() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("If");
         match("pr_if");
         match("parentesisAbierto");
         Expresion();
@@ -291,7 +267,6 @@ public class AnalizadorSintactico {
 
     // <IfPrima> ::= else <Sentencia> | ε
     private void IfPrima() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("IfPrima");
         if (tokenActual.getToken_id().equals("pr_else")) {
             match("pr_else");
             Sentencia();
@@ -300,7 +275,6 @@ public class AnalizadorSintactico {
 
     // <While> ::= while ( <Expresion> ) <Sentencia>
     private void While() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("While");
         match("pr_while");
         match("parentesisAbierto");
         Expresion();
@@ -310,7 +284,6 @@ public class AnalizadorSintactico {
 
     // <Switch> ::= switch ( <Expresion> ) { <ListaSentenciasSwitch> }
     private void Switch() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Switch");
         match("pr_switch");
         match("parentesisAbierto");
         Expresion();
@@ -322,7 +295,6 @@ public class AnalizadorSintactico {
 
     // <ListaSentenciasSwitch> ::= <SentenciaSwitch> <ListaSentenciasSwitch> | ε
     private void ListaSentenciasSwitch() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ListaSentenciasSwitch");
         if (tokenActual.getToken_id().equals("pr_case") || tokenActual.getToken_id().equals("pr_default")) {
             SentenciaSwitch();
             ListaSentenciasSwitch();
@@ -331,7 +303,6 @@ public class AnalizadorSintactico {
 
     // <SentenciaSwitch> ::= case <LiteralPrimitivo> : <SentenciaOpcional> | default : <Sentencia>
     private void SentenciaSwitch() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("SentenciaSwitch");
         if (tokenActual.getToken_id().equals("pr_case")) {
             match("pr_case");
             LiteralPrimitivo();
@@ -346,7 +317,6 @@ public class AnalizadorSintactico {
 
     // <SentenciaOpcional> ::= <Sentencia> | ε
     private void SentenciaOpcional() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("SentenciaOpcional");
         if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta")) {
             Sentencia();
         }
@@ -354,14 +324,12 @@ public class AnalizadorSintactico {
 
     // <Expresion>::= <ExpresionCompuesta> <ExpresionPrima>
     private void Expresion() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Expresion");
         ExpresionCompuesta();
         ExpresionPrima();
     }
 
     // <ExpresionPrima> ::= = <ExpresionCompuesta> | += <ExpresionCompuesta> | -= <ExpresionCompuesta> | ε
     private void ExpresionPrima() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ExpresionPrima");
         if (tokenActual.getToken_id().equals("asignacion") || tokenActual.getToken_id().equals("sumaAsignacion") || tokenActual.getToken_id().equals("restaAsignacion")) {
             OperadorAsignacion();
             ExpresionCompuesta();
@@ -370,7 +338,6 @@ public class AnalizadorSintactico {
 
     // <OperadorAsignacion> ::= = | += | -=
     private void OperadorAsignacion() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("OperadorAsignacion");
         if (tokenActual.getToken_id().equals("asignacion")) {
             match("asignacion");
         } else if (tokenActual.getToken_id().equals("sumaAsignacion")) {
@@ -382,14 +349,12 @@ public class AnalizadorSintactico {
 
     // <ExpresionCompuesta> ::= <ExpresionBasica> <ExpresionCompuestaPrima>
     private void ExpresionCompuesta() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ExpresionCompuesta");
         ExpresionBasica();
         ExpresionCompuestaPrima();
     }
 
     // <ExpresionCompuestaPrima> ::= <OperadorBinario> <ExpresionBasica> <ExpresionCompuestaPrima> | ε
     private void ExpresionCompuestaPrima() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ExpresionCompuestaPrima");
         if (tokenActual.getToken_id().equals("or") || tokenActual.getToken_id().equals("and") || tokenActual.getToken_id().equals("comparacion") || tokenActual.getToken_id().equals("distinto") || tokenActual.getToken_id().equals("menor") || tokenActual.getToken_id().equals("mayor") || tokenActual.getToken_id().equals("menorIgual") || tokenActual.getToken_id().equals("mayorIgual") || tokenActual.getToken_id().equals("suma") || tokenActual.getToken_id().equals("resta") || tokenActual.getToken_id().equals("multiplicacion") || tokenActual.getToken_id().equals("division") || tokenActual.getToken_id().equals("porcentaje")) {
             OperadorBinario();
             ExpresionBasica();
@@ -399,7 +364,6 @@ public class AnalizadorSintactico {
 
     // <OperadorBinario> ::= or | and | == | != | < | > | <= | >= | + | - | * | / | %
     private void OperadorBinario() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("OperadorBinario");
         switch (tokenActual.getToken_id()) {
             case "or":
                 match("or");
@@ -445,7 +409,6 @@ public class AnalizadorSintactico {
 
     // <ExpresionBasica> ::= <OperadorUnario> <Operando> | <Operando>
     private void ExpresionBasica() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ExpresionBasica");
         if (tokenActual.getToken_id().equals("suma") || tokenActual.getToken_id().equals("resta") || tokenActual.getToken_id().equals("not")) {
             OperadorUnario();
             Operando();
@@ -456,7 +419,6 @@ public class AnalizadorSintactico {
 
     // <OperadorUnario> ::= + | - | !
     private void OperadorUnario() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("OperadorUnario");
         if (tokenActual.getToken_id().equals("suma")) {
             match("suma");
         } else if (tokenActual.getToken_id().equals("resta")) {
@@ -468,7 +430,6 @@ public class AnalizadorSintactico {
 
     // <Operando> ::= <Literal> | <Acceso>
     private void Operando() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Operando");
         if (tokenActual.getToken_id().equals("intLiteral") || tokenActual.getToken_id().equals("charLiteral") || tokenActual.getToken_id().equals("pr_true") || tokenActual.getToken_id().equals("pr_false") || tokenActual.getToken_id().equals("pr_null") || tokenActual.getToken_id().equals("stringLiteral")) {
             Literal();
         } else {
@@ -478,7 +439,6 @@ public class AnalizadorSintactico {
 
     // <Literal> ::= <LiteralPrimitivo> | <LiteralObjeto>
     private void Literal() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Literal");
         if (esLiteralPrimitivo(tokenActual)) {
             LiteralPrimitivo();
         } else if (esLiteralObjeto(tokenActual)) {
@@ -490,7 +450,6 @@ public class AnalizadorSintactico {
 
     // <LiteralPrimitivo> ::= true | false | intLiteral | charLiteral
     private void LiteralPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("LiteralPrimitivo");
         switch (tokenActual.getToken_id()) {
             case "pr_true":
                 match("pr_true");
@@ -529,7 +488,6 @@ public class AnalizadorSintactico {
 
     // <Acceso> ::= <Primario> <EncadenadoOpcional>
     private void Acceso() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("Acceso");
         Primario(); //Porque cambia aca
         EncadenadoOpcional();
     }
@@ -564,12 +522,10 @@ public class AnalizadorSintactico {
 
     //<AccesoThis> ::= this
     private void AccesoThis() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("AccesoThis");
         match("pr_this");
     }
 
     private void AccesoVarMetodo() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("AccesoVarMetodo");
         match("idMetVar");
         AccesoVarMetodoPrima();
     }
@@ -583,7 +539,6 @@ public class AnalizadorSintactico {
 
     //<AccesoConstructor> ::= new idClase <ArgsActuales>
     private void AccesoConstructor() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("AccesoConstructor");
         match("pr_new");
         match("idClase");
         ArgsActuales();
@@ -591,7 +546,6 @@ public class AnalizadorSintactico {
 
     //<ExpresionParentizada> ::= ( <Expresion> )
     private void ExpresionParentizada() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ExpresionParentizada");
         match("parentesisAbierto");
         Expresion();
         match("parentesisCerrado");
@@ -599,7 +553,6 @@ public class AnalizadorSintactico {
 
     //<AccesoMetodoEstatico> ::= idClase . idMetVar <ArgsActuales>
     private void AccesoMetodoEstatico() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("AccesoMetodoEstatico");
         match("idClase");
         match("punto");
         match("idMetVar");
@@ -608,7 +561,6 @@ public class AnalizadorSintactico {
 
     //<ArgsActuales> ::= ( <ListaExpsOpcional> )
     private void ArgsActuales() throws ExcepcionSintactica, ExcepcionLexica {
-        System.out.println("ArgsActuales");
         match("parentesisAbierto");
         ListaExpsOpcional();
         match("parentesisCerrado");
