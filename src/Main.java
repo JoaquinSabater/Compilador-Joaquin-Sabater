@@ -19,25 +19,22 @@ public class Main {
 
             Token t = null;
 
-            boolean bandera = false;
+            boolean bandera = true;
 
-            do {
-                try {
-                    t = AL.proximoToken();
-                    System.out.println("Token ID: " + t.getToken_id() + ", Lexema: " + t.getLexema() + ", Linea: " + t.getNro_linea());
-                } catch (ExcepcionLexica e) {
-                    System.out.println(e.getMessage());
-                    bandera = true;
-                }
-            } while (!AL.esEOF());
+            try {
+                AS = new AnalizadorSintactico(AL);
+            } catch (ExcepcionSintactica e) {
+                bandera = false;
+                System.out.println(e.getMessage());
+            }
 
-            if(!bandera){
+            if(bandera){
                 System.out.println("[SinErrores]");
             }
 
             gestorDeArchivos.close();
         } catch (IOException | ExcepcionLexica e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("\n" + e);
         }
     }
 }

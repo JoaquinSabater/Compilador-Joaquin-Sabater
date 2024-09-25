@@ -1,2 +1,2 @@
-//[Error:|1]
+//[Error:|2]
 class MyClass

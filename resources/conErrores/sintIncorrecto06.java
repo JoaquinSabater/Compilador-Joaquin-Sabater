@@ -1,4 +1,4 @@
-//[Error:(|2]
+//[Error:(|3]
 class MyClass {
     void () {}
 }

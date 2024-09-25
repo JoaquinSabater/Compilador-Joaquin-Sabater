@@ -1,4 +1,4 @@
-//[Error:a|3]
+//[Error:a|4]
 class MyClass {
     void myMethod() {
         while a < 10 {

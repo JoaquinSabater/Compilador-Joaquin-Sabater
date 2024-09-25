@@ -256,12 +256,25 @@ public class analizadorLexico {
     }
 
     private Token e1() throws IOException, ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
+        if (caracterActual == '.'){
+            this.actualizarLexema();
+            this.actualizarCaracterActual();
+            return this.e1f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+                }
                 return this.e1f();
             }else {
                 return this.e1_segundoDigito();
@@ -271,12 +284,20 @@ public class analizadorLexico {
     }
 
     private Token e1_segundoDigito() throws IOException, ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+                }
                 return this.e1f();
             }else {
                 return this.e1_tercerDigito();
@@ -286,12 +307,20 @@ public class analizadorLexico {
     }
 
     private Token e1_tercerDigito() throws IOException, ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+                }
                 return this.e1f();
             }else {
                 return this.e1_cuartoDigito();
@@ -301,12 +330,20 @@ public class analizadorLexico {
     }
 
     private Token e1_cuartoDigito() throws IOException, ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+                }
                 return this.e1f();
             }else {
                 return this.e1_quintoDigito();
@@ -316,12 +353,20 @@ public class analizadorLexico {
     }
 
     private Token e1_quintoDigito() throws IOException, ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+                }
                 return this.e1f();
             }else {
                 return this.e1_sextoDigito();
@@ -331,12 +376,20 @@ public class analizadorLexico {
     }
 
     private Token e1_sextoDigito() throws IOException, ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+                }
                 return this.e1f();
             }else {
                 return this.e1_septimoDigito();
@@ -346,12 +399,20 @@ public class analizadorLexico {
     }
 
     private Token e1_septimoDigito() throws IOException, ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+                }
                 return this.e1f();
             }else {
                 return this.e1_octavoDigito();
@@ -361,12 +422,21 @@ public class analizadorLexico {
     }
 
     private Token e1_octavoDigito() throws ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (Character.isDigit(caracterActual)) {
             this.actualizarLexema();
             this.actualizarCaracterActual();
             if (caracterActual == '.'){
                 this.actualizarLexema();
                 this.actualizarCaracterActual();
+                if (caracterActual == '.'){
+                    throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+
+                }
                 return this.e1f();
             }else {
                 return this.e1_novenoDigito();
@@ -376,9 +446,18 @@ public class analizadorLexico {
     }
 
     private Token e1_novenoDigito() throws ExcepcionLexica {
+        if (caracterActual == 'e' || caracterActual == 'E'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e2f();
+        }
         if (caracterActual == '.'){
             this.actualizarLexema();
             this.actualizarCaracterActual();
+            if (caracterActual == '.'){
+                throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " no es valido poner mas de un . ", gestorDeFuente.getCurrentLine());
+
+            }
             return this.e1f();
         }else {
             if (Character.isDigit(this.caracterActual)) {
@@ -395,14 +474,13 @@ public class analizadorLexico {
             actualizarLexema();
             actualizarCaracterActual();
             return e2f();
-        }else {
-            if (Character.isDigit(caracterActual)) {
-                actualizarLexema();
-                actualizarCaracterActual();
-                return e1f();
-            } else
-                return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
         }
+        if (Character.isDigit(caracterActual)) {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e1f();
+        } else
+            return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e2f() throws ExcepcionLexica {
@@ -410,21 +488,38 @@ public class analizadorLexico {
             actualizarLexema();
             actualizarCaracterActual();
             return e3f();
-        }else {
-            if (Character.isDigit(caracterActual)) {
-                actualizarLexema();
-                actualizarCaracterActual();
-                return e2f();
-            } else
-                return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
         }
+        if (Character.isDigit(caracterActual)) {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e4f();
+        } else
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " despues de e tiene que haber digitos ", gestorDeFuente.getCurrentLine());
+    }
+
+    private Token e4f() throws ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e4f();
+        } else
+            return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e3f() throws ExcepcionLexica {
         if (Character.isDigit(caracterActual)) {
             actualizarLexema();
             actualizarCaracterActual();
-            return e3f();
+            return e5f();
+        } else
+            throw new ExcepcionLexica(gestorDeFuente.getLineNumber(), gestorDeFuente.getLineIndexNumber(), lexema, this.lexema + " despues de + o - tiene que haber digitos ", gestorDeFuente.getCurrentLine());
+    }
+
+    private Token e5f() throws ExcepcionLexica {
+        if (Character.isDigit(caracterActual)) {
+            actualizarLexema();
+            actualizarCaracterActual();
+            return e5f();
         } else
             return new Token("floatLiteral", lexema, gestorDeFuente.getLineNumber());
     }

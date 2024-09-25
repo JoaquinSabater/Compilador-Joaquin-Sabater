@@ -1,4 +1,4 @@
-//[Error:x|3]
+//[Error:x|4]
 class MyClass {
     void myMethod(int x) {
         switch x {

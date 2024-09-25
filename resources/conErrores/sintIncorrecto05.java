@@ -1,4 +1,4 @@
-//[Error:myVariable|2]
+//[Error:myVariable|3]
 class MyClass {
     myVariable;
 }
