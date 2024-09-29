@@ -1,6 +1,7 @@
 package AnalizadorSintactico;
 
 import AnalizadorLexico.*;
+import AnalizadorSemantico.*;
 
 import java.util.Objects;
 
@@ -9,9 +10,12 @@ public class AnalizadorSintactico {
 
     Token tokenActual;
 
-    public AnalizadorSintactico(analizadorLexico lexico) throws ExcepcionLexica, ExcepcionSintactica {
+    TS ts;
+
+    public AnalizadorSintactico(analizadorLexico lexico,TS ts) throws ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica {
         this.lexico = lexico;
         this.tokenActual = lexico.proximoToken();
+        this.ts = ts;
         Inicial();
     }
 
@@ -24,12 +28,12 @@ public class AnalizadorSintactico {
     }
 
     // <Inicial> ::= <ListaClases>
-    private void Inicial() throws ExcepcionSintactica, ExcepcionLexica {
+    private void Inicial() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         ListaClases();
     }
 
     // <ListaClases> ::= <Clase> <ListaClases> | ε
-    private void ListaClases() throws ExcepcionSintactica, ExcepcionLexica {
+    private void ListaClases() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_class")) {
             Clase();
             ListaClases();
@@ -37,20 +41,29 @@ public class AnalizadorSintactico {
     }
 
     // <Clase> ::= class idClase <HerenciaOpcional> { <ListaMiembros> }
-    private void Clase() throws ExcepcionSintactica, ExcepcionLexica {
+    private void Clase() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         match("pr_class");
         match("idClase");
+
+        //Creo la clase actual y la inserto en la tabla de simbolos
+        Clase c = new Clase(tokenActual);
+        ts.setClaseActual(c);
+        ts.insertarClase(tokenActual.getLexema(),c);
         HerenciaOpcional();
+
         match("llaveAbierta");
         ListaMiembros();
         match("llaveCerrada");
     }
 
     // <HerenciaOpcional> ::= extends idClase | ε
-    private void HerenciaOpcional() throws ExcepcionSintactica, ExcepcionLexica {
+    private void HerenciaOpcional() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_extends")) {
             match("pr_extends");
             match("idClase");
+            ts.setHerencia(tokenActual);
+        }else {
+            //ts.setHerencia(null);
         }
     }
 

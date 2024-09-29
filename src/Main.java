@@ -1,5 +1,6 @@
 import AnalizadorLexico.*;
 import sourcemanager.*;
+import AnalizadorSemantico.*;
 import AnalizadorSintactico.*;
 import AnalizadorSintactico.ExcepcionSintactica;
 
@@ -17,13 +18,15 @@ public class Main {
             gestorDeArchivos.open(args[0]);
             AL = new analizadorLexico(gestorDeArchivos);
 
+            TS ts = new TS();
+
             Token t = null;
 
             boolean bandera = true;
 
             try {
-                AS = new AnalizadorSintactico(AL);
-            } catch (ExcepcionSintactica e) {
+                AS = new AnalizadorSintactico(AL,ts);
+            } catch (ExcepcionSintactica | ExcepcionSemantica e) {
                 bandera = false;
                 System.out.println(e.getMessage());
             }
