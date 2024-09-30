@@ -8,6 +8,9 @@ public class TS {
 
     private HashMap<String, Clase> Clases;
 
+    private HashMap<String, Metodo> Metodos;
+
+
     Clase claseActual;
 
     Metodo metodoActual;
@@ -30,6 +33,14 @@ public class TS {
             throw new ExcepcionSemantica(clase.nombre, "La clase con el nombre " + nombre + " ya existe.");
         }
         Clases.put(nombre, clase);
+        claseActual = clase;
+    }
+
+    public void insertarMetodos(String nombre, Metodo metodo) throws ExcepcionSemantica {
+        if (Metodos.containsKey(nombre)) {
+            throw new ExcepcionSemantica(metodo.getNombre(), "El método con el nombre " + nombre + " ya existe.");
+        }
+        Metodos.put(nombre, metodo);
     }
 
     public void setClaseActual(Clase c) {
@@ -48,6 +59,19 @@ public class TS {
         }else {
             claseActual.setPadre(Clases.get(padre.getLexema()));
         }
+    }
+
+    public void agregarAtributos(Token tipo, Token nombre) throws ExcepcionSemantica {
+        Tipo t;
+        if (tipo.getToken_id().equals("pr_boolean") || tipo.getToken_id().equals("pr_char") || tipo.getToken_id().equals("pr_int")) {
+            t = new TipoPrimitivo();
+            t.setNombreClase(tipo);
+        }else {
+            t = new TipoClase();
+            t.setNombreClase(tipo);
+        }
+        Atributo a = new Atributo(t, nombre);
+        claseActual.insertarAtributo(nombre.getLexema(), a);
     }
 
     public Clase getClaseActual() {

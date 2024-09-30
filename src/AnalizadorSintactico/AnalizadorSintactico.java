@@ -12,6 +12,10 @@ public class AnalizadorSintactico {
 
     TS ts;
 
+    Token tipoAuxiliar;
+
+    Token nombreAuxiliar;
+
     public AnalizadorSintactico(analizadorLexico lexico,TS ts) throws ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica {
         this.lexico = lexico;
         this.tokenActual = lexico.proximoToken();
@@ -43,14 +47,14 @@ public class AnalizadorSintactico {
     // <Clase> ::= class idClase <HerenciaOpcional> { <ListaMiembros> }
     private void Clase() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         match("pr_class");
-        match("idClase");
 
         //Creo la clase actual y la inserto en la tabla de simbolos
         Clase c = new Clase(tokenActual);
         ts.setClaseActual(c);
         ts.insertarClase(tokenActual.getLexema(),c);
-        HerenciaOpcional();
 
+        match("idClase");
+        HerenciaOpcional();
         match("llaveAbierta");
         ListaMiembros();
         match("llaveCerrada");
@@ -68,7 +72,7 @@ public class AnalizadorSintactico {
     }
 
     // <ListaMiembros> ::= <Miembro> <ListaMiembros> | ε
-    private void ListaMiembros() throws ExcepcionSintactica, ExcepcionLexica {
+    private void ListaMiembros() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_public") || tokenActual.getToken_id().equals("pr_static") || tokenActual.getToken_id().equals("idClase") || tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int") || tokenActual.getToken_id().equals("pr_void")) {
             Miembro();
             ListaMiembros();
@@ -76,13 +80,19 @@ public class AnalizadorSintactico {
     }
 
     // <Miembro> ::= public <Constructor> | <EstaticoOpcional> <TipoMiembro> idMetVar <RestoAtributoMetodo>
-    private void Miembro() throws ExcepcionSintactica, ExcepcionLexica {
+    private void Miembro() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_public")) {
             Constructor();
         } else {
             EstaticoOpcional();
             TipoMiembro();
+            nombreAuxiliar = tokenActual;
             match("idMetVar");
+            if (ts.getMetodoActual() == null) {
+                ts.agregarAtributos(tipoAuxiliar,nombreAuxiliar);
+            }
+            //ts.agregarAtributos(tipoAuxiliar,nombreAuxiliar);
+            //El problema que tengo que es que va a entrar aca sea un mento o un atributo
             RestoAtributoMetodo();
         }
     }
@@ -91,7 +101,9 @@ public class AnalizadorSintactico {
     private void RestoAtributoMetodo() throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("puntoComa")) {
             match("puntoComa");
+            //aca solo entra cuando es una variable
         } else {
+            //aca
             ArgsFormales();
             Bloque();
         }
@@ -108,9 +120,11 @@ public class AnalizadorSintactico {
     // <TipoMiembro> ::= void | <Tipo>
     private void TipoMiembro() throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("pr_void")) {
+            tipoAuxiliar = tokenActual;
             match("pr_void");
         } else {
-            Tipo();
+            //Aca entra si es solo una variable
+            Tipo(); //Aca se elige el tipo del atributo quiero ver que pasa con los metodos
         }
     }
 
@@ -126,10 +140,13 @@ public class AnalizadorSintactico {
     // <TipoPrimitivo> ::= boolean | char | int
     private void TipoPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("pr_boolean")) {
+            tipoAuxiliar = tokenActual;
             match("pr_boolean");
         } else if (tokenActual.getToken_id().equals("pr_char")) {
+            tipoAuxiliar = tokenActual;
             match("pr_char");
         } else if (tokenActual.getToken_id().equals("pr_int")) {
+            tipoAuxiliar = tokenActual;
             match("pr_int");
         }
     }
@@ -152,6 +169,7 @@ public class AnalizadorSintactico {
     private void ListaArgsFormalesOpcional() throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int") || tokenActual.getToken_id().equals("idClase")) {
             ListaArgsFormales();
+            //Aca arranca a listar los argumentos formales del metodo
         }
     }
 
@@ -163,6 +181,7 @@ public class AnalizadorSintactico {
 
     // <RestoListaArgFormal> ::= , <ListaArgsFormales> | ε
     private void RestoListaArgFormal() throws ExcepcionSintactica, ExcepcionLexica {
+        //Aca entra si hay mas de un argumento formal
         if (tokenActual.getToken_id().equals("coma")) {
             match("coma");
             ListaArgsFormales();
@@ -171,8 +190,8 @@ public class AnalizadorSintactico {
 
     // <ArgFormal> ::= <Tipo> idMetVar
     private void ArgFormal() throws ExcepcionSintactica, ExcepcionLexica {
-        Tipo();
-        match("idMetVar"); //Llego
+        Tipo(); //Se elige el tipo del argumento
+        match("idMetVar");
     }
 
     // <Bloque> ::= { <ListaSentencias> }
