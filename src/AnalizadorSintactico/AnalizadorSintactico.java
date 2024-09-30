@@ -47,12 +47,7 @@ public class AnalizadorSintactico {
     // <Clase> ::= class idClase <HerenciaOpcional> { <ListaMiembros> }
     private void Clase() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         match("pr_class");
-
-        //Creo la clase actual y la inserto en la tabla de simbolos
-        Clase c = new Clase(tokenActual);
-        ts.setClaseActual(c);
-        ts.insertarClase(tokenActual.getLexema(),c);
-
+        ts.insertarClase(tokenActual);
         match("idClase");
         HerenciaOpcional();
         match("llaveAbierta");
@@ -98,19 +93,18 @@ public class AnalizadorSintactico {
     }
 
     // <RestoAtributoMetodo> ::= ; | <ArgsFormales> <Bloque>
-    private void RestoAtributoMetodo() throws ExcepcionSintactica, ExcepcionLexica {
+    private void RestoAtributoMetodo() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("puntoComa")) {
             match("puntoComa");
-            //aca solo entra cuando es una variable
         } else {
-            //aca
+            ts.insertarMetodos(tipoAuxiliar,nombreAuxiliar);
             ArgsFormales();
             Bloque();
         }
     }
 
     // <Constructor> ::= public idClase <ArgsFormales> <Bloque>
-    private void Constructor() throws ExcepcionSintactica, ExcepcionLexica {
+    private void Constructor() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         match("pr_public");
         match("idClase");
         ArgsFormales();
@@ -123,8 +117,7 @@ public class AnalizadorSintactico {
             tipoAuxiliar = tokenActual;
             match("pr_void");
         } else {
-            //Aca entra si es solo una variable
-            Tipo(); //Aca se elige el tipo del atributo quiero ver que pasa con los metodos
+            Tipo();
         }
     }
 
@@ -159,28 +152,28 @@ public class AnalizadorSintactico {
     }
 
     // <ArgsFormales> ::= ( <ListaArgsFormalesOpcional> )
-    private void ArgsFormales() throws ExcepcionSintactica, ExcepcionLexica {
+    private void ArgsFormales() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         match("parentesisAbierto");
         ListaArgsFormalesOpcional();
         match("parentesisCerrado");
     }
 
     // <ListaArgsFormalesOpcional> ::= <ListaArgsFormales> | ε
-    private void ListaArgsFormalesOpcional() throws ExcepcionSintactica, ExcepcionLexica {
+    private void ListaArgsFormalesOpcional() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int") || tokenActual.getToken_id().equals("idClase")) {
             ListaArgsFormales();
-            //Aca arranca a listar los argumentos formales del metodo
+
         }
     }
 
     // <ListaArgsFormales> ::= <ArgFormal> <RestoListaArgFormal>
-    private void ListaArgsFormales() throws ExcepcionSintactica, ExcepcionLexica {
+    private void ListaArgsFormales() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         ArgFormal();
         RestoListaArgFormal();
     }
 
     // <RestoListaArgFormal> ::= , <ListaArgsFormales> | ε
-    private void RestoListaArgFormal() throws ExcepcionSintactica, ExcepcionLexica {
+    private void RestoListaArgFormal() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         //Aca entra si hay mas de un argumento formal
         if (tokenActual.getToken_id().equals("coma")) {
             match("coma");
@@ -189,9 +182,13 @@ public class AnalizadorSintactico {
     }
 
     // <ArgFormal> ::= <Tipo> idMetVar
-    private void ArgFormal() throws ExcepcionSintactica, ExcepcionLexica {
+    private void ArgFormal() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         Tipo(); //Se elige el tipo del argumento
+        nombreAuxiliar = tokenActual;
         match("idMetVar");
+        ts.agregarParametros(tipoAuxiliar,nombreAuxiliar);
+        System.out.println(tipoAuxiliar.getLexema());
+        System.out.println(nombreAuxiliar.getLexema());
     }
 
     // <Bloque> ::= { <ListaSentencias> }

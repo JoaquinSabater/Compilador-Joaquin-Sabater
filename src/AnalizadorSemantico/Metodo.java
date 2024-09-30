@@ -10,8 +10,15 @@ public class Metodo {
     private Token tipo;
     private Clase clasePadre;
     private Token nombre;
-    private HashMap<String, Parametro> parametros;
+    private HashMap<String, Parametro> parametros = new HashMap<>();
     private boolean esVoid;
+
+    public void insertarParametro(Parametro p) throws ExcepcionSemantica {
+        if (parametros.containsKey(p.getNombre().getLexema())) {
+            throw new ExcepcionSemantica(p.getNombre(),"El método con el nombre " + p.getNombre().getLexema() + " ya existe.");
+        }
+        parametros.put(p.getNombre().getLexema(), p);
+    }
 
     // Getters and Setters
     public Token getTipo() {

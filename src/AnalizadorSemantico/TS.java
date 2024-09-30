@@ -8,9 +8,6 @@ public class TS {
 
     private HashMap<String, Clase> Clases;
 
-    private HashMap<String, Metodo> Metodos;
-
-
     Clase claseActual;
 
     Metodo metodoActual;
@@ -28,19 +25,25 @@ public class TS {
         return Clases.get(nombre);
     }
 
-    public void insertarClase(String nombre, Clase clase) throws ExcepcionSemantica {
-        if (Clases.containsKey(nombre)) {
-            throw new ExcepcionSemantica(clase.nombre, "La clase con el nombre " + nombre + " ya existe.");
+    public void insertarClase(Token tokenActual) throws ExcepcionSemantica {
+        Clase c = new Clase(tokenActual);
+        if (Clases.containsKey(tokenActual.getLexema())) {
+            throw new ExcepcionSemantica(tokenActual, "La clase con el nombre " + tokenActual.getLexema() + " ya existe.");
         }
-        Clases.put(nombre, clase);
-        claseActual = clase;
+        Clases.put(tokenActual.getLexema(), c);
+        claseActual = c;
     }
 
-    public void insertarMetodos(String nombre, Metodo metodo) throws ExcepcionSemantica {
-        if (Metodos.containsKey(nombre)) {
-            throw new ExcepcionSemantica(metodo.getNombre(), "El método con el nombre " + nombre + " ya existe.");
+    public void insertarMetodos(Token tipo,Token nombre) throws ExcepcionSemantica {
+        Metodo m = new Metodo();
+        m.setTipo(tipo);
+        m.setNombre(nombre);
+        m.setClasePadre(claseActual);
+        if (claseActual == null) {
+            throw new ExcepcionSemantica(nombre, "No se puede agregar un metodo a una clase que no existe.");
         }
-        Metodos.put(nombre, metodo);
+        claseActual.insertarMetodo(nombre.getLexema(), m);
+        metodoActual = m;
     }
 
     public void setClaseActual(Clase c) {
@@ -72,6 +75,19 @@ public class TS {
         }
         Atributo a = new Atributo(t, nombre);
         claseActual.insertarAtributo(nombre.getLexema(), a);
+    }
+
+    public void agregarParametros(Token tipo, Token nombre) throws ExcepcionSemantica {
+        Tipo t;
+        if (tipo.getToken_id().equals("pr_boolean") || tipo.getToken_id().equals("pr_char") || tipo.getToken_id().equals("pr_int")) {
+            t = new TipoPrimitivo();
+            t.setNombreClase(tipo);
+        }else {
+            t = new TipoClase();
+            t.setNombreClase(tipo);
+        }
+        Parametro p = new Parametro(t, nombre);
+        metodoActual.insertarParametro(p);
     }
 
     public Clase getClaseActual() {

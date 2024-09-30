@@ -43,6 +43,10 @@ public class Clase {
         return padre;
     }
 
+    public HashMap<String, Metodo> getMetodos() {
+        return metodos;
+    }
+
     public void consolidar() {
         estaConsolidada = true;
     }
