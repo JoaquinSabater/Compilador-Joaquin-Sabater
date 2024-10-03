@@ -28,11 +28,13 @@ public class Main {
                 AS = new AnalizadorSintactico(AL,ts);
             } catch (ExcepcionSintactica | ExcepcionSemantica e) {
                 bandera = false;
+                ts.limpiarClases();
                 System.out.println(e.getMessage());
             }
 
             if(bandera){
                 System.out.println("[SinErrores]");
+                ts.limpiarClases();
             }
 
             gestorDeArchivos.close();

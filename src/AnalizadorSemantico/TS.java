@@ -15,6 +15,7 @@ public class TS {
     public TS() {
         Clases = new HashMap<>();
         claseActual = null;
+        metodoActual = null;
     }
 
     public void limpiarClases() {
@@ -32,6 +33,7 @@ public class TS {
         }
         Clases.put(tokenActual.getLexema(), c);
         claseActual = c;
+        System.out.println("Clase " + tokenActual.getLexema() + " insertada.");
     }
 
     public void insertarMetodos(Token tipo,Token nombre) throws ExcepcionSemantica {
@@ -44,6 +46,7 @@ public class TS {
         }
         claseActual.insertarMetodo(nombre.getLexema(), m);
         metodoActual = m;
+        System.out.println("Metodo " + nombre.getLexema() + " insertado en la clase: " + claseActual.nombre.getLexema());
     }
 
     public void setClaseActual(Clase c) {
@@ -62,6 +65,7 @@ public class TS {
         }else {
             claseActual.setPadre(Clases.get(padre.getLexema()));
         }
+        System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.nombre.getLexema());
     }
 
     public void agregarAtributos(Token tipo, Token nombre) throws ExcepcionSemantica {
@@ -75,6 +79,7 @@ public class TS {
         }
         Atributo a = new Atributo(t, nombre);
         claseActual.insertarAtributo(nombre.getLexema(), a);
+        System.out.println("A la clase "+claseActual.getNombre().getLexema()+"  Atributo " + nombre.getLexema() + " ");
     }
 
     public void agregarParametros(Token tipo, Token nombre) throws ExcepcionSemantica {
@@ -88,6 +93,7 @@ public class TS {
         }
         Parametro p = new Parametro(t, nombre);
         metodoActual.insertarParametro(p);
+        System.out.println("Parametro " + nombre.getLexema() + " insertado. al medotodo "+metodoActual.getNombre().getLexema()+" ");
     }
 
     public Clase getClaseActual() {

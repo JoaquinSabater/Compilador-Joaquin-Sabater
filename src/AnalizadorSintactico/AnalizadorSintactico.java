@@ -12,6 +12,8 @@ public class AnalizadorSintactico {
 
     TS ts;
 
+    boolean bandera = true;
+
     Token tipoAuxiliar;
 
     Token nombreAuxiliar;
@@ -59,8 +61,8 @@ public class AnalizadorSintactico {
     private void HerenciaOpcional() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_extends")) {
             match("pr_extends");
-            match("idClase");
             ts.setHerencia(tokenActual);
+            match("idClase");
         }else {
             //ts.setHerencia(null);
         }
@@ -83,17 +85,18 @@ public class AnalizadorSintactico {
             TipoMiembro();
             nombreAuxiliar = tokenActual;
             match("idMetVar");
-            if (ts.getMetodoActual() == null) {
+            RestoAtributoMetodo();
+            //El error es que tiene que entrar aca despues de los metodos tambien, si quieto el if los parametros entran como atributos
+            if (bandera) {
                 ts.agregarAtributos(tipoAuxiliar,nombreAuxiliar);
             }
-            //ts.agregarAtributos(tipoAuxiliar,nombreAuxiliar);
-            //El problema que tengo que es que va a entrar aca sea un mento o un atributo
-            RestoAtributoMetodo();
+            bandera = true;
         }
     }
 
     // <RestoAtributoMetodo> ::= ; | <ArgsFormales> <Bloque>
     private void RestoAtributoMetodo() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
+        //Aca arranca un metodo
         if (tokenActual.getToken_id().equals("puntoComa")) {
             match("puntoComa");
         } else {
@@ -156,13 +159,15 @@ public class AnalizadorSintactico {
         match("parentesisAbierto");
         ListaArgsFormalesOpcional();
         match("parentesisCerrado");
+        bandera = false;
+        //Aca se termina de cerrar el metodo
     }
 
     // <ListaArgsFormalesOpcional> ::= <ListaArgsFormales> | ε
     private void ListaArgsFormalesOpcional() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int") || tokenActual.getToken_id().equals("idClase")) {
+            bandera = false;
             ListaArgsFormales();
-
         }
     }
 
@@ -187,8 +192,6 @@ public class AnalizadorSintactico {
         nombreAuxiliar = tokenActual;
         match("idMetVar");
         ts.agregarParametros(tipoAuxiliar,nombreAuxiliar);
-        System.out.println(tipoAuxiliar.getLexema());
-        System.out.println(nombreAuxiliar.getLexema());
     }
 
     // <Bloque> ::= { <ListaSentencias> }

@@ -43,6 +43,10 @@ public class Clase {
         return padre;
     }
 
+    public Token getNombre() {
+        return nombre;
+    }
+
     public HashMap<String, Metodo> getMetodos() {
         return metodos;
     }
