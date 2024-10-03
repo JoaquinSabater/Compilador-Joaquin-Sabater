@@ -200,7 +200,7 @@ public class AnalizadorSintactico {
 
     // <ListaSentencias> ::= <Sentencia> <ListaSentencias> | ε
     private void ListaSentencias() throws ExcepcionSintactica, ExcepcionLexica {
-        if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta") || esExpresion(tokenActual)) {
+        if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta") || esExpresion(tokenActual) || tokenActual.getToken_id().equals("idClase")) {
             Sentencia(); //Aca tenia el primer debug
             ListaSentencias();
         }
@@ -219,7 +219,7 @@ public class AnalizadorSintactico {
 
     */
     private void Sentencia() throws ExcepcionSintactica, ExcepcionLexica {
-        if(esExpresion(tokenActual)){
+        if(esExpresion(tokenActual) || tokenActual.getToken_id().equals("idClase")){
             Expresion();
             match("puntoComa");
         }
@@ -534,7 +534,7 @@ public class AnalizadorSintactico {
             case "pr_this":
                 AccesoThis();
                 break;
-            case "idMetVar"://Aca iria el or
+            case "idMetVar", "idClase"://Aca iria el or
                 AccesoVarMetodo();
                 break;
             case "pr_new":
@@ -555,7 +555,11 @@ public class AnalizadorSintactico {
     }
 
     private void AccesoVarMetodo() throws ExcepcionSintactica, ExcepcionLexica {
-        match("idMetVar");
+        if (tokenActual.getToken_id().equals("idMetVar")) {
+            match("idMetVar");
+        } else if (tokenActual.getToken_id().equals("idClase")) {
+            match("idClase");
+        }
         AccesoVarMetodoPrima();
     }
 
@@ -621,7 +625,11 @@ public class AnalizadorSintactico {
     private void EncadenadoOpcional() throws ExcepcionLexica, ExcepcionSintactica {
         if (tokenActual.getToken_id().equals("punto")) {
             match("punto");
-            match("idMetVar");
+            if (tokenActual.getToken_id().equals("idMetVar")) {
+                match("idMetVar");
+            } else if (tokenActual.getToken_id().equals("idClase")) {
+                match("idClase");
+            }
             EncadenadoOpcionalPrima();
         }
     }
@@ -633,7 +641,11 @@ public class AnalizadorSintactico {
             EncadenadoOpcional();
         } else if (tokenActual.getToken_id().equals("punto")) {
             match("punto");
-            match("idMetVar");
+            if (tokenActual.getToken_id().equals("idMetVar")) {
+                match("idMetVar");
+            } else if (tokenActual.getToken_id().equals("idClase")) {
+                match("idClase");
+            }
             EncadenadoOpcionalPrima();
         }
     }
