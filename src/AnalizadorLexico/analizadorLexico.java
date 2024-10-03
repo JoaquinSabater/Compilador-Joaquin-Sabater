@@ -610,7 +610,7 @@ public class analizadorLexico {
             actualizarCaracterActual();
             return e15();
         } else
-            return new Token("negado", lexema, gestorDeFuente.getLineNumber());
+            return new Token("not", lexema, gestorDeFuente.getLineNumber());
     }
 
     private Token e15() {

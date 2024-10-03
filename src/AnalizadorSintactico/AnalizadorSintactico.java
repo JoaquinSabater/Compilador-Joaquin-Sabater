@@ -219,7 +219,7 @@ public class AnalizadorSintactico {
 
     */
     private void Sentencia() throws ExcepcionSintactica, ExcepcionLexica {
-        if(esExpresion(tokenActual)){ //Aca esta el problema, no llega al break que esta en el swith
+        if(esExpresion(tokenActual)){
             Expresion();
             match("puntoComa");
         }
@@ -534,7 +534,7 @@ public class AnalizadorSintactico {
             case "pr_this":
                 AccesoThis();
                 break;
-            case "idMetVar":
+            case "idMetVar"://Aca iria el or
                 AccesoVarMetodo();
                 break;
             case "pr_new":
@@ -586,6 +586,7 @@ public class AnalizadorSintactico {
         match("punto");
         match("idMetVar");
         ArgsActuales();
+        EncadenadoOpcional();
     }
 
     //<ArgsActuales> ::= ( <ListaExpsOpcional> )
@@ -626,12 +627,14 @@ public class AnalizadorSintactico {
     }
 
     // <EncadenadoOpcionalPrima>::=  <EncadenadoOpcional> | <ArgsActuales> <EncadenadoOpcional>
-    private void EncadenadoOpcionalPrima() throws ExcepcionLexica, ExcepcionSintactica { //Aca no entra con asigancion
+    private void EncadenadoOpcionalPrima() throws ExcepcionLexica, ExcepcionSintactica {
         if (tokenActual.getToken_id().equals("parentesisAbierto")) {
             ArgsActuales();
             EncadenadoOpcional();
-        } else if (tokenActual.getToken_id().equals("idMetVar")) {
-            EncadenadoOpcional();
+        } else if (tokenActual.getToken_id().equals("punto")) {
+            match("punto");
+            match("idMetVar");
+            EncadenadoOpcionalPrima();
         }
     }
 
