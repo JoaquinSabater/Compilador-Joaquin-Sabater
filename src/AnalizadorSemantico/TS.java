@@ -18,6 +18,10 @@ public class TS {
         metodoActual = null;
     }
 
+    public void insertarConstructor(Token nombre){
+
+    }
+
     public void limpiarClases() {
         Clases.clear();
     }
@@ -33,7 +37,25 @@ public class TS {
         }
         Clases.put(tokenActual.getLexema(), c);
         claseActual = c;
+        System.out.println("-------------------------------------------------------------------");
         System.out.println("Clase " + tokenActual.getLexema() + " insertada.");
+    }
+
+    public void insertarConstructor(Token tipo,Token nombre) throws ExcepcionSemantica {
+        if(claseActual == null){
+            throw new ExcepcionSemantica(nombre, "No se puede agregar un constructor a una clase que no existe.");
+        }
+        if(claseActual.getNombre().getLexema().equals(nombre.getLexema())){
+            Metodo m = new Metodo();
+            m.setTipo(tipo);
+            m.setNombre(nombre);
+            m.setClasePadre(claseActual);
+            claseActual.insertarConstructor(m);
+            metodoActual = m;
+            System.out.println("Constructor " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
+        }else {
+            throw new ExcepcionSemantica(nombre, "El nombre del constructor no coincide con el nombre de la clase.");
+        }
     }
 
     public void insertarMetodos(Token tipo,Token nombre) throws ExcepcionSemantica {
@@ -46,7 +68,7 @@ public class TS {
         }
         claseActual.insertarMetodo(nombre.getLexema(), m);
         metodoActual = m;
-        System.out.println("Metodo " + nombre.getLexema() + " insertado en la clase: " + claseActual.nombre.getLexema());
+        System.out.println("Metodo " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
     }
 
     public void setClaseActual(Clase c) {
@@ -58,14 +80,14 @@ public class TS {
             throw new ExcepcionSemantica(padre, "No se puede asignar herencia a una clase que no existe.");
         }
         if (claseActual.getPadre() != null) {
-            throw new ExcepcionSemantica(padre, "La clase " + claseActual.nombre + " ya tiene una clase padre asignada.");
+            throw new ExcepcionSemantica(padre, "La clase " + claseActual.getNombre() + " ya tiene una clase padre asignada.");
         }
         if (!Clases.containsKey(padre.getLexema())) {
             throw new ExcepcionSemantica(padre, "La clase padre " + padre.getLexema() + " no existe.");
         }else {
             claseActual.setPadre(Clases.get(padre.getLexema()));
         }
-        System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.nombre.getLexema());
+        System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.getNombre().getLexema());
     }
 
     public void agregarAtributos(Token tipo, Token nombre) throws ExcepcionSemantica {

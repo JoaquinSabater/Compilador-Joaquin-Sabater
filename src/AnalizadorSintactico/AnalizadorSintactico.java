@@ -12,7 +12,7 @@ public class AnalizadorSintactico {
 
     TS ts;
 
-    boolean bandera = true;
+    boolean noEsMetodo = true;
 
     Token tipoAuxiliar;
 
@@ -86,17 +86,15 @@ public class AnalizadorSintactico {
             nombreAuxiliar = tokenActual;
             match("idMetVar");
             RestoAtributoMetodo();
-            //El error es que tiene que entrar aca despues de los metodos tambien, si quieto el if los parametros entran como atributos
-            if (bandera) {
+            if (noEsMetodo) {
                 ts.agregarAtributos(tipoAuxiliar,nombreAuxiliar);
             }
-            bandera = true;
+            noEsMetodo = true;
         }
     }
 
     // <RestoAtributoMetodo> ::= ; | <ArgsFormales> <Bloque>
     private void RestoAtributoMetodo() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
-        //Aca arranca un metodo
         if (tokenActual.getToken_id().equals("puntoComa")) {
             match("puntoComa");
         } else {
@@ -108,10 +106,14 @@ public class AnalizadorSintactico {
 
     // <Constructor> ::= public idClase <ArgsFormales> <Bloque>
     private void Constructor() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
+        tipoAuxiliar = tokenActual;
         match("pr_public");
+        nombreAuxiliar = tokenActual;
         match("idClase");
+        ts.insertarConstructor(tipoAuxiliar,nombreAuxiliar);
         ArgsFormales();
         Bloque();
+        noEsMetodo = true;
     }
 
     // <TipoMiembro> ::= void | <Tipo>
@@ -159,14 +161,13 @@ public class AnalizadorSintactico {
         match("parentesisAbierto");
         ListaArgsFormalesOpcional();
         match("parentesisCerrado");
-        bandera = false;
-        //Aca se termina de cerrar el metodo
+        noEsMetodo = false;
     }
 
     // <ListaArgsFormalesOpcional> ::= <ListaArgsFormales> | ε
     private void ListaArgsFormalesOpcional() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
         if (tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int") || tokenActual.getToken_id().equals("idClase")) {
-            bandera = false;
+            noEsMetodo = false;
             ListaArgsFormales();
         }
     }
@@ -179,7 +180,6 @@ public class AnalizadorSintactico {
 
     // <RestoListaArgFormal> ::= , <ListaArgsFormales> | ε
     private void RestoListaArgFormal() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
-        //Aca entra si hay mas de un argumento formal
         if (tokenActual.getToken_id().equals("coma")) {
             match("coma");
             ListaArgsFormales();
@@ -188,7 +188,7 @@ public class AnalizadorSintactico {
 
     // <ArgFormal> ::= <Tipo> idMetVar
     private void ArgFormal() throws ExcepcionSintactica, ExcepcionLexica, ExcepcionSemantica {
-        Tipo(); //Se elige el tipo del argumento
+        Tipo();
         nombreAuxiliar = tokenActual;
         match("idMetVar");
         ts.agregarParametros(tipoAuxiliar,nombreAuxiliar);

@@ -6,24 +6,39 @@ import java.util.HashMap;
 
 public class Clase {
 
-    Token nombre;
+    private Token nombre;
 
     private HashMap<String, Atributo> atributos = new HashMap<>();
 
     private HashMap<String, Metodo> metodos = new HashMap<>();
 
+    boolean tieneConstructor = false;
+
+    private Metodo constructor;
+
     private Clase padre;
 
-    boolean estaConsolidada = false;
+    private boolean estaConsolidada = false;
 
 
     public Clase(Token nombre) {
         this.nombre = nombre;
+        constructor = new Metodo();
+    }
+
+    public void insertarConstructor(Metodo metodo) throws ExcepcionSemantica {
+        if(!tieneConstructor){
+            constructor = metodo;
+            tieneConstructor = true;
+        }
+        else{
+            throw new ExcepcionSemantica(metodo.getNombre(),"La clase ya tiene un constructor.");
+        }
     }
 
     public void insertarAtributo(String nombreAtributo, Atributo atributo) throws ExcepcionSemantica {
         if (atributos.containsKey(nombreAtributo)) {
-            throw new ExcepcionSemantica(this.nombre,"El método con el nombre " + nombreAtributo + " ya existe.");
+            throw new ExcepcionSemantica(this.nombre,"El Atributo con el nombre " + nombreAtributo + " ya existe.");
         }
         atributos.put(nombreAtributo, atributo);
     }

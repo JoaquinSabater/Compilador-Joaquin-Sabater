@@ -4,13 +4,9 @@
 
 class B{
 
-    int x;
+    public B(int x)
+    { }
 
-    void m1()
-    {}
-
-    void m3(int x)
-    {}
 }
 
 class Init{
