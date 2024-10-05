@@ -12,22 +12,14 @@ public class TS {
     /*
     no es posible repetir los nombre entre la superclase
 
-    Si una clase sobre-escribe un metodo,este debe tener exactamente la misma cantidad y tipo de parametros,
-
-    Un metodo no puede tener mas de un parametro con el mismo nombre.
     Ninguna clase puede tener herencia circular (es decir, siguiendo la linea de ancestros extenderse
     a si misma).
-
-    Si un m´etodo m1 es declarado en una clase x y tiene el mismo nombre que un m´etodo en la
-    superclase, entonces el modificador de m´etodo (static o dynamic), el tipo de los argumentos y
-    el tipo de retorno tambi´en deben coincidir.
 
     No se puede definir una variable de instancia con el mismo nombre que de una varaible de
     instancia de un ancestro
 
     Alguna clase deber tener un m´etodo est´atico llamado main, el cual no posee p´arametros.
 
-    Falta heredar de object
      */
 
     private HashMap<String, Clase> Clases;
@@ -211,6 +203,8 @@ public class TS {
     // En el archivo `src/AnalizadorSemantico/TS.java`
 
     public void chequeoDeDeclaraciones() throws ExcepcionSemantica {
+        boolean mainEncontrado = false;
+
         for (Clase c : Clases.values()) {
             // Verificar herencia circular
             verificarHerenciaCircular(c, new HashSet<>());
@@ -242,7 +236,16 @@ public class TS {
                         throw new ExcepcionSemantica(c.getNombre(), "El tipo del parámetro " + parametro.getNombre().getLexema() + " no está definido.");
                     }
                 }
+
+                // Verificar método main
+                if (metodo.getNombre().getLexema().equals("main") && metodo.getEsStatic() && metodo.getParametros().isEmpty()) {
+                    mainEncontrado = true;
+                }
             }
+        }
+
+        if (!mainEncontrado) {
+            throw new ExcepcionSemantica(new Token("idMetVar", "main", 0), "No se encontró un método estático llamado main sin parámetros en ninguna clase.");
         }
     }
 
