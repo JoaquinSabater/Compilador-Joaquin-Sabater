@@ -26,6 +26,8 @@ public class TS {
     instancia de un ancestro
 
     Alguna clase deber tener un m´etodo est´atico llamado main, el cual no posee p´arametros.
+
+    Falta heredar de object
      */
 
     private HashMap<String, Clase> Clases;
@@ -267,10 +269,10 @@ public class TS {
                 for (Metodo metodoPadre : padre.getMetodos().values()) {
                     if (c.getMetodos().containsKey(metodoPadre.getNombre().getLexema())) {
                         Metodo metodoHijo = c.getMetodos().get(metodoPadre.getNombre().getLexema());
-                        if (!metodoHijo.getTipo().equals(metodoPadre.getTipo()) || !metodoHijo.getParametros().equals(metodoPadre.getParametros())) {
+                        if (!metodoHijo.getTipo().getNombreClase().getLexema().equals(metodoPadre.getTipo().getNombreClase().getLexema()) || !metodoHijo.compararParametros(metodoPadre.getParametros())) {
                             throw new ExcepcionSemantica(metodoHijo.getNombre(), "El método " + metodoPadre.getNombre().getLexema() + " en la clase " + c.getNombre().getLexema() + " no coincide con el método en la clase padre.");
                         }
-                    } else {
+                    }else {
                         c.insertarMetodo(metodoPadre.getNombre().getLexema(), metodoPadre);
                     }
                 }

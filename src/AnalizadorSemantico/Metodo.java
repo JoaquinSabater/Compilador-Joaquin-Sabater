@@ -60,4 +60,27 @@ public class Metodo {
     public void setEsVoid(boolean esVoid) {
         this.esVoid = esVoid;
     }
+
+    public boolean compararParametros(HashMap<String, Parametro> otrosParametros) {
+        if (this.parametros.size() != otrosParametros.size()) {
+            return false;
+        }
+
+        for (String key : this.parametros.keySet()) {
+            if (!otrosParametros.containsKey(key)) {
+                return false;
+            }
+
+            Parametro parametro1 = this.parametros.get(key);
+            Parametro parametro2 = otrosParametros.get(key);
+
+            if (!parametro1.getTipo().getNombreClase().getLexema().equals(parametro2.getTipo().getNombreClase().getLexema()) ||
+                    !parametro1.getNombre().getLexema().equals(parametro2.getNombre().getLexema())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
