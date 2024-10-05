@@ -66,7 +66,7 @@ public class AnalizadorSintactico {
             ts.setHerencia(tokenActual);
             match("idClase");
         }else {
-            //ts.setHerencia(null);
+            ts.setHerenciaObject();
         }
     }
 

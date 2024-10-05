@@ -183,6 +183,19 @@ public class TS {
         //System.out.println("Parametro " + nombre.getLexema() + " insertado. al medotodo "+metodoActual.getNombre().getLexema()+" ");
     }
 
+    public void setHerenciaObject() throws ExcepcionSemantica {
+        if (claseActual == null) {
+            throw new ExcepcionSemantica(new Token("idClase", "Object", 0), "No se puede asignar herencia a una clase que no existe.");
+        }
+        if (claseActual.getPadre() != null) {
+            throw new ExcepcionSemantica(new Token("idClase", "Object", 0), "La clase " + claseActual.getNombre() + " ya tiene una clase padre asignada.");
+        }else {
+            Clase c = Clases.get("Object");
+            claseActual.setPadre(c);
+        }
+        System.out.println("Herencia de Object asignada a la clase " + claseActual.getNombre().getLexema());
+    }
+
     public Clase getClaseActual() {
         return claseActual;
     }
@@ -271,7 +284,7 @@ public class TS {
                 for (Metodo metodoPadre : padre.getMetodos().values()) {
                     if (c.getMetodos().containsKey(metodoPadre.getNombre().getLexema())) {
                         Metodo metodoHijo = c.getMetodos().get(metodoPadre.getNombre().getLexema());
-                        if (!metodoHijo.getTipo().getNombreClase().getLexema().equals(metodoPadre.getTipo().getNombreClase().getLexema()) || !metodoHijo.compararParametros(metodoPadre.getParametros())) {
+                        if (!metodoHijo.getTipo().getNombreClase().getLexema().equals(metodoPadre.getTipo().getNombreClase().getLexema()) || !metodoHijo.compararParametros(metodoPadre.getParametros()) || metodoHijo.getEsStatic() != metodoPadre.getEsStatic()) {
                             throw new ExcepcionSemantica(metodoHijo.getNombre(), "El método " + metodoPadre.getNombre().getLexema() + " en la clase " + c.getNombre().getLexema() + " no coincide con el método en la clase padre.");
                         }
                     }else {
