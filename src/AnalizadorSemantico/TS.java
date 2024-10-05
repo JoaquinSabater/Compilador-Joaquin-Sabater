@@ -4,6 +4,7 @@ import AnalizadorLexico.Token;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class TS {
@@ -86,8 +87,8 @@ public class TS {
         }
         Clases.put(tokenActual.getLexema(), c);
         claseActual = c;
-        System.out.println("-------------------------------------------------------------------");
-        System.out.println("Clase " + tokenActual.getLexema() + " insertada.");
+        //System.out.println("-------------------------------------------------------------------");
+        //System.out.println("Clase " + tokenActual.getLexema() + " insertada.");
     }
 
     public void insertarConstructor(Token tipo,Token nombre) throws ExcepcionSemantica {
@@ -104,7 +105,7 @@ public class TS {
             m.setClasePadre(claseActual);
             claseActual.insertarConstructor(m);
             metodoActual = m;
-            System.out.println("Constructor " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
+            //System.out.println("Constructor " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
         }else {
             throw new ExcepcionSemantica(nombre, "El nombre del constructor no coincide con el nombre de la clase.");
         }
@@ -129,7 +130,7 @@ public class TS {
         }
         claseActual.insertarMetodo(nombre.getLexema(), m);
         metodoActual = m;
-        System.out.println("Metodo " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
+        //System.out.println("Metodo " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
     }
 
     public void setClaseActual(Clase c) {
@@ -143,7 +144,9 @@ public class TS {
         if (claseActual.getPadre() != null) {
             throw new ExcepcionSemantica(padre, "La clase " + claseActual.getNombre() + " ya tiene una clase padre asignada.");
         }else {
-            claseActual.setPadre(Clases.get(padre.getLexema()));
+            Clase c = new Clase(padre);
+            claseActual.setPadre(c);
+            System.out.println(claseActual.getPadre().getNombre().getLexema());
         }
         System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.getNombre().getLexema());
     }
@@ -159,7 +162,7 @@ public class TS {
         }
         Atributo a = new Atributo(t, nombre);
         claseActual.insertarAtributo(nombre.getLexema(), a);
-        System.out.println("A la clase "+claseActual.getNombre().getLexema()+"  Atributo " + nombre.getLexema() + " ");
+        //System.out.println("A la clase "+claseActual.getNombre().getLexema()+"  Atributo " + nombre.getLexema() + " ");
     }
 
     public void agregarParametros(Token tipo, Token nombre) throws ExcepcionSemantica {
@@ -173,7 +176,7 @@ public class TS {
         }
         Parametro p = new Parametro(t, nombre);
         metodoActual.insertarParametro(p);
-        System.out.println("Parametro " + nombre.getLexema() + " insertado. al medotodo "+metodoActual.getNombre().getLexema()+" ");
+        //System.out.println("Parametro " + nombre.getLexema() + " insertado. al medotodo "+metodoActual.getNombre().getLexema()+" ");
     }
 
     public Clase getClaseActual() {
@@ -196,8 +199,13 @@ public class TS {
             verificarHerenciaCircular(c, new HashSet<>());
 
             // Verificar que la clase padre esté definida
-            if (c.getPadre() != null && !Clases.containsKey(c.getPadre().getNombre().getLexema())) {
-                throw new ExcepcionSemantica(c.getNombre(), "La clase padre " + c.getPadre().getNombre().getLexema() + " no está definida.");
+            if (c.getPadre() != null) {
+                String nombrePadre = c.getPadre().getNombre().getLexema();
+                if (!Clases.containsKey(nombrePadre)) {
+                    throw new ExcepcionSemantica(c.getPadre().getNombre(), "La clase padre " + nombrePadre + " no está definida.");
+                } else {
+                    c.setPadre(Clases.get(nombrePadre));
+                }
             }
 
             // Verificar tipos de atributos
@@ -232,6 +240,9 @@ public class TS {
     }
 
     private boolean esTipoValido(Tipo tipo) {
+        if(Objects.equals(tipo.getNombreClase().getLexema(), "void")){
+            return true;
+        }
         if (tipo instanceof TipoPrimitivo) {
             return true;
         } else if (tipo instanceof TipoClase) {
@@ -257,7 +268,7 @@ public class TS {
                     if (c.getMetodos().containsKey(metodoPadre.getNombre().getLexema())) {
                         Metodo metodoHijo = c.getMetodos().get(metodoPadre.getNombre().getLexema());
                         if (!metodoHijo.getTipo().equals(metodoPadre.getTipo()) || !metodoHijo.getParametros().equals(metodoPadre.getParametros())) {
-                            throw new ExcepcionSemantica(c.getNombre(), "El método " + metodoPadre.getNombre().getLexema() + " en la clase " + c.getNombre().getLexema() + " no coincide con el método en la clase padre.");
+                            throw new ExcepcionSemantica(metodoHijo.getNombre(), "El método " + metodoPadre.getNombre().getLexema() + " en la clase " + c.getNombre().getLexema() + " no coincide con el método en la clase padre.");
                         }
                     } else {
                         c.insertarMetodo(metodoPadre.getNombre().getLexema(), metodoPadre);

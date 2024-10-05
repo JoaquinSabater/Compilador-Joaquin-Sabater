@@ -28,7 +28,7 @@ public class Main {
                 ts = new TS();
                 AS = new AnalizadorSintactico(AL,ts);
                 ts.chequeoDeDeclaraciones();
-
+                ts.consolidar();
             } catch (ExcepcionSintactica | ExcepcionSemantica e) {
                 bandera = false;
                 assert ts != null;
