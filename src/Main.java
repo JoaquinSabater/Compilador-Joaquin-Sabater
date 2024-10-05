@@ -18,16 +18,20 @@ public class Main {
             gestorDeArchivos.open(args[0]);
             AL = new analizadorLexico(gestorDeArchivos);
 
-            TS ts = new TS();
-
             Token t = null;
 
             boolean bandera = true;
 
+            TS ts = null;
+
             try {
+                ts = new TS();
                 AS = new AnalizadorSintactico(AL,ts);
+                ts.chequeoDeDeclaraciones();
+
             } catch (ExcepcionSintactica | ExcepcionSemantica e) {
                 bandera = false;
+                assert ts != null;
                 ts.limpiarClases();
                 System.out.println(e.getMessage());
             }

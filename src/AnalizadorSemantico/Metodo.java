@@ -7,7 +7,7 @@ import AnalizadorLexico.Token;
 import java.util.HashMap;
 
 public class Metodo {
-    private Token tipo;
+    private Tipo tipo;
     private Clase clasePadre;
     private Token nombre;
     private HashMap<String, Parametro> parametros = new HashMap<>();
@@ -15,17 +15,17 @@ public class Metodo {
 
     public void insertarParametro(Parametro p) throws ExcepcionSemantica {
         if (parametros.containsKey(p.getNombre().getLexema())) {
-            throw new ExcepcionSemantica(p.getNombre(),"El método con el nombre " + p.getNombre().getLexema() + " ya existe.");
+            throw new ExcepcionSemantica(p.getNombre(),"El parametro con el nombre " + p.getNombre().getLexema() + " ya existe.");
         }
         parametros.put(p.getNombre().getLexema(), p);
     }
 
     // Getters and Setters
-    public Token getTipo() {
+    public Tipo getTipo() {
         return tipo;
     }
 
-    public void setTipo(Token tipo) {
+    public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
 

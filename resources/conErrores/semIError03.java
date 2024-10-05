@@ -14,7 +14,7 @@ class A {
     {}
     
 }
-
+//El error es porque la redefincion solo se permite en metodos de la misma clase
 class B extends A{
     int m1()
     {}

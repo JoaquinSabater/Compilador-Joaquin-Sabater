@@ -66,6 +66,10 @@ public class Clase {
         return metodos;
     }
 
+    public HashMap<String, Atributo> getAtributos() {
+        return atributos;
+    }
+
     public void consolidar() {
         estaConsolidada = true;
     }
@@ -73,5 +77,6 @@ public class Clase {
     public boolean estaConsolidada() {
         return estaConsolidada;
     }
+
 
 }
