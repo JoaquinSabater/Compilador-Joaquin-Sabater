@@ -44,7 +44,7 @@ public class TS {
         // Crear y agregar la clase Object
         Token tokenObject = new Token("idClase", "Object", 0);
         insertarClase(tokenObject);
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "debugPrint", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "debugPrint", 0),true);
         agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
 
         // Crear y agregar la clase String
@@ -54,23 +54,23 @@ public class TS {
         // Crear y agregar la clase System
         Token tokenSystem = new Token("idClase", "System", 0);
         insertarClase(tokenSystem);
-        insertarMetodos(new Token("pr_int", "int", 0), new Token("idMetVar", "read", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printB", 0));
+        insertarMetodos(new Token("pr_int", "int", 0), new Token("idMetVar", "read", 0),true);
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printB", 0),true);
         agregarParametros(new Token("pr_boolean", "boolean", 0), new Token("idMetVar", "b", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printC", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printC", 0),true);
         agregarParametros(new Token("pr_char", "char", 0), new Token("idMetVar", "c", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printI", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printI", 0),true);
         agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printS", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printS", 0),true);
         agregarParametros(new Token("idClase", "String", 0), new Token("idMetVar", "s", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "println", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printBln", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "println", 0),true);
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printBln", 0),true);
         agregarParametros(new Token("pr_boolean", "boolean", 0), new Token("idMetVar", "b", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printCln", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printCln", 0),true);
         agregarParametros(new Token("pr_char", "char", 0), new Token("idMetVar", "c", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printIln", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printIln", 0),true);
         agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printSln", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printSln", 0),true);
         agregarParametros(new Token("idClase", "String", 0), new Token("idMetVar", "s", 0));
     }
 
@@ -113,7 +113,7 @@ public class TS {
         }
     }
 
-    public void insertarMetodos(Token tipo,Token nombre) throws ExcepcionSemantica {
+    public void insertarMetodos(Token tipo,Token nombre,boolean esStatic) throws ExcepcionSemantica {
         //Tipo no es un token tiene que ser un tipo
         Tipo t;
         if (tipo.getToken_id().equals("pr_boolean") || tipo.getToken_id().equals("pr_char") || tipo.getToken_id().equals("pr_int")) {
@@ -132,6 +132,7 @@ public class TS {
         }
         claseActual.insertarMetodo(nombre.getLexema(), m);
         metodoActual = m;
+        m.setEsStatic(esStatic);
         //System.out.println("Metodo " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
     }
 
@@ -153,7 +154,7 @@ public class TS {
         System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.getNombre().getLexema());
     }
 
-    public void agregarAtributos(Token tipo, Token nombre) throws ExcepcionSemantica {
+    public void agregarAtributos(Token tipo, Token nombre,boolean esStatic) throws ExcepcionSemantica {
         Tipo t;
         if (tipo.getToken_id().equals("pr_boolean") || tipo.getToken_id().equals("pr_char") || tipo.getToken_id().equals("pr_int")) {
             t = new TipoPrimitivo();
@@ -163,6 +164,7 @@ public class TS {
             t.setNombreClase(tipo);
         }
         Atributo a = new Atributo(t, nombre);
+        a.setEsStatic(esStatic);
         claseActual.insertarAtributo(nombre.getLexema(), a);
         //System.out.println("A la clase "+claseActual.getNombre().getLexema()+"  Atributo " + nombre.getLexema() + " ");
     }

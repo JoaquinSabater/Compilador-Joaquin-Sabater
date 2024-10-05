@@ -8,9 +8,19 @@ public class Atributo {
 
     private Token nombre;
 
+    boolean esStatic = false;
+
     public Atributo(Tipo tipo, Token nombre) {
         this.tipo = tipo;
         this.nombre = nombre;
+    }
+
+    public boolean getEsStatic() {
+        return esStatic;
+    }
+
+    public void setEsStatic(boolean esStatic) {
+        this.esStatic = esStatic;
     }
 
     public Tipo getTipo() {

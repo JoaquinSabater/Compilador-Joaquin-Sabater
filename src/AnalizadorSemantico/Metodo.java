@@ -1,5 +1,3 @@
-// En el archivo `src/AnalizadorSemantico/Metodo.java`
-
 package AnalizadorSemantico;
 
 import AnalizadorLexico.Token;
@@ -12,6 +10,8 @@ public class Metodo {
     private Token nombre;
     private HashMap<String, Parametro> parametros = new HashMap<>();
     private boolean esVoid;
+
+    private boolean esStatic = false;
 
     public void insertarParametro(Parametro p) throws ExcepcionSemantica {
         if (parametros.containsKey(p.getNombre().getLexema())) {
@@ -81,6 +81,14 @@ public class Metodo {
         }
 
         return true;
+    }
+
+    public boolean getEsStatic() {
+        return esStatic;
+    }
+
+    public void setEsStatic(boolean esStatic) {
+        this.esStatic = esStatic;
     }
 
 }

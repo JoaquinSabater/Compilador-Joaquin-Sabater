@@ -14,6 +14,8 @@ public class AnalizadorSintactico {
 
     boolean noEsMetodo = true;
 
+    boolean esStatic = false;
+
     Token tipoAuxiliar;
 
     Token nombreAuxiliar;
@@ -87,7 +89,8 @@ public class AnalizadorSintactico {
             match("idMetVar");
             RestoAtributoMetodo();
             if (noEsMetodo) {
-                ts.agregarAtributos(tipoAuxiliar,nombreAuxiliar);
+                ts.agregarAtributos(tipoAuxiliar,nombreAuxiliar,esStatic);
+                esStatic = false;
             }
             noEsMetodo = true;
         }
@@ -98,7 +101,8 @@ public class AnalizadorSintactico {
         if (tokenActual.getToken_id().equals("puntoComa")) {
             match("puntoComa");
         } else {
-            ts.insertarMetodos(tipoAuxiliar,nombreAuxiliar);
+            ts.insertarMetodos(tipoAuxiliar,nombreAuxiliar,esStatic);
+            esStatic = false;
             ArgsFormales();
             Bloque();
         }
@@ -153,6 +157,7 @@ public class AnalizadorSintactico {
     private void EstaticoOpcional() throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("pr_static")) {
             match("pr_static");
+            esStatic = true;
         }
     }
 
