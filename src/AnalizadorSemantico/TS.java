@@ -38,32 +38,6 @@ public class TS {
         insertarClase(tokenObject);
         insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "debugPrint", 0),true);
         agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
-
-        // Crear y agregar la clase String
-        Token tokenString = new Token("idClase", "String", 0);
-        insertarClase(tokenString);
-
-        // Crear y agregar la clase System
-        Token tokenSystem = new Token("idClase", "System", 0);
-        insertarClase(tokenSystem);
-        insertarMetodos(new Token("pr_int", "int", 0), new Token("idMetVar", "read", 0),true);
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printB", 0),true);
-        agregarParametros(new Token("pr_boolean", "boolean", 0), new Token("idMetVar", "b", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printC", 0),true);
-        agregarParametros(new Token("pr_char", "char", 0), new Token("idMetVar", "c", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printI", 0),true);
-        agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printS", 0),true);
-        agregarParametros(new Token("idClase", "String", 0), new Token("idMetVar", "s", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "println", 0),true);
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printBln", 0),true);
-        agregarParametros(new Token("pr_boolean", "boolean", 0), new Token("idMetVar", "b", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printCln", 0),true);
-        agregarParametros(new Token("pr_char", "char", 0), new Token("idMetVar", "c", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printIln", 0),true);
-        agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
-        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printSln", 0),true);
-        agregarParametros(new Token("idClase", "String", 0), new Token("idMetVar", "s", 0));
     }
 
     public void limpiarClases() {
@@ -238,7 +212,7 @@ public class TS {
                 }
 
                 // Verificar método main
-                if (metodo.getNombre().getLexema().equals("main") && metodo.getEsStatic() && metodo.getParametros().isEmpty()) {
+                if (metodo.getNombre().getLexema().equals("main") && metodo.getEsStatic() && metodo.getParametros().isEmpty() && metodo.getTipo().getNombreClase().getLexema().equals("void")) {
                     mainEncontrado = true;
                 }
             }
@@ -293,6 +267,32 @@ public class TS {
                     }else {
                         c.insertarMetodo(metodoPadre.getNombre().getLexema(), metodoPadre);
                     }
+                }
+            }
+        }
+    }
+
+    public void mostrarInformacionClases() {
+        for (Clase c : Clases.values()) {
+            System.out.println("-------------------------------------------------------------------");
+            System.out.println("Clase: " + c.getNombre().getLexema());
+            if (c.getPadre() != null) {
+                System.out.println("  Padre: " + c.getPadre().getNombre().getLexema());
+            } else {
+                System.out.println("  Padre: Ninguno");
+            }
+
+            System.out.println(" ------------------------- Atributos:-----------------------------");
+            for (Atributo atributo : c.getAtributos().values()) {
+                System.out.println("    Nombre: " + atributo.getNombre().getLexema() + ", Tipo: " + atributo.getTipo().getNombreClase().getLexema() + ", Es estático: " + atributo.getEsStatic());
+            }
+
+            System.out.println("  --------------------------Métodos:-----------------------------");
+            for (Metodo metodo : c.getMetodos().values()) {
+                System.out.println("    Nombre: " + metodo.getNombre().getLexema() + ", Tipo: " + metodo.getTipo().getNombreClase().getLexema() + ", Es estático: " + metodo.getEsStatic());
+                System.out.println("    Parámetros:");
+                for (Parametro parametro : metodo.getParametros().values()) {
+                    System.out.println("      Nombre: " + parametro.getNombre().getLexema() + ", Tipo: " + parametro.getTipo().getNombreClase().getLexema());
                 }
             }
         }

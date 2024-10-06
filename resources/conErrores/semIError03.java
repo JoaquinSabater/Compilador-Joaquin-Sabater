@@ -19,9 +19,6 @@ class B extends A{
     void m1(int a)
     {}
 }
-
-
-
 class Init{
     static void main()
     { }
