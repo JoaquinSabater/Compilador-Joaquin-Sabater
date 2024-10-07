@@ -38,7 +38,7 @@ public class Clase {
 
     public void insertarAtributo(String nombreAtributo, Atributo atributo) throws ExcepcionSemantica {
         if (atributos.containsKey(nombreAtributo)) {
-            throw new ExcepcionSemantica(this.nombre,"El Atributo con el nombre " + nombreAtributo + " ya existe.");
+            throw new ExcepcionSemantica(atributo.getNombre(),"El Atributo con el nombre " + nombreAtributo + " ya existe.");
         }
         atributos.put(nombreAtributo, atributo);
     }

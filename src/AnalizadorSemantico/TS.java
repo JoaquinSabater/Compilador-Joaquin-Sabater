@@ -10,15 +10,10 @@ import java.util.Set;
 public class TS {
 
     /*
-    no es posible repetir los nombre entre la superclase
+        no es posible repetir los nombre entre la superclase
 
-    Ninguna clase puede tener herencia circular (es decir, siguiendo la linea de ancestros extenderse
-    a si misma).
-
-    No se puede definir una variable de instancia con el mismo nombre que de una varaible de
-    instancia de un ancestro
-
-    Alguna clase deber tener un m´etodo est´atico llamado main, el cual no posee p´arametros.
+        No se puede definir una variable de instancia con el mismo nombre que de una varaible de
+        instancia de un ancestro
 
      */
 
@@ -38,6 +33,33 @@ public class TS {
         insertarClase(tokenObject);
         insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "debugPrint", 0),true);
         agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
+
+        // Crear y agregar la clase String
+        Token tokenString = new Token("idClase", "String", 0);
+        insertarClase(tokenString);
+
+        // Crear y agregar la clase System
+        Token tokenSystem = new Token("idClase", "System", 0);
+        insertarClase(tokenSystem);
+        insertarMetodos(new Token("pr_int", "int", 0), new Token("idMetVar", "read", 0),true);
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printB", 0),true);
+        agregarParametros(new Token("pr_boolean", "boolean", 0), new Token("idMetVar", "b", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printC", 0),true);
+        agregarParametros(new Token("pr_char", "char", 0), new Token("idMetVar", "c", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printI", 0),true);
+        agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printS", 0),true);
+        agregarParametros(new Token("idClase", "String", 0), new Token("idMetVar", "s", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "println", 0),true);
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printBln", 0),true);
+        agregarParametros(new Token("pr_boolean", "boolean", 0), new Token("idMetVar", "b", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printCln", 0),true);
+        agregarParametros(new Token("pr_char", "char", 0), new Token("idMetVar", "c", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printIln", 0),true);
+        agregarParametros(new Token("pr_int", "int", 0), new Token("idMetVar", "i", 0));
+        insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printSln", 0),true);
+        agregarParametros(new Token("idClase", "String", 0), new Token("idMetVar", "s", 0));
+
     }
 
     public void limpiarClases() {
@@ -117,7 +139,7 @@ public class TS {
             claseActual.setPadre(c);
             System.out.println(claseActual.getPadre().getNombre().getLexema());
         }
-        System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.getNombre().getLexema());
+        //System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.getNombre().getLexema());
     }
 
     public void agregarAtributos(Token tipo, Token nombre,boolean esStatic) throws ExcepcionSemantica {
@@ -159,7 +181,7 @@ public class TS {
             Clase c = Clases.get("Object");
             claseActual.setPadre(c);
         }
-        System.out.println("Herencia de Object asignada a la clase " + claseActual.getNombre().getLexema());
+        //System.out.println("Herencia de Object asignada a la clase " + claseActual.getNombre().getLexema());
     }
 
     public Clase getClaseActual() {
@@ -247,26 +269,41 @@ public class TS {
 
     public void consolidar() throws ExcepcionSemantica {
         for (Clase c : Clases.values()) {
-            if (c.getPadre() != null) {
-                Clase padre = c.getPadre();
+            if(!c.estaConsolidada()){
+                consolidarClase(c);
+            }
+        }
+    }
 
-                // Copiar atributos de la clase padre a la clase hija
-                for (Atributo atributoPadre : padre.getAtributos().values()) {
-                    if (!c.getAtributos().containsKey(atributoPadre.getNombre().getLexema())) {
-                        c.insertarAtributo(atributoPadre.getNombre().getLexema(), atributoPadre);
-                    }
+    private void consolidarClase(Clase c) throws ExcepcionSemantica {
+        if (c.getPadre() != null && !c.getPadre().estaConsolidada()) {
+            consolidarClase(c.getPadre());
+        }
+        agregarMetodosYAtributos(c);
+        c.consolidar();
+    }
+
+    private void agregarMetodosYAtributos(Clase c) throws ExcepcionSemantica {
+        if (c.getPadre() != null){
+            Clase padre = c.getPadre();
+
+            // Copiar atributos de la clase padre a la clase hija
+            for (Atributo atributoPadre : padre.getAtributos().values()) {
+                if (c.getAtributos().containsKey(atributoPadre.getNombre().getLexema())) {
+                    throw new ExcepcionSemantica(c.getAtributos().get(atributoPadre.getNombre().getLexema()).getNombre(), "El nombre del atributo " + atributoPadre.getNombre().getLexema() + " ya está definido en una clase padre");
                 }
+                c.insertarAtributo(atributoPadre.getNombre().getLexema(), atributoPadre);
+            }
 
-                // Copiar métodos de la clase padre a la clase hija
-                for (Metodo metodoPadre : padre.getMetodos().values()) {
-                    if (c.getMetodos().containsKey(metodoPadre.getNombre().getLexema())) {
-                        Metodo metodoHijo = c.getMetodos().get(metodoPadre.getNombre().getLexema());
-                        if (!metodoHijo.getTipo().getNombreClase().getLexema().equals(metodoPadre.getTipo().getNombreClase().getLexema()) || !metodoHijo.compararParametros(metodoPadre.getParametros()) || metodoHijo.getEsStatic() != metodoPadre.getEsStatic()) {
-                            throw new ExcepcionSemantica(metodoHijo.getNombre(), "El método " + metodoPadre.getNombre().getLexema() + " en la clase " + c.getNombre().getLexema() + " no coincide con el método en la clase padre.");
-                        }
-                    }else {
-                        c.insertarMetodo(metodoPadre.getNombre().getLexema(), metodoPadre);
+            // Copiar métodos de la clase padre a la clase hija
+            for (Metodo metodoPadre : padre.getMetodos().values()) {
+                if (c.getMetodos().containsKey(metodoPadre.getNombre().getLexema())) {
+                    Metodo metodoHijo = c.getMetodos().get(metodoPadre.getNombre().getLexema());
+                    if (!metodoHijo.getTipo().getNombreClase().getLexema().equals(metodoPadre.getTipo().getNombreClase().getLexema()) || !metodoHijo.compararParametros(metodoPadre.getParametros()) || metodoHijo.getEsStatic() != metodoPadre.getEsStatic()) {
+                        throw new ExcepcionSemantica(metodoHijo.getNombre(), "El método " + metodoPadre.getNombre().getLexema() + " en la clase " + c.getNombre().getLexema() + " no coincide con el método en la clase padre.");
                     }
+                }else {
+                    c.insertarMetodo(metodoPadre.getNombre().getLexema(), metodoPadre);
                 }
             }
         }

@@ -1,11 +1,13 @@
 ///[SinErrores]
 //Control simple de declaracion de clases con nombres validos
 
-class A {
-
+class A{
     int a;
+}
 
-    static int b;
+class B extends A{
+
+    int c;
 
     void m1(int a)
     {}
@@ -20,14 +22,14 @@ class A {
     {}
 
 }
-//El error es porque la redefincion solo se permite en metodos de la misma clase
-class B extends A{
+class C extends B{
 
-    int x;
+    char d;
 
-    void m1(int a)
+    void m10(int a)
     {}
 }
+
 class Init{
     static void main()
     { }
