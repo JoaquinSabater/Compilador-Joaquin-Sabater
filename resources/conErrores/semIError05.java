@@ -1,7 +1,10 @@
-///[Error:m1|18]
+///[Error:a|22]
 
 class A {
-    int m1(int a)
+
+    int a;
+
+    void m1(int a,char b)
     {}
     
     static void m2()
@@ -15,6 +18,9 @@ class A {
     
 }
 class B extends A{
+
+    char a;
+
     void m1(int a)
     {}
 }

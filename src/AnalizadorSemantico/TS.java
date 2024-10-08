@@ -137,7 +137,6 @@ public class TS {
         }else {
             Clase c = new Clase(padre);
             claseActual.setPadre(c);
-            System.out.println(claseActual.getPadre().getNombre().getLexema());
         }
         //System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.getNombre().getLexema());
     }
@@ -165,6 +164,7 @@ public class TS {
         }else {
             t = new TipoClase();
             t.setNombreClase(tipo);
+            //System.out.println(t.getNombreClase().getLexema());
         }
         Parametro p = new Parametro(t, nombre);
         metodoActual.insertarParametro(p);
@@ -196,8 +196,6 @@ public class TS {
         return metodoActual;
     }
 
-    // En el archivo `src/AnalizadorSemantico/TS.java`
-
     public void chequeoDeDeclaraciones() throws ExcepcionSemantica {
         boolean mainEncontrado = false;
 
@@ -218,18 +216,18 @@ public class TS {
             // Verificar tipos de atributos
             for (Atributo atributo : c.getAtributos().values()) {
                 if (!esTipoValido(atributo.getTipo())) {
-                    throw new ExcepcionSemantica(c.getNombre(), "El tipo del atributo " + atributo.getNombre().getLexema() + " no está definido.");
+                    throw new ExcepcionSemantica(atributo.getNombre(), "El tipo del atributo " + atributo.getNombre().getLexema() + " no está definido.");
                 }
             }
 
             // Verificar tipos de parámetros y métodos
             for (Metodo metodo : c.getMetodos().values()) {
                 if (!esTipoValido(metodo.getTipo())) {
-                    throw new ExcepcionSemantica(c.getNombre(), "El tipo del método " + metodo.getNombre().getLexema() + " no está definido.");
+                    throw new ExcepcionSemantica(metodo.getNombre(), "El tipo del método " + metodo.getNombre().getLexema() + " no está definido.");
                 }
                 for (Parametro parametro : metodo.getParametros().values()) {
                     if (!esTipoValido(parametro.getTipo())) {
-                        throw new ExcepcionSemantica(c.getNombre(), "El tipo del parámetro " + parametro.getNombre().getLexema() + " no está definido.");
+                        throw new ExcepcionSemantica(metodo.getNombre(), "El tipo del parámetro " + parametro.getNombre().getLexema() + " no está definido.");
                     }
                 }
 

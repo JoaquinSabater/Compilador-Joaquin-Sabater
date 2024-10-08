@@ -132,7 +132,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/AnalizadorSintactico/AnalizadorSintactico.java</url>
-          <line>540</line>
+          <line>541</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>

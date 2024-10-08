@@ -135,6 +135,7 @@ public class AnalizadorSintactico {
         if (tokenActual.getToken_id().equals("pr_boolean") || tokenActual.getToken_id().equals("pr_char") || tokenActual.getToken_id().equals("pr_int")) {
             TipoPrimitivo();
         } else {
+            tipoAuxiliar = tokenActual;
             match("idClase");
         }
     }

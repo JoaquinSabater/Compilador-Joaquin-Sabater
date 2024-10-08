@@ -1,7 +1,7 @@
 ///[Error:m1|18]
 
 class A {
-    int m1(int a)
+    void m1(int a,char b)
     {}
     
     static void m2()

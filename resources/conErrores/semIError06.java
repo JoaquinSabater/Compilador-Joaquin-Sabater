@@ -1,6 +1,9 @@
-///[Error:m1|18]
+///[Error:main|0]
 
 class A {
+
+    int a;
+
     int m1(int a)
     {}
     
@@ -15,12 +18,14 @@ class A {
     
 }
 class B extends A{
+
+    char a;
+
     void m1(int a)
     {}
 }
 class Init{
-    static void main()
-    { }
+
 }
 
 

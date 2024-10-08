@@ -45,7 +45,7 @@ public class Clase {
 
     public void insertarMetodo(String nombreMetodo, Metodo metodo) throws ExcepcionSemantica {
         if (metodos.containsKey(nombreMetodo)) {
-            throw new ExcepcionSemantica(this.nombre,"El método con el nombre " + nombreMetodo + " ya existe.");
+            throw new ExcepcionSemantica(metodo.getNombre(),"El método con el nombre " + nombreMetodo + " ya existe.");
         }
         metodos.put(nombreMetodo, metodo);
     }
