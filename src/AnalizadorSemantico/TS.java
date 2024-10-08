@@ -37,10 +37,15 @@ public class TS {
         // Crear y agregar la clase String
         Token tokenString = new Token("idClase", "String", 0);
         insertarClase(tokenString);
+        setHerencia(new Token("idClase", "Object", 0));
+
 
         // Crear y agregar la clase System
         Token tokenSystem = new Token("idClase", "System", 0);
         insertarClase(tokenSystem);
+        setHerencia(new Token("idClase", "Object", 0));
+
+
         insertarMetodos(new Token("pr_int", "int", 0), new Token("idMetVar", "read", 0),true);
         insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printB", 0),true);
         agregarParametros(new Token("pr_boolean", "boolean", 0), new Token("idMetVar", "b", 0));
