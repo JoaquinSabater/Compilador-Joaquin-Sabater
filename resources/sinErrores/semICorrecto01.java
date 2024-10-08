@@ -3,9 +3,12 @@
 
 class A {
 
-    Z r;
+    int m1(Z a)
+    {}
+}
 
-    int m1(int a)
+class Z {
+    int m2(int a)
     {}
 }
 
