@@ -1,5 +1,10 @@
 package AnalizadorSintactico;
 
+import AST.Expresiones.NodoExpresion;
+import AST.Sentencias.NodoBloque;
+import AST.Sentencias.NodoIf;
+import AST.Sentencias.NodoSentencia;
+import AST.Sentencias.NodoWhile;
 import AnalizadorLexico.*;
 import AnalizadorSemantico.*;
 
@@ -19,6 +24,8 @@ public class AnalizadorSintactico {
     Token tipoAuxiliar;
 
     Token nombreAuxiliar;
+
+    NodoBloque bloqueActual;
 
     public AnalizadorSintactico(analizadorLexico lexico,TS ts) throws ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica {
         this.lexico = lexico;
@@ -201,16 +208,20 @@ public class AnalizadorSintactico {
     }
 
     // <Bloque> ::= { <ListaSentencias> }
-    private void Bloque() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoBloque Bloque() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoBloque nodoBloque= new NodoBloque(tokenActual);
+        bloqueActual = nodoBloque;
         match("llaveAbierta");
         ListaSentencias();
         match("llaveCerrada");
+        return nodoBloque;
     }
 
     // <ListaSentencias> ::= <Sentencia> <ListaSentencias> | ε
     private void ListaSentencias() throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta") || esExpresion(tokenActual) || tokenActual.getToken_id().equals("idClase")) {
-            Sentencia(); //Aca tenia el primer debug
+            NodoSentencia sentencia = Sentencia();
+            bloqueActual.agregarSentencia(sentencia);
             ListaSentencias();
         }
     }
@@ -227,7 +238,8 @@ public class AnalizadorSintactico {
        <Sentencia> ::= <Bloque>
 
     */
-    private void Sentencia() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoSentencia Sentencia() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoSentencia nodoSentencia = null;
         if(esExpresion(tokenActual) || tokenActual.getToken_id().equals("idClase")){
             Expresion();
             match("puntoComa");
@@ -249,22 +261,23 @@ public class AnalizadorSintactico {
                 match("puntoComa");
                 break;
             case "pr_if":
-                If();
+                nodoSentencia = If();
                 break;
             case "pr_while":
-                While();
+                nodoSentencia = While();
                 break;
             case "pr_switch":
                 Switch();
                 break;
             case "llaveAbierta":
-                Bloque();
+                nodoSentencia = Bloque();
                 break;
             case "llaveCerrada":
                 break;
             case "idMetVar":
                 break;
         }
+        return nodoSentencia;
     }
 
     // <VarLocal> ::= var idMetVar = <ExpresionCompuesta>
@@ -294,30 +307,41 @@ public class AnalizadorSintactico {
     }
 
     // <If> ::= if ( <Expresion> ) <Sentencia> <IfPrima>
-    private void If() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoIf If() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoIf nodoIf = new NodoIf(tokenActual);
         match("pr_if");
         match("parentesisAbierto");
-        Expresion();
+        NodoExpresion condicion = Expresion();
+        nodoIf.setCondicion(condicion);
         match("parentesisCerrado");
-        Sentencia();
-        IfPrima();
+        NodoSentencia sentencia = Sentencia();
+        nodoIf.setSentencia(sentencia);
+        if (tokenActual.getToken_id().equals("pr_else")) {
+            NodoSentencia sentenciaElse = IfPrima();
+            nodoIf.setSentenciaElse(sentenciaElse);
+        }
+        return nodoIf;
     }
 
     // <IfPrima> ::= else <Sentencia> | ε
-    private void IfPrima() throws ExcepcionSintactica, ExcepcionLexica {
-        if (tokenActual.getToken_id().equals("pr_else")) {
-            match("pr_else");
-            Sentencia();
-        }
+    private NodoSentencia IfPrima() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoSentencia nodoSentencia = null;
+        match("pr_else");
+        nodoSentencia = Sentencia();
+        return nodoSentencia;
     }
 
     // <While> ::= while ( <Expresion> ) <Sentencia>
-    private void While() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoWhile While() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoWhile nodoWhile = new NodoWhile(tokenActual);
         match("pr_while");
         match("parentesisAbierto");
-        Expresion();
+        NodoExpresion condocion = Expresion();
+        nodoWhile.setCondicion(condocion);
         match("parentesisCerrado");
-        Sentencia();
+        NodoSentencia sentencia = Sentencia();
+        nodoWhile.setSentencia(sentencia);
+        return nodoWhile;
     }
 
     // <Switch> ::= switch ( <Expresion> ) { <ListaSentenciasSwitch> }
@@ -361,9 +385,10 @@ public class AnalizadorSintactico {
     }
 
     // <Expresion>::= <ExpresionCompuesta> <ExpresionPrima>
-    private void Expresion() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoExpresion Expresion() throws ExcepcionSintactica, ExcepcionLexica {
         ExpresionCompuesta();
         ExpresionPrima();
+        return null;
     }
 
     // <ExpresionPrima> ::= = <ExpresionCompuesta> | += <ExpresionCompuesta> | -= <ExpresionCompuesta> | ε

@@ -3,8 +3,8 @@ package AST.Sentencias;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 
-public class NodoReturn extends NodoSentencia {
-    public NodoReturn(Token token) {
+public class NodoVar extends NodoSentencia {
+    public NodoVar(Token token) {
         super(token);
     }
 
