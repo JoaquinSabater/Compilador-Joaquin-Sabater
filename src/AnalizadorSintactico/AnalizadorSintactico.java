@@ -1,6 +1,7 @@
 package AnalizadorSintactico;
 
 import AST.Expresiones.NodoExpresion;
+import AST.Expresiones.NodoExpresionVacia;
 import AST.Sentencias.*;
 import AnalizadorLexico.*;
 import AnalizadorSemantico.*;
@@ -252,7 +253,7 @@ public class AnalizadorSintactico {
                 match("puntoComa");
                 break;
             case "pr_return":
-                Return();
+                nodoSentencia = Return();
                 match("puntoComa");
                 break;
             case "pr_break":
@@ -292,25 +293,33 @@ public class AnalizadorSintactico {
     }
 
     //<Return> ::= return <ExpresionOpcional>
-    private void Return() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoSentencia Return() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoReturn nodoReturn = new NodoReturn(tokenActual);
+        NodoExpresion nodoExpresion;
+        nodoReturn.setMetodoPadre(ts.getMetodoActual());
         match("pr_return");
-        ExpresionOpcional();
+        nodoExpresion = ExpresionOpcional();
+        nodoReturn.setExpresion(nodoExpresion);
+        return nodoReturn;
     }
 
     // <Break> ::= break
     private NodoSentencia Break() throws ExcepcionSintactica, ExcepcionLexica {
         NodoBrake nodoBrake = new NodoBrake(tokenActual);
-        if(esWhileOrSwich){
-            match("pr_break");
-        }
+        nodoBrake.setEsWhileOrSwitch(esWhileOrSwich);
+        match("pr_break");
         return nodoBrake;
     }
 
     // <ExpresionOpcional> ::= <Expresion> | ε
-    private void ExpresionOpcional() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoExpresion ExpresionOpcional() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoExpresion nodoExpresion = null;
         if (tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("intLiteral") || tokenActual.getToken_id().equals("charLiteral") || tokenActual.getToken_id().equals("pr_true") || tokenActual.getToken_id().equals("pr_false") || tokenActual.getToken_id().equals("pr_null") || tokenActual.getToken_id().equals("stringLiteral") || tokenActual.getToken_id().equals("parentesisAbierto") || tokenActual.getToken_id().equals("pr_this") || tokenActual.getToken_id().equals("pr_new") || tokenActual.getToken_id().equals("suma") || tokenActual.getToken_id().equals("resta") || tokenActual.getToken_id().equals("not")) {
-            Expresion();
+            nodoExpresion = Expresion();
+        }else {
+            //nodoExpresion = new NodoExpresionVacia();
         }
+        return nodoExpresion;
     }
 
     // <If> ::= if ( <Expresion> ) <Sentencia> <IfPrima>

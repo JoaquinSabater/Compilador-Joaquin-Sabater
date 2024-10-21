@@ -21,6 +21,6 @@ public class NodoBrake extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-
+        //verificar que el break este dentro de un while o un switch
     }
 }
