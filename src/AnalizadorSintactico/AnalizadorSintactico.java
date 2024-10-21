@@ -1,10 +1,7 @@
 package AnalizadorSintactico;
 
 import AST.Expresiones.NodoExpresion;
-import AST.Sentencias.NodoBloque;
-import AST.Sentencias.NodoIf;
-import AST.Sentencias.NodoSentencia;
-import AST.Sentencias.NodoWhile;
+import AST.Sentencias.*;
 import AnalizadorLexico.*;
 import AnalizadorSemantico.*;
 
@@ -20,6 +17,8 @@ public class AnalizadorSintactico {
     boolean noEsMetodo = true;
 
     boolean esStatic = false;
+
+    boolean esWhileOrSwich = false;
 
     Token tipoAuxiliar;
 
@@ -257,17 +256,21 @@ public class AnalizadorSintactico {
                 match("puntoComa");
                 break;
             case "pr_break":
-                Break();
+                nodoSentencia = Break();
                 match("puntoComa");
                 break;
             case "pr_if":
                 nodoSentencia = If();
                 break;
             case "pr_while":
+                esWhileOrSwich = true;
                 nodoSentencia = While();
+                esWhileOrSwich = false;
                 break;
             case "pr_switch":
+                esWhileOrSwich = true;
                 Switch();
+                esWhileOrSwich = false;
                 break;
             case "llaveAbierta":
                 nodoSentencia = Bloque();
@@ -295,8 +298,12 @@ public class AnalizadorSintactico {
     }
 
     // <Break> ::= break
-    private void Break() throws ExcepcionSintactica, ExcepcionLexica {
-        match("pr_break");
+    private NodoSentencia Break() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoBrake nodoBrake = new NodoBrake(tokenActual);
+        if(esWhileOrSwich){
+            match("pr_break");
+        }
+        return nodoBrake;
     }
 
     // <ExpresionOpcional> ::= <Expresion> | ε
