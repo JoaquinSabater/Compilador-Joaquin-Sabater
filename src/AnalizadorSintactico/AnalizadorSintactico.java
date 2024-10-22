@@ -2,6 +2,7 @@ package AnalizadorSintactico;
 
 import AST.Expresiones.NodoExpresion;
 import AST.Expresiones.NodoExpresionVacia;
+import AST.Expresiones.NodoOperandoLiteral;
 import AST.Sentencias.*;
 import AnalizadorLexico.*;
 import AnalizadorSemantico.*;
@@ -26,6 +27,8 @@ public class AnalizadorSintactico {
     Token nombreAuxiliar;
 
     NodoBloque bloqueActual;
+
+    NodoSwitch nodoSwitchActual;
 
     public AnalizadorSintactico(analizadorLexico lexico,TS ts) throws ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica {
         this.lexico = lexico;
@@ -361,14 +364,20 @@ public class AnalizadorSintactico {
     }
 
     // <Switch> ::= switch ( <Expresion> ) { <ListaSentenciasSwitch> }
-    private void Switch() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoSentencia Switch() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoSwitch nodoSwitch = new NodoSwitch(tokenActual);
+        NodoExpresion nodoExpresion = null;
+
+        nodoSwitchActual = nodoSwitch;
         match("pr_switch");
         match("parentesisAbierto");
-        Expresion();
+        nodoExpresion = Expresion();
+        nodoSwitch.setExpresion(nodoExpresion);
         match("parentesisCerrado");
         match("llaveAbierta");
         ListaSentenciasSwitch();
         match("llaveCerrada");
+        return nodoSwitch;
     }
 
     // <ListaSentenciasSwitch> ::= <SentenciaSwitch> <ListaSentenciasSwitch> | ε
@@ -381,23 +390,31 @@ public class AnalizadorSintactico {
 
     // <SentenciaSwitch> ::= case <LiteralPrimitivo> : <SentenciaOpcional> | default : <Sentencia>
     private void SentenciaSwitch() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoOperandoLiteral nodoOperandoLiteral;
+        NodoSentencia sentencia;
         if (tokenActual.getToken_id().equals("pr_case")) {
             match("pr_case");
-            LiteralPrimitivo();
+            nodoOperandoLiteral = LiteralPrimitivo();
             match("dosPuntos");
-            SentenciaOpcional();
+            sentencia = SentenciaOpcional();
+            if (nodoOperandoLiteral != null) {
+                nodoSwitchActual.agregarCaso(nodoOperandoLiteral, sentencia);
+            }
         } else if (tokenActual.getToken_id().equals("pr_default")) {
             match("pr_default");
             match("dosPuntos");
-            Sentencia();
+            sentencia =Sentencia();
+            nodoSwitchActual.setSentenciaDefault(sentencia);
         }
     }
 
     // <SentenciaOpcional> ::= <Sentencia> | ε
-    private void SentenciaOpcional() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoSentencia SentenciaOpcional() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoSentencia nodoSentencia = null;
         if (tokenActual.getToken_id().equals("puntoComa") || tokenActual.getToken_id().equals("idMetVar") || tokenActual.getToken_id().equals("pr_var") || tokenActual.getToken_id().equals("pr_return") || tokenActual.getToken_id().equals("pr_break") || tokenActual.getToken_id().equals("pr_if") || tokenActual.getToken_id().equals("pr_while") || tokenActual.getToken_id().equals("pr_switch") || tokenActual.getToken_id().equals("llaveAbierta")) {
-            Sentencia();
+            nodoSentencia = Sentencia();
         }
+        return nodoSentencia;
     }
 
     // <Expresion>::= <ExpresionCompuesta> <ExpresionPrima>
@@ -528,7 +545,8 @@ public class AnalizadorSintactico {
     }
 
     // <LiteralPrimitivo> ::= true | false | intLiteral | charLiteral
-    private void LiteralPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoOperandoLiteral LiteralPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral();
         switch (tokenActual.getToken_id()) {
             case "pr_true":
                 match("pr_true");
@@ -543,6 +561,8 @@ public class AnalizadorSintactico {
                 match("charLiteral");
                 break;
         }
+        return nodoOperandoLiteral;
+        //TO-DO Revisar esto bien
     }
 
     // <LiteralObjeto> ::= null | stringLiteral
