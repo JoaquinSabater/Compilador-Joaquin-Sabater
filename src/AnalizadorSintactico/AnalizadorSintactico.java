@@ -1,8 +1,6 @@
 package AnalizadorSintactico;
 
-import AST.Expresiones.NodoExpresion;
-import AST.Expresiones.NodoExpresionVacia;
-import AST.Expresiones.NodoOperandoLiteral;
+import AST.Expresiones.*;
 import AST.Sentencias.*;
 import AnalizadorLexico.*;
 import AnalizadorSemantico.*;
@@ -444,77 +442,100 @@ public class AnalizadorSintactico {
     }
 
     // <ExpresionCompuesta> ::= <ExpresionBasica> <ExpresionCompuestaPrima>
-    private void ExpresionCompuesta() throws ExcepcionSintactica, ExcepcionLexica {
-        ExpresionBasica();
-        ExpresionCompuestaPrima();
+    private NodoExpresion ExpresionCompuesta() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoExpresion ladoIzquierdo = ExpresionBasica();
+        return ExpresionCompuestaPrima(ladoIzquierdo);
     }
 
     // <ExpresionCompuestaPrima> ::= <OperadorBinario> <ExpresionBasica> <ExpresionCompuestaPrima> | ε
-    private void ExpresionCompuestaPrima() throws ExcepcionSintactica, ExcepcionLexica {
-        if (tokenActual.getToken_id().equals("or") || tokenActual.getToken_id().equals("and") || tokenActual.getToken_id().equals("comparacion") || tokenActual.getToken_id().equals("distinto") || tokenActual.getToken_id().equals("menor") || tokenActual.getToken_id().equals("mayor") || tokenActual.getToken_id().equals("menorIgual") || tokenActual.getToken_id().equals("mayorIgual") || tokenActual.getToken_id().equals("suma") || tokenActual.getToken_id().equals("resta") || tokenActual.getToken_id().equals("multiplicacion") || tokenActual.getToken_id().equals("division") || tokenActual.getToken_id().equals("porcentaje")) {
-            OperadorBinario();
-            ExpresionBasica();
-            ExpresionCompuestaPrima();
+    private NodoExpresion ExpresionCompuestaPrima(NodoExpresion ladoIzquierdo) throws ExcepcionSintactica, ExcepcionLexica {
+        if (esOperadorBinario(tokenActual)) {
+            Token operador = OperadorBinario();
+            NodoExpresion ladoDerecho = ExpresionBasica();
+            NodoExpresionBinaria nodoExpresionBinaria = new NodoExpresionBinaria(ladoIzquierdo, ladoDerecho, operador);
+            return ExpresionCompuestaPrima(nodoExpresionBinaria);
         }
+        return ladoIzquierdo;
     }
 
     // <OperadorBinario> ::= or | and | == | != | < | > | <= | >= | + | - | * | / | %
-    private void OperadorBinario() throws ExcepcionSintactica, ExcepcionLexica {
+    private Token OperadorBinario() throws ExcepcionSintactica, ExcepcionLexica {
+        Token toReturn = null;
+        //Aca se determina el lado derecho esto deberia devolver un toekn
         switch (tokenActual.getToken_id()) {
             case "or":
+                toReturn = tokenActual;
                 match("or");
                 break;
             case "and":
+                toReturn = tokenActual;
                 match("and");
                 break;
             case "comparacion":
+                toReturn = tokenActual;
                 match("comparacion");
                 break;
             case "distinto":
+                toReturn = tokenActual;
                 match("distinto");
                 break;
             case "menor":
+                toReturn = tokenActual;
                 match("menor");
                 break;
             case "mayor":
+                toReturn = tokenActual;
                 match("mayor");
                 break;
             case "menorIgual":
+                toReturn = tokenActual;
                 match("menorIgual");
                 break;
             case "mayorIgual":
+                toReturn = tokenActual;
                 match("mayorIgual");
                 break;
             case "suma":
+                toReturn = tokenActual;
                 match("suma");
                 break;
             case "resta":
+                toReturn = tokenActual;
                 match("resta");
                 break;
             case "multiplicacion":
+                toReturn = tokenActual;
                 match("multiplicacion");
                 break;
             case "division":
+                toReturn = tokenActual;
                 match("division");
                 break;
             case "porcentaje":
+                toReturn = tokenActual;
                 match("porcentaje");
                 break;
         }
+        return toReturn;
     }
 
     // <ExpresionBasica> ::= <OperadorUnario> <Operando> | <Operando>
-    private void ExpresionBasica() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoExpresion ExpresionBasica() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoExpresion nodoExpresion;
         if (tokenActual.getToken_id().equals("suma") || tokenActual.getToken_id().equals("resta") || tokenActual.getToken_id().equals("not")) {
-            OperadorUnario();
-            Operando();
+            Token operadorUnario = OperadorUnario();
+            NodoExpresion operando = Operando();
+            nodoExpresion = null;
+            //Aca hay algo que cambiar
         } else {
-            Operando();
+            nodoExpresion = Operando();
         }
+        return nodoExpresion;
     }
 
     // <OperadorUnario> ::= + | - | !
-    private void OperadorUnario() throws ExcepcionSintactica, ExcepcionLexica {
+    private Token OperadorUnario() throws ExcepcionSintactica, ExcepcionLexica {
+        Token operador = tokenActual;
         if (tokenActual.getToken_id().equals("suma")) {
             match("suma");
         } else if (tokenActual.getToken_id().equals("resta")) {
@@ -522,56 +543,57 @@ public class AnalizadorSintactico {
         } else if (tokenActual.getToken_id().equals("not")) {
             match("not");
         }
+        return operador;
     }
 
     // <Operando> ::= <Literal> | <Acceso>
-    private void Operando() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoExpresion Operando() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoExpresion nodoExpresion = null;
         if (tokenActual.getToken_id().equals("intLiteral") || tokenActual.getToken_id().equals("charLiteral") || tokenActual.getToken_id().equals("pr_true") || tokenActual.getToken_id().equals("pr_false") || tokenActual.getToken_id().equals("pr_null") || tokenActual.getToken_id().equals("stringLiteral")) {
-            Literal();
+            nodoExpresion = Literal();
         } else {
-            Acceso();
+            //nodoExpresion = Acceso();
         }
+        return nodoExpresion;
     }
 
     // <Literal> ::= <LiteralPrimitivo> | <LiteralObjeto>
-    private void Literal() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoExpresion Literal() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoOperandoLiteral nodoOperandoLiteral = null;
         if (esLiteralPrimitivo(tokenActual)) {
-            LiteralPrimitivo();
+            nodoOperandoLiteral = LiteralPrimitivo();
         } else if (esLiteralObjeto(tokenActual)) {
-            LiteralObjeto();
+            nodoOperandoLiteral = LiteralObjeto();
         } else {
             throw new ExcepcionSintactica(tokenActual, "literal válido");
         }
+        return nodoOperandoLiteral;
     }
 
     // <LiteralPrimitivo> ::= true | false | intLiteral | charLiteral
     private NodoOperandoLiteral LiteralPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral();
-        switch (tokenActual.getToken_id()) {
-            case "pr_true":
-                match("pr_true");
-                break;
-            case "pr_false":
-                match("pr_false");
-                break;
-            case "intLiteral":
-                match("intLiteral");
-                break;
-            case "charLiteral":
-                match("charLiteral");
-                break;
+        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual.getLexema());
+        if (tokenActual.getToken_id().equals("pr_true")) {
+            match("pr_true");
+        } else if (tokenActual.getToken_id().equals("pr_false")) {
+            match("pr_false");
+        } else if (tokenActual.getToken_id().equals("intLiteral")) {
+            match("intLiteral");
+        } else if (tokenActual.getToken_id().equals("charLiteral")) {
+            match("charLiteral");
         }
         return nodoOperandoLiteral;
-        //TO-DO Revisar esto bien
     }
 
     // <LiteralObjeto> ::= null | stringLiteral
-    private void LiteralObjeto() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoOperandoLiteral LiteralObjeto() throws ExcepcionSintactica, ExcepcionLexica {
+        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual.getLexema());
         if (tokenActual.getToken_id().equals("pr_null")) {
             match("pr_null");
         } else if (tokenActual.getToken_id().equals("stringLiteral")) {
             match("stringLiteral");
         }
+        return nodoOperandoLiteral;
     }
 
     // Método auxiliar para verificar si el token actual es un literal primitivo
@@ -729,5 +751,15 @@ public class AnalizadorSintactico {
                 token.getToken_id().equals("pr_new") || token.getToken_id().equals("parentesisAbierto") ||
                 token.getToken_id().equals("suma") || token.getToken_id().equals("resta") ||
                 token.getToken_id().equals("not");
+    }
+
+    private boolean esOperadorBinario(Token token) {
+        return token.getToken_id().equals("or") || token.getToken_id().equals("and") ||
+                token.getToken_id().equals("==") || token.getToken_id().equals("!=") ||
+                token.getToken_id().equals("<") || token.getToken_id().equals(">") ||
+                token.getToken_id().equals("<=") || token.getToken_id().equals(">=") ||
+                token.getToken_id().equals("+") || token.getToken_id().equals("-") ||
+                token.getToken_id().equals("*") || token.getToken_id().equals("/") ||
+                token.getToken_id().equals("%");
     }
 }

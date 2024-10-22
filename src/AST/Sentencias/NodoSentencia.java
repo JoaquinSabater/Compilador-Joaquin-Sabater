@@ -2,8 +2,7 @@ package AST.Sentencias;
 
 import AnalizadorLexico.*;
 import AnalizadorSemantico.*;
-import AST.*;
-import AnalizadorSintactico.*;
+
 
 public abstract class NodoSentencia {
     protected Token token;

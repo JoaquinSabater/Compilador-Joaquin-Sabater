@@ -3,7 +3,6 @@ package AST.Sentencias;
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
-import AST.*;
 
 public class NodoIf extends NodoSentencia {
 
