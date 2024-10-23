@@ -5,8 +5,12 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
 
 public class NodoExpresionUnaria extends NodoExpresion{
-    public NodoExpresionUnaria(Token token) {
+
+    private NodoExpresion operando;
+
+    public NodoExpresionUnaria(Token token, NodoExpresion operando) {
         super(token);
+        this.operando = operando;
     }
 
     @Override

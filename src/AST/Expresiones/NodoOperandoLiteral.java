@@ -1,16 +1,17 @@
 package AST.Expresiones;
 
+import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
 
 public class NodoOperandoLiteral extends NodoOperando {
-    private String valor;
+    private Token valor;
 
-    public NodoOperandoLiteral(String valor) {
+    public NodoOperandoLiteral(Token valor) {
         this.valor = valor;
     }
 
-    public String getValor() {
+    public Token getValor() {
         return valor;
     }
 

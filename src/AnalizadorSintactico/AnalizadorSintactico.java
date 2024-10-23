@@ -525,8 +525,7 @@ public class AnalizadorSintactico {
         if (tokenActual.getToken_id().equals("suma") || tokenActual.getToken_id().equals("resta") || tokenActual.getToken_id().equals("not")) {
             Token operadorUnario = OperadorUnario();
             NodoExpresion operando = Operando();
-            nodoExpresion = null;
-            //Aca hay algo que cambiar
+            nodoExpresion = new NodoExpresionUnaria(operadorUnario, operando);
         } else {
             nodoExpresion = Operando();
         }
@@ -535,15 +534,18 @@ public class AnalizadorSintactico {
 
     // <OperadorUnario> ::= + | - | !
     private Token OperadorUnario() throws ExcepcionSintactica, ExcepcionLexica {
-        Token operador = tokenActual;
+        Token toReturn = null;
         if (tokenActual.getToken_id().equals("suma")) {
+            toReturn = tokenActual;
             match("suma");
         } else if (tokenActual.getToken_id().equals("resta")) {
+            toReturn = tokenActual;
             match("resta");
         } else if (tokenActual.getToken_id().equals("not")) {
+            toReturn = tokenActual;
             match("not");
         }
-        return operador;
+        return toReturn;
     }
 
     // <Operando> ::= <Literal> | <Acceso>
@@ -572,7 +574,7 @@ public class AnalizadorSintactico {
 
     // <LiteralPrimitivo> ::= true | false | intLiteral | charLiteral
     private NodoOperandoLiteral LiteralPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual.getLexema());
+        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual);
         if (tokenActual.getToken_id().equals("pr_true")) {
             match("pr_true");
         } else if (tokenActual.getToken_id().equals("pr_false")) {
@@ -587,7 +589,7 @@ public class AnalizadorSintactico {
 
     // <LiteralObjeto> ::= null | stringLiteral
     private NodoOperandoLiteral LiteralObjeto() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual.getLexema());
+        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual);
         if (tokenActual.getToken_id().equals("pr_null")) {
             match("pr_null");
         } else if (tokenActual.getToken_id().equals("stringLiteral")) {
@@ -609,7 +611,7 @@ public class AnalizadorSintactico {
 
     // <Acceso> ::= <Primario> <EncadenadoOpcional>
     private void Acceso() throws ExcepcionSintactica, ExcepcionLexica {
-        Primario(); //Porque cambia aca
+        Primario();
         EncadenadoOpcional();
     }
 
