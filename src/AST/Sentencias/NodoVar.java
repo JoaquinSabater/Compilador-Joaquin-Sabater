@@ -24,8 +24,7 @@ public class NodoVar extends NodoSentencia {
     }
 
     @Override
-    public Tipo chequear() throws ExcepcionSemantica {
-        // Implementar la lógica de chequeo semántico
-        return null;
+    public void chequear() throws ExcepcionSemantica {
+
     }
 }

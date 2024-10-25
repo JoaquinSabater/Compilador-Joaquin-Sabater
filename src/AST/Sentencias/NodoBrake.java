@@ -23,10 +23,9 @@ public class NodoBrake extends NodoSentencia {
     }
 
     @Override
-    public Tipo chequear() throws ExcepcionSemantica {
+    public void chequear() throws ExcepcionSemantica {
         if (!esWhileOrSwitch) {
             throw new ExcepcionSemantica(token,"Error semántico en la línea " + token.getNro_linea() + ": la sentencia break solo puede ser utilizada dentro de un ciclo o un switch.");
         }
-        return null;
     }
 }

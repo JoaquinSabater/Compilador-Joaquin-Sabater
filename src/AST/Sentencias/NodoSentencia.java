@@ -11,7 +11,7 @@ public abstract class NodoSentencia {
         this.token = token;
     }
 
-    public abstract Tipo chequear() throws ExcepcionSemantica;
+    public abstract void chequear() throws ExcepcionSemantica;
 
     public Token getToken(){
         return token;

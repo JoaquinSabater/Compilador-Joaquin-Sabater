@@ -35,8 +35,8 @@ public class NodoReturn extends NodoSentencia {
     }
 
     @Override
-    public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+    public void chequear() throws ExcepcionSemantica {
+
     }
 
 }

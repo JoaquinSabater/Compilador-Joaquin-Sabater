@@ -52,8 +52,8 @@ public class NodoSwitch extends NodoSentencia {
     }
 
     @Override
-    public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+    public void chequear() throws ExcepcionSemantica {
+
     }
 
     public void agregarCaso(NodoOperandoLiteral nodoOperandoLiteral, NodoSentencia sentencia) {

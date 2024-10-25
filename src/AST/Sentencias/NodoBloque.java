@@ -22,11 +22,10 @@ public class NodoBloque extends NodoSentencia {
     }
 
     @Override
-    public Tipo chequear() throws ExcepcionSemantica {
+    public void chequear() throws ExcepcionSemantica {
         for (NodoSentencia sentencia : listaSentencias) {
             sentencia.chequear();
         }
-        return null;
     }
 
     public void setClaseContenedora(Clase claseContenedora) {
