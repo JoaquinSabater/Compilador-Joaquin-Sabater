@@ -11,6 +11,8 @@ public class NodoReturn extends NodoSentencia {
 
     NodoExpresion expresion;
 
+    Token token;
+
     public NodoReturn(Token token) {
         super(token);
     }
@@ -33,6 +35,15 @@ public class NodoReturn extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-        //Voy a tener que fijarme si el metodo padre tiene un tipo de retorno
+        if (expresion != null) {
+            expresion.chequear();
+            if (!expresion.getTipo().esCompatible(metodoPadre.getTipoRetorno())) {
+                throw new ExcepcionSemantica("La expresion de retorno no es compatible con el tipo de retorno del metodo", getToken());
+            }
+        } else {
+            if (!metodoPadre.getTipoRetorno().esVoid()) {
+                throw new ExcepcionSemantica("El metodo debe retornar un valor", getToken());
+            }
+        }
     }
 }

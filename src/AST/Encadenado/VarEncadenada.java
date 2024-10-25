@@ -1,4 +1,9 @@
 package AST.Encadenado;
 
-public class VarEncadenada {
+import AnalizadorLexico.Token;
+
+public class VarEncadenada extends Encadenado {
+    public VarEncadenada(Token token) {
+        super(token);
+    }
 }

@@ -1,7 +1,9 @@
 package AST.Expresiones;
 
+import AnalizadorLexico.Token;
+
 public abstract class NodoOperando extends NodoExpresion {
-    public NodoOperando() {
-        super(null);
+    public NodoOperando(Token token){
+        super(token);
     }
 }

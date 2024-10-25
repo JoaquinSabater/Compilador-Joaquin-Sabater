@@ -1,13 +1,20 @@
 package AST.Sentencias;
 
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.Clase;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.Metodo;
 
 import java.util.ArrayList;
 
 public class NodoBloque extends NodoSentencia {
 
     private ArrayList<NodoSentencia> listaSentencias;
+
+    Clase claseContenedora;
+
+    Metodo metodoContenedor;
+
     public NodoBloque(Token token) {
         super(token);
         listaSentencias = new ArrayList<>();
@@ -15,7 +22,25 @@ public class NodoBloque extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
+        for (NodoSentencia sentencia : listaSentencias) {
+            sentencia.chequear();
+        }
+    }
 
+    public void setClaseContenedora(Clase claseContenedora) {
+        this.claseContenedora = claseContenedora;
+    }
+
+    public Clase getClaseContenedora() {
+        return claseContenedora;
+    }
+
+    public void setMetodoContenedor(Metodo metodoContenedor) {
+        this.metodoContenedor = metodoContenedor;
+    }
+
+    public Metodo getMetodoContenedor() {
+        return metodoContenedor;
     }
 
     public void agregarSentencia(NodoSentencia sentencia) {
