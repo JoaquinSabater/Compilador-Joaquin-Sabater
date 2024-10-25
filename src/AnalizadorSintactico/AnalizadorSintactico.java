@@ -257,7 +257,7 @@ public class AnalizadorSintactico {
                 match("puntoComa");
                 break;
             case "pr_var":
-                VarLocal();
+                nodoSentencia = VarLocal();
                 match("puntoComa");
                 break;
             case "pr_return":
@@ -293,11 +293,13 @@ public class AnalizadorSintactico {
     }
 
     // <VarLocal> ::= var idMetVar = <ExpresionCompuesta>
-    private void VarLocal() throws ExcepcionSintactica, ExcepcionLexica {
+    private NodoVar VarLocal() throws ExcepcionSintactica, ExcepcionLexica {
         match("pr_var");
+        Token idMetVar = tokenActual;
         match("idMetVar");
         match("asignacion");
-        ExpresionCompuesta();
+        NodoExpresion expresion = ExpresionCompuesta();
+        return new NodoVar(idMetVar, expresion);
     }
 
     //<Return> ::= return <ExpresionOpcional>

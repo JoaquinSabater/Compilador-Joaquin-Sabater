@@ -2,6 +2,7 @@ package AST.Sentencias;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.Tipo;
 
 public class NodoAsignacion extends NodoSentencia {
     public NodoAsignacion(Token token) {
@@ -9,7 +10,7 @@ public class NodoAsignacion extends NodoSentencia {
     }
 
     @Override
-    public void chequear() throws ExcepcionSemantica {
-
+    public Tipo chequear() throws ExcepcionSemantica {
+        return null;
     }
 }
