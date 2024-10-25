@@ -4,6 +4,7 @@ import AST.Expresiones.NodoExpresion;
 import AST.Expresiones.NodoOperandoLiteral;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.Tipo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,8 +52,8 @@ public class NodoSwitch extends NodoSentencia {
     }
 
     @Override
-    public void chequear() throws ExcepcionSemantica {
-
+    public Tipo chequear() throws ExcepcionSemantica {
+        return null;
     }
 
     public void agregarCaso(NodoOperandoLiteral nodoOperandoLiteral, NodoSentencia sentencia) {

@@ -3,6 +3,7 @@ package AST.Sentencias;
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.Tipo;
 
 public class NodoIf extends NodoSentencia {
 
@@ -15,8 +16,16 @@ public class NodoIf extends NodoSentencia {
     }
 
     @Override
-    public void chequear() throws ExcepcionSemantica {
-
+    public Tipo chequear() throws ExcepcionSemantica {
+        Tipo tipoCondicion = condicion.chequear();
+        if (!tipoCondicion.getNombreClase().getLexema().equals("boolean")) {
+            throw new ExcepcionSemantica(token, "La condicion del if debe ser de tipo boolean");
+        }
+        sentencia.chequear();
+        if (sentenciaElse != null) {
+            sentenciaElse.chequear();
+        }
+        return null;
     }
 
     public void setCondicion(NodoExpresion condicion) {

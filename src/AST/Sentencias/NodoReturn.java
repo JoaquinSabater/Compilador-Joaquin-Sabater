@@ -4,6 +4,7 @@ import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Metodo;
+import AnalizadorSemantico.Tipo;
 
 public class NodoReturn extends NodoSentencia {
 
@@ -34,16 +35,8 @@ public class NodoReturn extends NodoSentencia {
     }
 
     @Override
-    public void chequear() throws ExcepcionSemantica {
-        if (expresion != null) {
-            expresion.chequear();
-            if (!expresion.getTipo().esCompatible(metodoPadre.getTipoRetorno())) {
-                throw new ExcepcionSemantica("La expresion de retorno no es compatible con el tipo de retorno del metodo", getToken());
-            }
-        } else {
-            if (!metodoPadre.getTipoRetorno().esVoid()) {
-                throw new ExcepcionSemantica("El metodo debe retornar un valor", getToken());
-            }
-        }
+    public Tipo chequear() throws ExcepcionSemantica {
+        return null;
     }
+
 }

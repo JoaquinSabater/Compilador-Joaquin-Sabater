@@ -20,4 +20,14 @@ public class TipoClase implements Tipo {
     public boolean esTipoPrimitivo() {
         return false;
     }
+
+    @Override
+    public boolean esCompatibleOperador(Token token) {
+        return token.getToken_id().equals("asignacion") || token.getToken_id().equals("comparacion") || token.getToken_id().equals("distinto");
+    }
+
+    @Override
+    public boolean esCompatibleTipo(Tipo t) {
+        return this.getNombreClase().getLexema().equals(t.getNombreClase().getLexema());
+    }
 }

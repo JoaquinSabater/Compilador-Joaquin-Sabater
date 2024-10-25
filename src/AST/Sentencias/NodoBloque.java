@@ -4,6 +4,7 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.Clase;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Metodo;
+import AnalizadorSemantico.Tipo;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,11 @@ public class NodoBloque extends NodoSentencia {
     }
 
     @Override
-    public void chequear() throws ExcepcionSemantica {
+    public Tipo chequear() throws ExcepcionSemantica {
         for (NodoSentencia sentencia : listaSentencias) {
             sentencia.chequear();
         }
+        return null;
     }
 
     public void setClaseContenedora(Clase claseContenedora) {

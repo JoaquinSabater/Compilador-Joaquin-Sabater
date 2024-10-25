@@ -8,4 +8,8 @@ public interface Tipo {
 
     public Token getNombreClase();
     public boolean esTipoPrimitivo();
+
+    public abstract boolean esCompatibleOperador(Token token);
+
+    public abstract boolean esCompatibleTipo(Tipo t);
 }
