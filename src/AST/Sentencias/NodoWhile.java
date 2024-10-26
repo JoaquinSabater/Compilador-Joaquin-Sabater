@@ -3,6 +3,7 @@ package AST.Sentencias;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AST.Expresiones.*;
+import AnalizadorSemantico.Tipo;
 
 public class NodoWhile extends NodoSentencia {
 
@@ -15,7 +16,11 @@ public class NodoWhile extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-
+        Tipo tipoCondicion = condicion.chequear();
+        if (tipoCondicion.getNombreClase().getToken_id().equals("boleano")) {
+            throw new ExcepcionSemantica(token, "La condición del while debe ser de tipo booleano");
+        }
+        sentencia.chequear();
     }
 
     public void setCondicion(NodoExpresion condicion) {

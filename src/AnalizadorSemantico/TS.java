@@ -1,5 +1,6 @@
 package AnalizadorSemantico;
 
+import AST.Sentencias.NodoBloque;
 import AnalizadorLexico.Token;
 
 import java.util.HashMap;
@@ -8,25 +9,19 @@ import java.util.Objects;
 import java.util.Set;
 
 public class TS {
-
-    /*
-        no es posible repetir los nombre entre la superclase
-
-        No se puede definir una variable de instancia con el mismo nombre que de una varaible de
-        instancia de un ancestro
-
-     */
-
     private HashMap<String, Clase> Clases;
 
     Clase claseActual;
 
     Metodo metodoActual;
 
+    NodoBloque bloqueActual;
+
     public TS() throws ExcepcionSemantica {
         Clases = new HashMap<>();
         claseActual = null;
         metodoActual = null;
+        bloqueActual = null;
 
         // Crear y agregar la clase Object
         Token tokenObject = new Token("idClase", "Object", 0);
@@ -65,6 +60,14 @@ public class TS {
         insertarMetodos(new Token("pr_void", "void", 0), new Token("idMetVar", "printSln", 0),true);
         agregarParametros(new Token("idClase", "String", 0), new Token("idMetVar", "s", 0));
 
+    }
+
+    public NodoBloque getBloqueActual() {
+        return bloqueActual;
+    }
+
+    public void setBloqueActual(NodoBloque bloqueActual) {
+        this.bloqueActual = bloqueActual;
     }
 
     public void limpiarClases() {

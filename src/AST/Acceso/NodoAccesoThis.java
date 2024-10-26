@@ -2,14 +2,15 @@ package AST.Acceso;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 
 public class NodoAccesoThis extends NodoAcceso{
 
     Token token;
 
-    public NodoAccesoThis(Token token) {
-        super(token);
+    public NodoAccesoThis(Token token, TS ts) {
+        super(token,ts);
     }
 
     public boolean esAsignable(){

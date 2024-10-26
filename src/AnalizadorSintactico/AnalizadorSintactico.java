@@ -215,13 +215,24 @@ public class AnalizadorSintactico {
 
     // <Bloque> ::= { <ListaSentencias> }
     private NodoBloque Bloque() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoBloque nodoBloque= new NodoBloque(tokenActual);
-        nodoBloque.setClaseContenedora(ts.getClaseActual());
-        nodoBloque.setMetodoContenedor(ts.getMetodoActual());
-        bloqueActual = nodoBloque;
+        boolean flag = false;
+        NodoBloque nodoBloque = null;
+        if (ts.getBloqueActual() == null){
+            nodoBloque= new NodoBloque(tokenActual,null);
+            nodoBloque.setMetodoContenedor(ts.getMetodoActual());
+        }
+        else {
+            nodoBloque= new NodoBloque(tokenActual,ts.getBloqueActual());
+            nodoBloque.setMetodoContenedor(ts.getMetodoActual());
+            ts.setBloqueActual(nodoBloque);
+            flag = true;
+        }
         match("llaveAbierta");
         ListaSentencias();
         match("llaveCerrada");
+        if(flag){
+            ts.setBloqueActual(nodoBloque.getPadre());
+        }
         return nodoBloque;
     }
 
@@ -249,7 +260,12 @@ public class AnalizadorSintactico {
     private NodoSentencia Sentencia() throws ExcepcionSintactica, ExcepcionLexica {
         NodoSentencia nodoSentencia = null;
         if(esExpresion(tokenActual) || tokenActual.getToken_id().equals("idClase")){
-            Expresion();
+            NodoAsignacionLlamada toReturn = new NodoAsignacionLlamada(tokenActual);
+            NodoExpresion nodoExpresion;
+            nodoExpresion = Expresion();
+            toReturn.setExpresion(nodoExpresion);
+            nodoSentencia = toReturn;
+            //Creo un nodoAsiginacionLlamada que herede de sentencia y guardo la expresion
             match("puntoComa");
         }
         switch (tokenActual.getToken_id()) {
@@ -566,7 +582,7 @@ public class AnalizadorSintactico {
         if (tokenActual.getToken_id().equals("intLiteral") || tokenActual.getToken_id().equals("charLiteral") || tokenActual.getToken_id().equals("pr_true") || tokenActual.getToken_id().equals("pr_false") || tokenActual.getToken_id().equals("pr_null") || tokenActual.getToken_id().equals("stringLiteral")) {
             nodoExpresion = Literal();
         } else {
-            //nodoExpresion = Acceso();
+            nodoExpresion = Acceso();
         }
         return nodoExpresion;
     }
@@ -645,7 +661,7 @@ public class AnalizadorSintactico {
             case "pr_new":
                 return AccesoConstructor();
             case "parentesisAbierto":
-                return (NodoAcceso) ExpresionParentizada();
+                return ExpresionParentizada();
             case "pr_static":
                 return AccesoMetodoEstatico();
             default:
@@ -657,7 +673,7 @@ public class AnalizadorSintactico {
     private NodoAccesoThis AccesoThis() throws ExcepcionSintactica, ExcepcionLexica {
         Token tokenThis = tokenActual;
         match("pr_this");
-        return new NodoAccesoThis(tokenThis);
+        return new NodoAccesoThis(tokenThis,ts);
     }
 
     private NodoAcceso AccesoVarMetodo() throws ExcepcionSintactica, ExcepcionLexica {
@@ -673,9 +689,9 @@ public class AnalizadorSintactico {
     // <AccesoVarMetodoPrima> ::= <ArgsActuales> | ε
     private NodoAcceso AccesoVarMetodoPrima(Token tokenVarMetodo) throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("parentesisAbierto")) {
-            return new AccesoMetodo(tokenVarMetodo, ArgsActuales());
+            return new AccesoMetodo(tokenVarMetodo, ArgsActuales(),ts,ts.getClaseActual());
         } else {
-            return new NodoAccesoVar(tokenVarMetodo);
+            return new NodoAccesoVar(tokenVarMetodo,ts);
         }
     }
 
@@ -684,13 +700,13 @@ public class AnalizadorSintactico {
         match("pr_new");
         Token tokenClase = tokenActual;
         match("idClase");
-        return new AccesoConstructor(tokenClase, ArgsActuales());
+        return new AccesoConstructor(tokenClase, ArgsActuales(),ts);
     }
 
     //<ExpresionParentizada> ::= ( <Expresion> )
     private NodoExpresionParametrizada ExpresionParentizada() throws ExcepcionSintactica, ExcepcionLexica {
         match("parentesisAbierto");
-        NodoExpresionParametrizada nodoExpresionParametrizada = new NodoExpresionParametrizada(tokenActual,Expresion());
+        NodoExpresionParametrizada nodoExpresionParametrizada = new NodoExpresionParametrizada(tokenActual,Expresion(),ts);
         match("parentesisCerrado");
         return nodoExpresionParametrizada;
     }
@@ -701,7 +717,7 @@ public class AnalizadorSintactico {
         match("punto");
         Token tokenMetodo = tokenActual;
         match("idMetVar");
-        AccesoMetodoEstatico nodoAccesoMetodoEstatico = new AccesoMetodoEstatico(tokenClase, tokenMetodo, ArgsActuales());
+        AccesoMetodoEstatico nodoAccesoMetodoEstatico = new AccesoMetodoEstatico(tokenClase, tokenMetodo, ArgsActuales(),ts);
         nodoAccesoMetodoEstatico.setEncadenado(EncadenadoOpcional());
         return nodoAccesoMetodoEstatico;
     }

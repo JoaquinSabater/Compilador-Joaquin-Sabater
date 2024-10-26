@@ -16,9 +16,16 @@ public class NodoBloque extends NodoSentencia {
 
     Metodo metodoContenedor;
 
-    public NodoBloque(Token token) {
+    NodoBloque padre;
+
+    public NodoBloque(Token token, NodoBloque padre) {
         super(token);
         listaSentencias = new ArrayList<>();
+        this.padre = padre;
+    }
+
+    public NodoBloque getPadre() {
+        return padre;
     }
 
     @Override

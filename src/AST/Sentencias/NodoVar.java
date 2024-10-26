@@ -25,6 +25,6 @@ public class NodoVar extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-
+        //Aca en la parte de var que tengo que chequear ?
     }
 }

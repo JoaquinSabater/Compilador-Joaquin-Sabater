@@ -2,6 +2,7 @@ package AST.Acceso;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import AST.Expresiones.NodoExpresion;
 
@@ -11,8 +12,8 @@ public class NodoExpresionParametrizada extends NodoAcceso{
 
     NodoExpresion nodoExpresion;
 
-    public NodoExpresionParametrizada(Token token, NodoExpresion nodoExpresion) {
-        super(token);
+    public NodoExpresionParametrizada(Token token, NodoExpresion nodoExpresion, TS ts) {
+        super(token,ts);
         this.nodoExpresion = nodoExpresion;
     }
 

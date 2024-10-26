@@ -1,17 +1,14 @@
 package AST.Acceso;
 
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.Atributo;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.Parametro;
-import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.*;
 
 public class NodoAccesoVar extends NodoAcceso {
 
     private Atributo atributo;
     private Parametro parametro;
-    public NodoAccesoVar(Token token) {
-        super(token);
+    public NodoAccesoVar(Token token, TS ts) {
+        super(token,ts);
         this.esAsignable = true;
     }
 

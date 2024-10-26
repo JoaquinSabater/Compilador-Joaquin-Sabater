@@ -1,5 +1,6 @@
 package AnalizadorSemantico;
 
+import AST.Sentencias.NodoBloque;
 import AnalizadorLexico.Token;
 
 import java.util.HashMap;
@@ -10,6 +11,8 @@ public class Metodo {
     private Token nombre;
     private HashMap<String, Parametro> parametros = new HashMap<>();
     private boolean esVoid;
+
+    private NodoBloque bloqueContenedor;
 
     private boolean esStatic = false;
 

@@ -31,5 +31,6 @@ public class NodoExpresionBinaria extends NodoExpresion{
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
         return null;
+        //Implementar por cada operador binario y comparar
     }
 }

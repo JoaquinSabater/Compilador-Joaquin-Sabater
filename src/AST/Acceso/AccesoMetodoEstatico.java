@@ -4,6 +4,7 @@ import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Metodo;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ public class AccesoMetodoEstatico extends NodoAcceso {
     Token nombre;
 
     Token metodo;
-    public AccesoMetodoEstatico(Token nombre,Token metodo,ArrayList<NodoExpresion> listaExpresiones) {
-        super(nombre);
+    public AccesoMetodoEstatico(Token nombre, Token metodo, ArrayList<NodoExpresion> listaExpresiones, TS ts) {
+        super(nombre,ts);
         this.listaExpresiones = listaExpresiones;
         this.nombre = nombre;
         this.metodo = metodo;

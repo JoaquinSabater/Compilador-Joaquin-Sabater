@@ -36,7 +36,14 @@ public class NodoReturn extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-
+        Tipo tipoMetodo = metodoPadre.getTipo();
+        if (expresion != null) {
+            Tipo tipoExpresion = expresion.chequear();
+            if (!tipoMetodo.esCompatibleTipo(tipoExpresion)) {
+                throw new ExcepcionSemantica(token, "El tipo de la expresion de retorno no es compatible con el tipo de retorno del metodo");
+            }
+        }
+        //Donde controlo si el tipo si un metodo con un tipo no tiene un return ?
     }
 
 }

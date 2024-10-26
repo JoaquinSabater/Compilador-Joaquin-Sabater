@@ -8,6 +8,7 @@ public class NodoOperandoLiteral extends NodoOperando {
     private Token valor;
 
     public NodoOperandoLiteral(Token valor) {
+        super(valor);
         this.valor = valor;
     }
 

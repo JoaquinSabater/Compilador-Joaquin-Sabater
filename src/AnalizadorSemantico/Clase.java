@@ -62,6 +62,10 @@ public class Clase {
         return nombre;
     }
 
+    public Metodo getMetodo(String nombreMetodo) {
+        return metodos.get(nombreMetodo);
+    }
+
     public HashMap<String, Metodo> getMetodos() {
         return metodos;
     }
