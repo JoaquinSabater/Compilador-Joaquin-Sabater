@@ -26,7 +26,7 @@ public class NodoAccesoVar extends NodoAcceso {
         Tipo toReturn = null;
         Clase claseActual = ts.getClaseActual();
         Metodo metodoActual = ts.getMetodoActual();
-        NodoBloque bloqueActual = metodoActual.getBloqueContenedor();
+        //NodoBloque bloqueActual = metodoActual.getBloqueContenedor();
 
         if(claseActual.getAtributo(this.token.getLexema()) != null){
             this.atributo = claseActual.getAtributo(this.token.getLexema());

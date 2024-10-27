@@ -27,6 +27,13 @@ public class NodoExpresionParametrizada extends NodoAcceso{
 
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+        Tipo tipoExpresion = this.nodoExpresion.chequear();
+        if(this.encadenado != null){
+            if(tipoExpresion.esTipoPrimitivo()){
+                throw new ExcepcionSemantica(this.nodoExpresion.obtenerToken(), "El lado izquierdo del encadenado es un tipo primitivo");
+            }
+            return this.encadenado.chequear(tipoExpresion);
+        }
+        return tipoExpresion;
     }
 }
