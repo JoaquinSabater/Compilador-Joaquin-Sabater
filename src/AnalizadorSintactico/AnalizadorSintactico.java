@@ -763,17 +763,18 @@ public class AnalizadorSintactico {
     // <EncadenadoOpcional>::= . idMetVar<EncadenadoOpcionalPrima> | ε
     private Encadenado EncadenadoOpcional() throws ExcepcionLexica, ExcepcionSintactica {
         Encadenado encadenado = null;
+        Token tokenAux = null;
         if (tokenActual.getToken_id().equals("punto")) {
             match("punto");
             Encadenado nuevoEncadenado = null;
             if (tokenActual.getToken_id().equals("idMetVar")) {
-                Token tokenVar = tokenActual;
+                tokenAux = tokenActual;
                 match("idMetVar");
-                nuevoEncadenado = new VarEncadenada(tokenVar);
+                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
             } else if (tokenActual.getToken_id().equals("idClase")) {
-                Token tokenClase = tokenActual;
+                tokenAux = tokenActual;
                 match("idClase");
-                nuevoEncadenado = new VarEncadenada(tokenClase);
+                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
             }
             if (nuevoEncadenado != null) {
                 if (encadenado == null) {
@@ -782,16 +783,16 @@ public class AnalizadorSintactico {
                     encadenado.setEncadenado(nuevoEncadenado);
                 }
             }
-            encadenado = EncadenadoOpcionalPrima(encadenado);
+            encadenado = EncadenadoOpcionalPrima(encadenado,tokenAux);
         }
         return encadenado;
     }
 
-    private Encadenado EncadenadoOpcionalPrima(Encadenado encadenado) throws ExcepcionLexica, ExcepcionSintactica {
+    private Encadenado EncadenadoOpcionalPrima(Encadenado encadenado,Token token) throws ExcepcionLexica, ExcepcionSintactica {
+        Token tokenAux = null;
         if (tokenActual.getToken_id().equals("parentesisAbierto")) {
-            Token tokenMetodo = tokenActual;
             ArrayList<NodoExpresion> listaExpresiones = ArgsActuales();
-            Encadenado nuevoEncadenado = new LlamadaEncadenada(tokenMetodo, listaExpresiones);
+            Encadenado nuevoEncadenado = new LlamadaEncadenada(token,ts,listaExpresiones);
             if (encadenado == null) {
                 encadenado = nuevoEncadenado;
             } else {
@@ -802,13 +803,13 @@ public class AnalizadorSintactico {
             match("punto");
             Encadenado nuevoEncadenado = null;
             if (tokenActual.getToken_id().equals("idMetVar")) {
-                Token tokenVar = tokenActual;
+                tokenAux = tokenActual;
                 match("idMetVar");
-                nuevoEncadenado = new VarEncadenada(tokenVar);
+                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
             } else if (tokenActual.getToken_id().equals("idClase")) {
-                Token tokenClase = tokenActual;
+                tokenAux = tokenActual;
                 match("idClase");
-                nuevoEncadenado = new VarEncadenada(tokenClase);
+                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
             }
             if (nuevoEncadenado != null) {
                 if (encadenado == null) {
@@ -817,7 +818,7 @@ public class AnalizadorSintactico {
                     encadenado.setEncadenado(nuevoEncadenado);
                 }
             }
-            encadenado = EncadenadoOpcionalPrima(encadenado);
+            encadenado = EncadenadoOpcionalPrima(encadenado,tokenAux);
         }
         return encadenado;
     }
