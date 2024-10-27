@@ -220,10 +220,12 @@ public class AnalizadorSintactico {
         if (ts.getBloqueActual() == null){
             nodoBloque= new NodoBloque(tokenActual,null);
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
+            ts.getMetodoActual().setBloqueContenedor(nodoBloque);
         }
         else {
             nodoBloque= new NodoBloque(tokenActual,ts.getBloqueActual());
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
+            ts.getMetodoActual().setBloqueContenedor(nodoBloque);
             ts.setBloqueActual(nodoBloque);
             flag = true;
         }

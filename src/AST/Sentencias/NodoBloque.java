@@ -1,10 +1,7 @@
 package AST.Sentencias;
 
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.Clase;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.Metodo;
-import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.*;
 
 import java.util.ArrayList;
 
@@ -62,4 +59,5 @@ public class NodoBloque extends NodoSentencia {
     public ArrayList<NodoSentencia> getListaSentencias() {
         return listaSentencias;
     }
+
 }

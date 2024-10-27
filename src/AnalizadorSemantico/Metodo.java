@@ -24,6 +24,16 @@ public class Metodo {
     }
 
     // Getters and Setters
+
+
+    public NodoBloque getBloqueContenedor() {
+        return bloqueContenedor;
+    }
+
+    public void setBloqueContenedor(NodoBloque bloqueContenedor) {
+        this.bloqueContenedor = bloqueContenedor;
+    }
+
     public Tipo getTipo() {
         return tipo;
     }
@@ -94,4 +104,7 @@ public class Metodo {
         this.esStatic = esStatic;
     }
 
+    public Parametro getParametro(String lexema) {
+        return parametros.get(lexema);
+    }
 }

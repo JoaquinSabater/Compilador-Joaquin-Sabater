@@ -1,5 +1,6 @@
 package AST.Acceso;
 
+import AST.Sentencias.NodoBloque;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
@@ -22,6 +23,26 @@ public class NodoAccesoVar extends NodoAcceso {
 
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+        Tipo toReturn = null;
+        Clase claseActual = ts.getClaseActual();
+        Metodo metodoActual = ts.getMetodoActual();
+        NodoBloque bloqueActual = metodoActual.getBloqueContenedor();
+
+        if(claseActual.getAtributo(this.token.getLexema()) != null){
+            this.atributo = claseActual.getAtributo(this.token.getLexema());
+            toReturn = this.atributo.getTipo();
+        }
+        else if(metodoActual.getParametro(this.token.getLexema()) != null){
+            this.parametro = metodoActual.getParametro(this.token.getLexema());
+            toReturn = this.parametro.getTipo();
+        } else{
+            throw new ExcepcionSemantica(this.token, "No se encontro el atributo o parametro " + this.token.getLexema());
+        }
+
+        if (this.encadenado != null) {
+            return encadenado.chequear(toReturn);
+        } else {
+            return toReturn;
+        }
     }
 }
