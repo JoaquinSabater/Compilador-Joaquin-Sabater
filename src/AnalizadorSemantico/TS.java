@@ -79,7 +79,7 @@ public class TS {
     }
 
     public void insertarClase(Token tokenActual) throws ExcepcionSemantica {
-        Clase c = new Clase(tokenActual);
+        Clase c = new Clase(tokenActual, this);
         if (Clases.containsKey(tokenActual.getLexema())) {
             throw new ExcepcionSemantica(tokenActual, "La clase con el nombre " + tokenActual.getLexema() + " ya existe.");
         }
@@ -143,7 +143,7 @@ public class TS {
         if (claseActual.getPadre() != null) {
             throw new ExcepcionSemantica(padre, "La clase " + claseActual.getNombre() + " ya tiene una clase padre asignada.");
         }else {
-            Clase c = new Clase(padre);
+            Clase c = new Clase(padre,this);
             claseActual.setPadre(c);
         }
         //System.out.println("Herencia de " + padre.getLexema() + " asignada a la clase " + claseActual.getNombre().getLexema());
@@ -312,6 +312,13 @@ public class TS {
                     c.insertarMetodo(metodoPadre.getNombre().getLexema(), metodoPadre);
                 }
             }
+        }
+    }
+
+    public void chequeoDeSentencias() throws ExcepcionSemantica {
+        for (Clase c : Clases.values()) {
+            claseActual = c;
+            c.chequeoDeSentencias();
         }
     }
 

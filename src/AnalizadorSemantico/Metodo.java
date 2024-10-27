@@ -107,4 +107,8 @@ public class Metodo {
     public Parametro getParametro(String lexema) {
         return parametros.get(lexema);
     }
+
+    public void chequear() throws ExcepcionSemantica {
+        bloqueContenedor.chequear();
+    }
 }

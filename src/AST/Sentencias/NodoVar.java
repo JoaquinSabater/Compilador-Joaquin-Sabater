@@ -2,17 +2,23 @@ package AST.Sentencias;
 
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.Clase;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.Metodo;
 
 public class NodoVar extends NodoSentencia {
     private Token idMetVar;
     private NodoExpresion expresion;
 
-    public NodoVar(Token idMetVar, NodoExpresion expresion) {
+    TS ts;
+
+    public NodoVar(Token idMetVar, NodoExpresion expresion, TS ts) {
         super(idMetVar);
         this.idMetVar = idMetVar;
         this.expresion = expresion;
+        this.ts = ts;
     }
 
     public Token getIdMetVar() {
@@ -25,6 +31,18 @@ public class NodoVar extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-        //Aca en la parte de var que tengo que chequear ?
+        Clase claseActual = ts.getClaseActual();
+        Metodo metodoActual = ts.getMetodoActual();
+        NodoBloque bloqueActual = metodoActual.getBloqueContenedor();
+
+        if (claseActual.getAtributo(this.idMetVar.getLexema()) != null) {
+            throw new ExcepcionSemantica(this.idMetVar, "El nombre de la variable ya ha sido utilizado como atributo de la clase");
+        }
+
+        if (metodoActual.getParametro(this.idMetVar.getLexema()) != null) {
+            throw new ExcepcionSemantica(this.idMetVar, "El nombre de la variable ya ha sido utilizado como parámetro del método");
+        }
+
+        expresion.chequear();
     }
 }

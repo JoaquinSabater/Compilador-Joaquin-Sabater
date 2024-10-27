@@ -317,7 +317,7 @@ public class AnalizadorSintactico {
         match("idMetVar");
         match("asignacion");
         NodoExpresion expresion = ExpresionCompuesta();
-        return new NodoVar(idMetVar, expresion);
+        return new NodoVar(idMetVar, expresion,ts);
     }
 
     //<Return> ::= return <ExpresionOpcional>

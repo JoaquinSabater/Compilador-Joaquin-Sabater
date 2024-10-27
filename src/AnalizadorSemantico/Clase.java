@@ -20,8 +20,10 @@ public class Clase {
 
     private boolean estaConsolidada = false;
 
+    TS ts;
 
-    public Clase(Token nombre) {
+
+    public Clase(Token nombre, TS ts) {
         this.nombre = nombre;
         constructor = new Metodo();
     }
@@ -48,6 +50,13 @@ public class Clase {
             throw new ExcepcionSemantica(metodo.getNombre(),"El método con el nombre " + nombreMetodo + " ya existe.");
         }
         metodos.put(nombreMetodo, metodo);
+    }
+
+    public void chequeoDeSentencias() throws ExcepcionSemantica {
+        for (Metodo metodo : metodos.values()) {
+            ts.setMetodoActual(metodo);
+            metodo.chequear();
+        }
     }
 
     public void setPadre(Clase padre) {

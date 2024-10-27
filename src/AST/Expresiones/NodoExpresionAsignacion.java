@@ -32,6 +32,14 @@ public class NodoExpresionAsignacion extends NodoExpresion {
     }
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+        Tipo toReturn = null;
+        if(ladoIzquierdo != null){
+            toReturn = ladoIzquierdo.chequear();
+            if(ladoDerecho == null)
+                return toReturn;
+            else
+                toReturn = ladoDerecho.chequear();
+        }
+        return toReturn;
     }
 }

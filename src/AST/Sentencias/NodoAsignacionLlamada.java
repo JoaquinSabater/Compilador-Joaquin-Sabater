@@ -22,6 +22,6 @@ public class NodoAsignacionLlamada extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-
+        expresion.chequear();
     }
 }
