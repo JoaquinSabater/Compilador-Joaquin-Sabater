@@ -4,7 +4,7 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
 
-public class NodoOperandoLiteral extends NodoOperando {
+public abstract class NodoOperandoLiteral extends NodoOperando {
     private Token valor;
 
     public NodoOperandoLiteral(Token valor) {

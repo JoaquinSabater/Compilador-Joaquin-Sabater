@@ -602,28 +602,35 @@ public class AnalizadorSintactico {
 
     // <LiteralPrimitivo> ::= true | false | intLiteral | charLiteral
     private NodoOperandoLiteral LiteralPrimitivo() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual);
+        //Me conviene crear objetos para devolver los tipos de los literales primitvos
+        NodoOperandoLiteral toReturn = null;
         if (tokenActual.getToken_id().equals("pr_true")) {
+            toReturn = new NodoBoolean(tokenActual);
             match("pr_true");
         } else if (tokenActual.getToken_id().equals("pr_false")) {
+            toReturn = new NodoBoolean(tokenActual);
             match("pr_false");
         } else if (tokenActual.getToken_id().equals("intLiteral")) {
+            toReturn = new NodoInt(tokenActual);
             match("intLiteral");
         } else if (tokenActual.getToken_id().equals("charLiteral")) {
+            toReturn = new NodoChar(tokenActual);
             match("charLiteral");
         }
-        return nodoOperandoLiteral;
+        return toReturn;
     }
 
     // <LiteralObjeto> ::= null | stringLiteral
     private NodoOperandoLiteral LiteralObjeto() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoOperandoLiteral nodoOperandoLiteral = new NodoOperandoLiteral(tokenActual);
+        NodoOperandoLiteral toReturn = null;
         if (tokenActual.getToken_id().equals("pr_null")) {
+            toReturn = new NodoNull(tokenActual);
             match("pr_null");
         } else if (tokenActual.getToken_id().equals("stringLiteral")) {
+            toReturn = new NodoString(tokenActual);
             match("stringLiteral");
         }
-        return nodoOperandoLiteral;
+        return toReturn;
     }
 
     // Método auxiliar para verificar si el token actual es un literal primitivo

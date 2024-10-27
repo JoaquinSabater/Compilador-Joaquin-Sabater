@@ -15,6 +15,10 @@ public class NodoExpresionUnaria extends NodoExpresion{
 
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+        Tipo tipoOperando = operando.chequear();
+        if(tipoOperando.esCompatibleOperador(token))
+            return tipoOperando;
+        else
+            throw new ExcepcionSemantica(token,"El operador " + token.getLexema() + " no es compatible con el tipo " + tipoOperando.getNombreClase().getLexema());
     }
 }
