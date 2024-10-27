@@ -55,7 +55,16 @@ public class AccesoMetodoEstatico extends NodoAcceso {
         } else {
             throw new ExcepcionSemantica(token, "Método no encontrado");
         }
-        return metodo.getTipo();
+
+        if(encadenado == null){
+            return metodo.getTipo();
+        } else {
+            if(metodo.getTipo().esTipoPrimitivo()){
+                throw new ExcepcionSemantica(token, "No se puede encadenar un método con un tipo primitivo");
+            } else {
+                return encadenado.chequear(metodo.getTipo());
+            }
+        }
     }
 
     public boolean esAsignable(){

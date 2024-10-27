@@ -1,9 +1,7 @@
 package AST.Acceso;
 
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.TS;
-import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.*;
 
 public class NodoAccesoThis extends NodoAcceso{
 
@@ -22,6 +20,17 @@ public class NodoAccesoThis extends NodoAcceso{
 
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+        Clase claseActual = ts.getClaseActual();
+        if (claseActual == null) {
+            throw new ExcepcionSemantica(token, "Clase actual no definida");
+        }
+        TipoClase tipoClaseActual = new TipoClase();
+        tipoClaseActual.setNombreClase(claseActual.getNombre());
+
+        if (this.encadenado != null) {
+            return encadenado.chequear(tipoClaseActual);
+        } else {
+            return tipoClaseActual;
+        }
     }
 }
