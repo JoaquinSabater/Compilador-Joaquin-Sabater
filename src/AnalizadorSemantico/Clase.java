@@ -83,4 +83,7 @@ public class Clase {
     }
 
 
+    public Atributo getAtributo(String lexema) {
+        return atributos.get(lexema);
+    }
 }

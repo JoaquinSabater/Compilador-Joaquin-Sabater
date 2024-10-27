@@ -29,6 +29,4 @@ public class NodoExpresionParametrizada extends NodoAcceso{
     public Tipo chequear() throws ExcepcionSemantica {
         return null;
     }
-
-
 }

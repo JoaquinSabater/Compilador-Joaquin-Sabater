@@ -9,16 +9,33 @@ public class VarEncadenada extends Encadenado {
         this.esAsignable = true;
     }
 
+    //Yo tengo que revisar que exista en la clase que me dan por la izquierda
     @Override
-    public Tipo chequear() throws ExcepcionSemantica {
-        Clase claseActual = ts.getClaseActual();
+    public Tipo chequear(Tipo tipoLadoIzquierdo) throws ExcepcionSemantica {
+        Tipo tipoVariableEncadenada = null;
+
+        Clase claseActual = ts.getClase(tipoLadoIzquierdo.getNombreClase().getLexema());
+
+        if (claseActual == null){
+            throw new ExcepcionSemantica(token, "Clase " + tipoLadoIzquierdo.getNombreClase().getLexema() + " no encontrada");
+        }
 
         Atributo atributo = claseActual.getAtributo(token.getLexema());
         if (atributo == null) {
             throw new ExcepcionSemantica(token, "Atributo " + token.getLexema() + " no encontrado en la clase " + claseActual.getNombre());
         }
 
-        return atributo.getTipo();
+        tipoVariableEncadenada = atributo.getTipo();
+
+        if(this.encadenado != null){
+            if(!tipoVariableEncadenada.esTipoPrimitivo())
+                return this.encadenado.chequear(tipoVariableEncadenada);
+            else
+                throw new ExcepcionSemantica(this.token, "la variable encadenada "+this.token.getLexema()+ " no debe ser de tipo primitivo para tener un encadenado.");
+
+        }
+
+        return tipoVariableEncadenada;
     }
 
     public boolean esAsignable(){

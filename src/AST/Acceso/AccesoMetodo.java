@@ -13,10 +13,9 @@ public class AccesoMetodo extends NodoAcceso {
 
     Clase claseContenedora;
 
-    public AccesoMetodo(Token token, ArrayList<NodoExpresion> listaExpresiones, TS ts, Clase claseContenedora) {
+    public AccesoMetodo(Token token, ArrayList<NodoExpresion> listaExpresiones, TS ts) {
         super(token,ts);
         this.listaExpresiones = listaExpresiones;
-        this.claseContenedora = claseContenedora;
     }
 
     public ArrayList<NodoExpresion> getListaExpresiones() {
@@ -35,28 +34,25 @@ public class AccesoMetodo extends NodoAcceso {
     }
 
     public Tipo chequear() throws ExcepcionSemantica {
-        if (claseContenedora == null) {
-            throw new ExcepcionSemantica(token, "Clase contenedora no definida");
-        } else {
-            Metodo metodo = claseContenedora.getMetodo(token.getLexema());
-            if (metodo != null) {
-                HashMap<String, Parametro> parametros = metodo.getParametros();
-                if (parametros.size() != listaExpresiones.size()) {
-                    throw new ExcepcionSemantica(token, "Cantidad de parámetros no coincide con el método");
-                }
-                int i = 0;
-                for (Parametro parametro : parametros.values()) {
-                    NodoExpresion expresion = listaExpresiones.get(i);
-                    Tipo tipoExpresion = expresion.chequear();
-                    if (!parametro.getTipo().equals(tipoExpresion)) {
-                        throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método");
-                    }
-                    i++;
-                }
-            } else {
-                throw new ExcepcionSemantica(token, "Método no encontrado");
+        claseContenedora = ts.getClaseActual();
+        Metodo metodo = claseContenedora.getMetodo(token.getLexema());
+        if (metodo != null) {
+            HashMap<String, Parametro> parametros = metodo.getParametros();
+            if (parametros.size() != listaExpresiones.size()) {
+                throw new ExcepcionSemantica(token, "Cantidad de parámetros no coincide con el método");
             }
-            return metodo.getTipo();
+            int i = 0;
+            for (Parametro parametro : parametros.values()) {
+                NodoExpresion expresion = listaExpresiones.get(i);
+                Tipo tipoExpresion = expresion.chequear();
+                if (!parametro.getTipo().equals(tipoExpresion)) {
+                    throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método");
+                }
+                i++;
+            }
+        } else {
+            throw new ExcepcionSemantica(token, "Método no encontrado");
         }
+        return metodo.getTipo();
     }
 }

@@ -5,6 +5,7 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AccesoMetodoEstatico extends NodoAcceso {
 
@@ -30,8 +31,31 @@ public class AccesoMetodoEstatico extends NodoAcceso {
         this.listaExpresiones = listaExpresiones;
     }
 
+    @Override
     public Tipo chequear() throws ExcepcionSemantica {
-        return null;
+        claseContenedora = ts.getClaseActual();
+        Metodo metodo = claseContenedora.getMetodo(token.getLexema());
+        if (metodo != null) {
+            if (!metodo.getEsStatic()) {
+                throw new ExcepcionSemantica(token, "El método " + token.getLexema() + " no es estático");
+            }
+            HashMap<String, Parametro> parametros = metodo.getParametros();
+            if (parametros.size() != listaExpresiones.size()) {
+                throw new ExcepcionSemantica(token, "Cantidad de parámetros no coincide con el método");
+            }
+            int i = 0;
+            for (Parametro parametro : parametros.values()) {
+                NodoExpresion expresion = listaExpresiones.get(i);
+                Tipo tipoExpresion = expresion.chequear();
+                if (!parametro.getTipo().equals(tipoExpresion)) {
+                    throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método");
+                }
+                i++;
+            }
+        } else {
+            throw new ExcepcionSemantica(token, "Método no encontrado");
+        }
+        return metodo.getTipo();
     }
 
     public boolean esAsignable(){

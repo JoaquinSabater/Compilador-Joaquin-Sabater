@@ -652,7 +652,7 @@ public class AnalizadorSintactico {
     }
 
     /*
-    <Primario> ::= <AccesoThis>
+    <Primario> ::= <AccesoThis> //Me tengo que fijar que no sea static y despues llamar al encadenado
     <Primario> ::= <AccesoVar>
     <Primario> ::= <AccesoConstructor>
     <Primario> ::= <AccesoMetodo>
@@ -696,7 +696,7 @@ public class AnalizadorSintactico {
     // <AccesoVarMetodoPrima> ::= <ArgsActuales> | ε
     private NodoAcceso AccesoVarMetodoPrima(Token tokenVarMetodo) throws ExcepcionSintactica, ExcepcionLexica {
         if (tokenActual.getToken_id().equals("parentesisAbierto")) {
-            return new AccesoMetodo(tokenVarMetodo, ArgsActuales(),ts,ts.getClaseActual());
+            return new AccesoMetodo(tokenVarMetodo, ArgsActuales(),ts);
         } else {
             return new NodoAccesoVar(tokenVarMetodo,ts);
         }

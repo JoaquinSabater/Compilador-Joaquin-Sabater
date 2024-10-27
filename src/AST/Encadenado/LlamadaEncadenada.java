@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 public class LlamadaEncadenada extends Encadenado{
     private ArrayList<NodoExpresion> listaExpresiones;
-    private Metodo metodo;
 
     public LlamadaEncadenada(Token token,TS ts ,ArrayList<NodoExpresion> listaExpresiones){
         super(token,ts);
@@ -17,8 +16,10 @@ public class LlamadaEncadenada extends Encadenado{
     }
 
     @Override
-    public Tipo chequear() throws ExcepcionSemantica {
-        Clase claseActual = ts.getClaseActual();
+    public Tipo chequear(Tipo tipoLadoIzquierdo) throws ExcepcionSemantica {
+        Clase claseActual = ts.getClase(tipoLadoIzquierdo.getNombreClase().getLexema());
+
+        Tipo toReturn;
 
         Metodo metodo = claseActual.getMetodo(token.getLexema());
         if (metodo == null) {
@@ -40,7 +41,15 @@ public class LlamadaEncadenada extends Encadenado{
             i++;
         }
 
-        return metodo.getTipo();
+        toReturn = metodo.getTipo();
+
+        if(this.encadenado != null){
+            if(toReturn.esTipoPrimitivo()) //Porque el encadenado sigue
+                throw new ExcepcionSemantica(token, "el tipo de retorno del metodo "+this.token.getLexema()+" no debe ser tipo primitivo");
+            return this.encadenado.chequear(toReturn);
+        }
+
+        return toReturn;
     }
 
     public boolean esAsignable(){

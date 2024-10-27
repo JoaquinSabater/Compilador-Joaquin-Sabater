@@ -36,5 +36,5 @@ public abstract class Encadenado {
             esLadoIzquierdo = true;
     }
 
-    public abstract Tipo chequear() throws ExcepcionSemantica;
+    public abstract Tipo chequear(Tipo tipoLadoIzquierdo) throws ExcepcionSemantica;
 }
