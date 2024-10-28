@@ -109,6 +109,8 @@ public class Metodo {
     }
 
     public void chequear() throws ExcepcionSemantica {
-        bloqueContenedor.chequear();
+        if (bloqueContenedor != null) {
+            bloqueContenedor.chequear();
+        }
     }
 }

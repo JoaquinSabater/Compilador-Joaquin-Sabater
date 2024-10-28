@@ -26,6 +26,7 @@ public class Clase {
     public Clase(Token nombre, TS ts) {
         this.nombre = nombre;
         constructor = new Metodo();
+        this.ts = ts;
     }
 
     public void insertarConstructor(Metodo metodo) throws ExcepcionSemantica {

@@ -130,14 +130,10 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/AnalizadorSintactico/AnalizadorSintactico.java</url>
-          <line>663</line>
-          <properties class="AnalizadorSintactico.AnalizadorSintactico" method="Primario">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
+          <line>617</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

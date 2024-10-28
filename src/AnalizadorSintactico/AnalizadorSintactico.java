@@ -219,11 +219,13 @@ public class AnalizadorSintactico {
         NodoBloque nodoBloque = null;
         if (ts.getBloqueActual() == null){
             nodoBloque= new NodoBloque(tokenActual,null);
+            bloqueActual = nodoBloque;
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
             ts.getMetodoActual().setBloqueContenedor(nodoBloque);
         }
         else {
             nodoBloque= new NodoBloque(tokenActual,ts.getBloqueActual());
+            bloqueActual = nodoBloque;
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
             ts.getMetodoActual().setBloqueContenedor(nodoBloque);
             ts.setBloqueActual(nodoBloque);
@@ -474,7 +476,7 @@ public class AnalizadorSintactico {
     // <ExpresionCompuesta> ::= <ExpresionBasica> <ExpresionCompuestaPrima>
     private NodoExpresion ExpresionCompuesta() throws ExcepcionSintactica, ExcepcionLexica {
         NodoExpresion ladoIzquierdo = ExpresionBasica();
-        return ExpresionCompuestaPrima(ladoIzquierdo);
+        return ExpresionCompuestaPrima(ladoIzquierdo); //aca llega con =
     }
 
     // <ExpresionCompuestaPrima> ::= <OperadorBinario> <ExpresionBasica> <ExpresionCompuestaPrima> | ε
@@ -714,9 +716,10 @@ public class AnalizadorSintactico {
 
     //<ExpresionParentizada> ::= ( <Expresion> )
     private NodoExpresionParametrizada ExpresionParentizada() throws ExcepcionSintactica, ExcepcionLexica {
-        match("parentesisAbierto");
-        NodoExpresionParametrizada nodoExpresionParametrizada = new NodoExpresionParametrizada(tokenActual,Expresion(),ts);
-        match("parentesisCerrado");
+        match("parentesisAbierto");//Aca no cambio el token actual
+        NodoExpresion nodoExpresion = Expresion();
+        NodoExpresionParametrizada nodoExpresionParametrizada = new NodoExpresionParametrizada(tokenActual,nodoExpresion,ts);
+        match("parentesisCerrado"); // el tema es que se corta en este punto despues del 4+
         return nodoExpresionParametrizada;
     }
     //<AccesoMetodoEstatico> ::= idClase . idMetVar <ArgsActuales>
