@@ -43,7 +43,11 @@ public class VarEncadenada extends Encadenado {
     }
 
     public boolean esAsignable(){
-        return true;
+        if(this.encadenado == null){
+            return true;
+        } else {
+            return this.encadenado.esAsignable();
+        }
     }
     public boolean esInvocable(){
         return false;

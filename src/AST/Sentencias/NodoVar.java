@@ -43,6 +43,8 @@ public class NodoVar extends NodoSentencia {
             throw new ExcepcionSemantica(this.idMetVar, "El nombre de la variable ya ha sido utilizado como parámetro del método");
         }
 
+        //TODO: Chequear que el nombre de la variable no haya sido utilizado en el bloque actual
+
         expresion.chequear();
     }
 }

@@ -34,14 +34,14 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/sinErrores",
+    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/conErrores",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
@@ -131,9 +131,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AST/Expresiones/NodoExpresionBinaria.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="28" />
+          <url>file://$PROJECT_DIR$/src/AnalizadorSemantico/TipoPrimitivo.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -14,7 +14,11 @@ public class NodoAccesoVar extends NodoAcceso {
     }
 
     public boolean esAsignable() {
-        return this.encadenado != null;
+        if(this.encadenado == null){
+            return true;
+        } else {
+            return this.encadenado.esAsignable();
+        }
     }
 
     public boolean esInvocable() {

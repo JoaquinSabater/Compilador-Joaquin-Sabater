@@ -3,7 +3,7 @@
 
 class A {
 
-    A v1;
+    A v1;   
     
      void m1(B p1)
     

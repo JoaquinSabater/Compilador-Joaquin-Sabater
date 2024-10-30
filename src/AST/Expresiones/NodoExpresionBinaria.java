@@ -29,6 +29,8 @@ public class NodoExpresionBinaria extends NodoExpresion{
         return operador;
     }
 
+    public boolean esAsignable(){return false;}
+
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
         //Falta la comparacion comatibilidad de los tipos

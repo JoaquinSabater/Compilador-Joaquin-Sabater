@@ -12,7 +12,11 @@ public class NodoAccesoThis extends NodoAcceso{
     }
 
     public boolean esAsignable(){
-        return this.encadenado != null;
+        if(this.encadenado == null){
+            return false;
+        } else {
+            return this.encadenado.esAsignable();
+        }
     }
     public boolean esInvocable(){
         return false;

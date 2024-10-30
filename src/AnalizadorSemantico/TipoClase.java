@@ -33,6 +33,6 @@ public class TipoClase implements Tipo {
 
     @Override
     public boolean esCompatibleTipo(Tipo t) {
-        return !this.getNombreClase().getLexema().equals(t.getNombreClase().getLexema());
+        return this.getNombreClase().getLexema().equals(t.getNombreClase().getLexema());
     }
 }

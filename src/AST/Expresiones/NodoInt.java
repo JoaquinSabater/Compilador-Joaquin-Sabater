@@ -12,7 +12,7 @@ public class NodoInt extends NodoOperandoLiteral {
     @Override
     public Tipo chequear() {
         TipoPrimitivo tipo = new TipoPrimitivo();
-        tipo.setNombreClase(this.getValor());
+        tipo.setNombreClase(new Token("pr_int", "int", token.getNro_linea()));
         return tipo;
     }
 }

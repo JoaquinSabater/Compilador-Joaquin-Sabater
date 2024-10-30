@@ -1,20 +1,20 @@
 // mediante la llamada a un metodo directo accede encadenadamente a una var
 class A {
     int a1;
-
-    public A(){
-
-    }
+    
      void m1(int p1)
     {
         p1 = m3().a1;
     }
-
-    A m3(){
-
+    
+     void m2()
+    {}
+    
+     A m3(){
+        return new A();
     }
-
-
+         
+    
 
 }
 

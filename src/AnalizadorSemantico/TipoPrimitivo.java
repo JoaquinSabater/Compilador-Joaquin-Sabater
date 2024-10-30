@@ -38,13 +38,13 @@ public class TipoPrimitivo implements Tipo {
             this.nombreDelTipo = new Token("pr_boolean", "pr_boolean", token.getNro_linea());
         }
         else if(token.getToken_id().equals("suma") || token.getToken_id().equals("resta") || token.getToken_id().equals("multiplicacion") || token.getToken_id().equals("division")){
-            this.nombreDelTipo = new Token("intLiteral", "intLiteral", token.getNro_linea());
+            this.nombreDelTipo = new Token("pr_int", "int", token.getNro_linea());
         }
     }
 
     @Override
     public boolean esCompatibleTipo(Tipo t) {
-        return this.getNombreClase().getLexema().equals(t.getNombreClase().getLexema());
+        return this.getNombreClase().getToken_id().equals(t.getNombreClase().getToken_id());
         // Me tengo que fijar tambine lo de los padres
     }
 

@@ -15,6 +15,7 @@ public class LlamadaEncadenada extends Encadenado{
         this.listaExpresiones = listaExpresiones;
     }
 
+
     @Override
     public Tipo chequear(Tipo tipoLadoIzquierdo) throws ExcepcionSemantica {
         Clase claseActual = ts.getClase(tipoLadoIzquierdo.getNombreClase().getLexema());
@@ -53,7 +54,11 @@ public class LlamadaEncadenada extends Encadenado{
     }
 
     public boolean esAsignable(){
-        return false;
+        if(this.encadenado == null){
+            return false;
+        } else {
+            return this.encadenado.esAsignable();
+        }
     }
     public boolean esInvocable(){
         return true;
