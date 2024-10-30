@@ -34,6 +34,11 @@ public class NodoExpresionAsignacion extends NodoExpresion {
     public boolean esAsignable(){return false;}
 
     @Override
+    public boolean esInvocable() {
+        return false;
+    }
+
+    @Override
     public Tipo chequear() throws ExcepcionSemantica {
         Tipo tipoLadoIzquierdo = ladoIzquierdo.chequear();
         Tipo tipoLadoDerecho = ladoDerecho.chequear();
@@ -49,6 +54,7 @@ public class NodoExpresionAsignacion extends NodoExpresion {
                 toReturn = tipoLadoDerecho;
             }
         }
+        //TODO cheaquear que el lado izquierdo es asignable
         //Fijarme que el lado izquierdo sea asiganble
         return toReturn;
     }

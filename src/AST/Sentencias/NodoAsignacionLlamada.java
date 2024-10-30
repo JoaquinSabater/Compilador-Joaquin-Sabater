@@ -1,6 +1,7 @@
 package AST.Sentencias;
 
 import AST.Expresiones.NodoExpresion;
+import AST.Expresiones.NodoExpresionAsignacion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 
@@ -23,7 +24,10 @@ public class NodoAsignacionLlamada extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         expresion.chequear();
-        //Me tengo que asegurar de que si es una asigancion el lado izquierdo es asignable y si no es una asigancion tengo que controlar que
-        //sea algo llamabale
+        if (!(expresion instanceof NodoExpresionAsignacion)){
+            if (!expresion.esInvocable()){
+                throw new ExcepcionSemantica(expresion.obtenerToken(), "La expresion no es invocable");
+            }
+        }
     }
 }

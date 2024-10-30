@@ -16,6 +16,11 @@ public class NodoExpresionUnaria extends NodoExpresion{
     public boolean esAsignable(){return false;}
 
     @Override
+    public boolean esInvocable() {
+        return false;
+    }
+
+    @Override
     public Tipo chequear() throws ExcepcionSemantica {
         Tipo tipoOperando = operando.chequear();
         if(tipoOperando.esCompatibleOperador(token))

@@ -75,7 +75,11 @@ public class AccesoMetodoEstatico extends NodoAcceso {
         }
     }
     public boolean esInvocable(){
-        return true;
+        if(this.encadenado == null){
+            return true;
+        } else {
+            return this.encadenado.esInvocable();
+        }
     }
 
 }

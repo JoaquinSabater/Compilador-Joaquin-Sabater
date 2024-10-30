@@ -61,6 +61,10 @@ public class LlamadaEncadenada extends Encadenado{
         }
     }
     public boolean esInvocable(){
-        return true;
+        if(this.encadenado == null){
+            return true;
+        } else {
+            return this.encadenado.esInvocable();
+        }
     }
 }

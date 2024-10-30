@@ -13,5 +13,10 @@ public abstract class NodoExpresion {
     public Token obtenerToken(){
         return this.token;
     }
+
+    public abstract boolean esAsignable();
+
+    public abstract boolean esInvocable();
+
     public abstract Tipo chequear() throws ExcepcionSemantica;
 }

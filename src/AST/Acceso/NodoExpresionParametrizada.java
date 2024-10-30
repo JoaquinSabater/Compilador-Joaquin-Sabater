@@ -26,6 +26,24 @@ public class NodoExpresionParametrizada extends NodoAcceso{
     }
 
     @Override
+    public boolean esAsignable() {
+        if(this.encadenado == null){
+            return false;
+        } else {
+            return this.encadenado.esAsignable();
+        }
+    }
+
+    @Override
+    public boolean esInvocable() {
+        if(this.encadenado == null){
+            return false;
+        } else {
+            return this.encadenado.esInvocable();
+        }
+    }
+
+    @Override
     public Tipo chequear() throws ExcepcionSemantica {
         Tipo tipoExpresion = this.nodoExpresion.chequear();
         if(this.encadenado != null){

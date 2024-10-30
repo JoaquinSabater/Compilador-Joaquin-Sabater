@@ -23,10 +23,18 @@ public class AccesoConstructor extends NodoAcceso {
     }
 
     public boolean esAsignable(){
-        return false;
+        if(this.encadenado == null){
+            return false;
+        } else {
+            return this.encadenado.esAsignable();
+        }
     }
     public boolean esInvocable(){
-        return true;
+        if(this.encadenado == null){
+            return true;
+        } else {
+            return this.encadenado.esInvocable();
+        }
     }
 
     public Tipo chequear() throws ExcepcionSemantica {

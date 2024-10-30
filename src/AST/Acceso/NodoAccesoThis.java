@@ -19,7 +19,11 @@ public class NodoAccesoThis extends NodoAcceso{
         }
     }
     public boolean esInvocable(){
-        return false;
+        if(this.encadenado == null){
+            return false;
+        } else {
+            return this.encadenado.esAsignable();
+        }
     }
 
     @Override

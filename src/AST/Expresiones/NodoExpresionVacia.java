@@ -12,6 +12,11 @@ public class NodoExpresionVacia extends NodoExpresion{
     public boolean esAsignable(){return false;}
 
     @Override
+    public boolean esInvocable() {
+        return false;
+    }
+
+    @Override
     public Tipo chequear() throws ExcepcionSemantica {
         return null;
     }

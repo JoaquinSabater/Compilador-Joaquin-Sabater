@@ -26,9 +26,10 @@ public abstract class Encadenado {
     public boolean esLadoIzquierdo(){
         return esLadoIzquierdo;
     }
-    public boolean esAsignable(){
-        return esAsignable;
-    }
+    public abstract boolean esAsignable();
+
+    public abstract boolean esInvocable();
+
     public void setComoLadoIzquierdo(){
         if(this.encadenado != null)
             encadenado.setComoLadoIzquierdo();
