@@ -23,5 +23,7 @@ public class NodoAsignacionLlamada extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         expresion.chequear();
+        //Me tengo que asegurar de que si es una asigancion el lado izquierdo es asignable y si no es una asigancion tengo que controlar que
+        //sea algo llamabale
     }
 }

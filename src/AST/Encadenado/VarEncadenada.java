@@ -4,8 +4,12 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
 public class VarEncadenada extends Encadenado {
+
+    TS ts;
+
     public VarEncadenada(Token token, TS ts) {
         super(token, ts);
+        this.ts = ts;
         this.esAsignable = true;
     }
 

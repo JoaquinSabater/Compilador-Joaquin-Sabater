@@ -92,6 +92,9 @@ public class Clase {
         return estaConsolidada;
     }
 
+    public Metodo getConstructor() {
+        return constructor;
+    }
 
     public Atributo getAtributo(String lexema) {
         return atributos.get(lexema);

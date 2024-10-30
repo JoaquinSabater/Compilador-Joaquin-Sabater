@@ -11,5 +11,7 @@ public interface Tipo {
 
     public abstract boolean esCompatibleOperador(Token token);
 
+    public void setNombreDelTipo(Token token);
+
     public abstract boolean esCompatibleTipo(Tipo t);
 }

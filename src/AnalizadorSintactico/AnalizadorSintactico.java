@@ -476,7 +476,7 @@ public class AnalizadorSintactico {
     // <ExpresionCompuesta> ::= <ExpresionBasica> <ExpresionCompuestaPrima>
     private NodoExpresion ExpresionCompuesta() throws ExcepcionSintactica, ExcepcionLexica {
         NodoExpresion ladoIzquierdo = ExpresionBasica();
-        return ExpresionCompuestaPrima(ladoIzquierdo); //aca llega con =
+        return ExpresionCompuestaPrima(ladoIzquierdo);
     }
 
     // <ExpresionCompuestaPrima> ::= <OperadorBinario> <ExpresionBasica> <ExpresionCompuestaPrima> | ε
@@ -716,11 +716,10 @@ public class AnalizadorSintactico {
 
     //<ExpresionParentizada> ::= ( <Expresion> )
     private NodoExpresionParametrizada ExpresionParentizada() throws ExcepcionSintactica, ExcepcionLexica {
-        match("parentesisAbierto");//Aca no cambio el token actual
+        match("parentesisAbierto");
         NodoExpresion nodoExpresion = Expresion();
-        NodoExpresionParametrizada nodoExpresionParametrizada = new NodoExpresionParametrizada(tokenActual,nodoExpresion,ts);
-        match("parentesisCerrado"); // el tema es que se corta en este punto despues del 4+
-        return nodoExpresionParametrizada;
+        match("parentesisCerrado");
+        return new NodoExpresionParametrizada(tokenActual, nodoExpresion, ts);
     }
     //<AccesoMetodoEstatico> ::= idClase . idMetVar <ArgsActuales>
     private AccesoMetodoEstatico AccesoMetodoEstatico() throws ExcepcionSintactica, ExcepcionLexica {
@@ -841,11 +840,11 @@ public class AnalizadorSintactico {
 
     private boolean esOperadorBinario(Token token) {
         return token.getToken_id().equals("or") || token.getToken_id().equals("and") ||
-                token.getToken_id().equals("==") || token.getToken_id().equals("!=") ||
-                token.getToken_id().equals("<") || token.getToken_id().equals(">") ||
-                token.getToken_id().equals("<=") || token.getToken_id().equals(">=") ||
-                token.getToken_id().equals("+") || token.getToken_id().equals("-") ||
-                token.getToken_id().equals("*") || token.getToken_id().equals("/") ||
-                token.getToken_id().equals("%");
+                token.getToken_id().equals("comparacion") || token.getToken_id().equals("distinto") ||
+                token.getToken_id().equals("menor") || token.getToken_id().equals("mayor") ||
+                token.getToken_id().equals("menorIgual") || token.getToken_id().equals("mayorIgual") ||
+                token.getToken_id().equals("suma") || token.getToken_id().equals("resta") ||
+                token.getToken_id().equals("multiplicacion") || token.getToken_id().equals("division") ||
+                token.getToken_id().equals("porcentaje");
     }
 }

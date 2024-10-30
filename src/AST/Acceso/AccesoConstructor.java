@@ -36,7 +36,7 @@ public class AccesoConstructor extends NodoAcceso {
                 throw new ExcepcionSemantica(token, "La clase " + token.getLexema() + " no existe");
             } else {
                 Clase clase = ts.getClase(token.getLexema());
-                Metodo constructor = clase.getMetodo(token.getLexema());
+                Metodo constructor = clase.getConstructor();
                 if (constructor != null) {
                     HashMap<String, Parametro> parametros = constructor.getParametros();
                     if (parametros.size() != listaExpresiones.size()) {

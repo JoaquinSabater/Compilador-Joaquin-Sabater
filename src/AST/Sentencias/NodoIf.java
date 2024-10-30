@@ -18,7 +18,7 @@ public class NodoIf extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         Tipo tipoCondicion = condicion.chequear();
-        if (!tipoCondicion.getNombreClase().getLexema().equals("boolean")) {
+        if (!tipoCondicion.getNombreClase().getToken_id().equals("pr_boolean")) {
             throw new ExcepcionSemantica(token, "La condicion del if debe ser de tipo boolean");
         }
         sentencia.chequear();

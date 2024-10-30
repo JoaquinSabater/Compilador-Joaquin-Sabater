@@ -3,6 +3,7 @@ package AST.Expresiones;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.TipoPrimitivo;
 
 public class NodoExpresionBinaria extends NodoExpresion{
     private NodoExpresion ladoIzquierdo;
@@ -30,12 +31,15 @@ public class NodoExpresionBinaria extends NodoExpresion{
 
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
-       Tipo tipoLadoIzquierdo = ladoIzquierdo.chequear();
-       Tipo tipoLadoDerecho = ladoDerecho.chequear();
-       if(tipoLadoDerecho.esCompatibleOperador(operador) && tipoLadoIzquierdo.esCompatibleOperador(operador) && tipoLadoDerecho.esCompatibleTipo(tipoLadoIzquierdo)){
-           return tipoLadoIzquierdo;
-       }else {
-           throw new ExcepcionSemantica(operador,"Error en la linea " + operador.getNro_linea() + ": Los tipos de los operandos no son compatibles con el operador " + operador.getLexema());
-       }
+        //Falta la comparacion comatibilidad de los tipos
+        Tipo tipoLadoIzquierdo = ladoIzquierdo.chequear();
+        Tipo tipoLadoDerecho = ladoDerecho.chequear();
+        if (tipoLadoDerecho.esCompatibleOperador(operador) && tipoLadoIzquierdo.esCompatibleOperador(operador)) {
+            Tipo toReturn = new TipoPrimitivo();
+            toReturn.setNombreDelTipo(operador);
+            return toReturn;
+        } else {
+            throw new ExcepcionSemantica(operador, ": Los tipos de los operandos no son compatibles con el operador " + operador.getLexema());
+        }
     }
 }
