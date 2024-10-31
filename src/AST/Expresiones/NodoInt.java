@@ -10,6 +10,16 @@ public class NodoInt extends NodoOperandoLiteral {
     }
 
     @Override
+    public boolean esAsignable() {
+        return false;
+    }
+
+    @Override
+    public boolean esInvocable() {
+        return false;
+    }
+
+    @Override
     public Tipo chequear() {
         TipoPrimitivo tipo = new TipoPrimitivo();
         tipo.setNombreClase(new Token("pr_int", "int", token.getNro_linea()));

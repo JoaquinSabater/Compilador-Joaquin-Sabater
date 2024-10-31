@@ -10,6 +10,16 @@ public class NodoNull extends NodoOperandoLiteral {
     }
 
     @Override
+    public boolean esAsignable() {
+        return false;
+    }
+
+    @Override
+    public boolean esInvocable() {
+        return false;
+    }
+
+    @Override
     public Tipo chequear() {
         TipoClase tipo = new TipoClase();
         tipo.setNombreClase(this.getValor());

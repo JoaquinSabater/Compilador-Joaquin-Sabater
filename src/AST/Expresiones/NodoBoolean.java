@@ -10,6 +10,16 @@ public class NodoBoolean extends NodoOperandoLiteral {
     }
 
     @Override
+    public boolean esAsignable() {
+        return false;
+    }
+
+    @Override
+    public boolean esInvocable() {
+        return false;
+    }
+
+    @Override
     public Tipo chequear() {
         TipoPrimitivo tipo = new TipoPrimitivo(); //TODO: Aca hay que cambiarlo
         tipo.setNombreClase(new Token("pr_boolean", "pr_boolean", getValor().getNro_linea()));

@@ -10,6 +10,16 @@ public class NodoChar extends NodoOperandoLiteral {
     }
 
     @Override
+    public boolean esAsignable() {
+        return false;
+    }
+
+    @Override
+    public boolean esInvocable() {
+        return false;
+    }
+
+    @Override
     public Tipo chequear() {
         TipoPrimitivo tipo = new TipoPrimitivo();
         tipo.setNombreClase(new Token("charLiteral", "charLiteral", token.getNro_linea()));
