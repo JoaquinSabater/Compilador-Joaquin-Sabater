@@ -2,11 +2,15 @@
 
 class A {
     int a1;
-   
-    
      void m1(){
-        a1 = 4;
-        
+         switch (1) {
+             case 1:
+                 var y = 3;
+             case 2:
+                 var x = 1;
+             default:
+                var z = 2;
+         }
     }
     
 }    

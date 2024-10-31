@@ -34,7 +34,7 @@ public class NodoAccesoVar extends NodoAcceso {
         Tipo toReturn = null;
         Clase claseActual = ts.getClaseActual();
         Metodo metodoActual = ts.getMetodoActual();
-        //NodoBloque bloqueActual = metodoActual.getBloqueContenedor();
+        NodoBloque bloqueActual = metodoActual.getBloqueContenedor();
 
         if(claseActual.getAtributo(this.token.getLexema()) != null){
             this.atributo = claseActual.getAtributo(this.token.getLexema());
@@ -43,6 +43,9 @@ public class NodoAccesoVar extends NodoAcceso {
         else if(metodoActual.getParametro(this.token.getLexema()) != null){
             this.parametro = metodoActual.getParametro(this.token.getLexema());
             toReturn = this.parametro.getTipo();
+        } else if (bloqueActual.esVariableDeclaradaEnBloqueOEnPadre(this.token.getLexema())) {
+            toReturn = new TipoClase();
+            toReturn.setNombreClase(new Token("pr_var", "pr_var", this.token.getNro_linea()));
         } else{
             throw new ExcepcionSemantica(this.token, "No se encontro el atributo o parametro " + this.token.getLexema());
         }

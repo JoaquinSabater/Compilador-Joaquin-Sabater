@@ -44,8 +44,10 @@ public class TipoPrimitivo implements Tipo {
 
     @Override
     public boolean esCompatibleTipo(Tipo t) {
+        if(t.getNombreClase().getToken_id().equals("pr_var")){
+            return true;
+        }
         return this.getNombreClase().getToken_id().equals(t.getNombreClase().getToken_id());
-        // Me tengo que fijar tambine lo de los padres
     }
 
 }

@@ -34,14 +34,14 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/conErrores",
+    "last_opened_file_path": "C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/sinErrores",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
@@ -55,7 +55,7 @@
       <command value="AccesoMetodoEstatico()" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TesterDeCasosConErrores">
+  <component name="RunManager" selected="JUnit.TesterDeCasosSinErrores">
     <configuration name="TesterDeCasosConErrores" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demos" />
       <option name="PACKAGE_NAME" value="" />
@@ -109,8 +109,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores" />
+        <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (2)" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (1)" />
       </list>
@@ -131,9 +131,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AnalizadorSemantico/TipoPrimitivo.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="40" />
+          <url>file://$PROJECT_DIR$/src/AST/Sentencias/NodoWhile.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -4,10 +4,14 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class NodoBloque extends NodoSentencia {
 
     private ArrayList<NodoSentencia> listaSentencias;
+
+    private Set<String> variablesDeclaradas;
 
     Clase claseContenedora;
 
@@ -19,6 +23,7 @@ public class NodoBloque extends NodoSentencia {
         super(token);
         listaSentencias = new ArrayList<>();
         this.padre = padre;
+        this.variablesDeclaradas = new HashSet<>();
     }
 
     public NodoBloque getPadre() {
@@ -27,7 +32,8 @@ public class NodoBloque extends NodoSentencia {
 
     @Override
     public void chequear() throws ExcepcionSemantica {
-        for (NodoSentencia sentencia : listaSentencias) {
+        while (!listaSentencias.isEmpty()) {
+            NodoSentencia sentencia = listaSentencias.remove(0);
             sentencia.chequear();
         }
     }
@@ -60,4 +66,16 @@ public class NodoBloque extends NodoSentencia {
         return listaSentencias;
     }
 
+    public boolean esVariableDeclaradaEnBloqueOEnPadre(String nombreVariable) {
+        if (variablesDeclaradas.contains(nombreVariable)) {
+            return true;
+        } else if (padre != null) {
+            return padre.esVariableDeclaradaEnBloqueOEnPadre(nombreVariable);
+        }
+        return false;
+    }
+
+    public void agregarVariable(String nombreVariable) {
+        variablesDeclaradas.add(nombreVariable);
+    }
 }

@@ -33,6 +33,9 @@ public class TipoClase implements Tipo {
 
     @Override
     public boolean esCompatibleTipo(Tipo t) {
+        if(t.getNombreClase().getToken_id().equals("pr_var")){
+            return true;
+        }
         return this.getNombreClase().getLexema().equals(t.getNombreClase().getLexema());
     }
 }

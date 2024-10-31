@@ -21,6 +21,7 @@ public class NodoSwitch extends NodoSentencia {
 
     public NodoSwitch(Token token) {
         super(token);
+        casos = new HashMap<NodoOperandoLiteral,NodoSentencia>();
     }
 
     public NodoExpresion getExpresion() {
@@ -54,7 +55,7 @@ public class NodoSwitch extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         Tipo tipoExpresion = expresion.chequear();
-        if (!tipoExpresion.getNombreClase().getToken_id().equals("entero")) {
+        if (!tipoExpresion.getNombreClase().getToken_id().equals("pr_int") && !tipoExpresion.getNombreClase().getToken_id().equals("pr_char") && !tipoExpresion.getNombreClase().getToken_id().equals("pr_boolean")) {
             throw new ExcepcionSemantica(token, "La expresion del switch debe ser de tipo entero");
         }
         for (NodoSentencia sentencia : listaSentencias) {

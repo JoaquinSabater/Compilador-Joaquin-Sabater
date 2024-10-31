@@ -17,7 +17,7 @@ public class NodoWhile extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         Tipo tipoCondicion = condicion.chequear();
-        if (tipoCondicion.getNombreClase().getToken_id().equals("boleano")) {
+        if (!tipoCondicion.getNombreClase().getToken_id().equals("pr_boolean")) {
             throw new ExcepcionSemantica(token, "La condición del while debe ser de tipo booleano");
         }
         sentencia.chequear();
