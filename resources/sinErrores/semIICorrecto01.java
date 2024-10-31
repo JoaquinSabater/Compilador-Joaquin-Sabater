@@ -6,6 +6,7 @@ class A {
          switch (1) {
              case 1:
                  var y = 3;
+                 break;
              case 2:
                  var x = 1;
              default:

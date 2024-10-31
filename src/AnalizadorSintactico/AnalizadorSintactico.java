@@ -409,7 +409,7 @@ public class AnalizadorSintactico {
 
     // <ListaSentenciasSwitch> ::= <SentenciaSwitch> <ListaSentenciasSwitch> | ε
     private void ListaSentenciasSwitch() throws ExcepcionSintactica, ExcepcionLexica {
-        if (tokenActual.getToken_id().equals("pr_case") || tokenActual.getToken_id().equals("pr_default")) {
+        if (tokenActual.getToken_id().equals("pr_case") || tokenActual.getToken_id().equals("pr_default") || tokenActual.getToken_id().equals("pr_break")) {
             SentenciaSwitch();
             ListaSentenciasSwitch();
         }
@@ -432,6 +432,8 @@ public class AnalizadorSintactico {
             match("dosPuntos");
             sentencia =Sentencia();
             nodoSwitchActual.setSentenciaDefault(sentencia);
+        }else if(tokenActual.getToken_id().equals("pr_break")){
+            Sentencia();
         }
     }
 

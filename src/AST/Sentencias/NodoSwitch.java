@@ -8,6 +8,7 @@ import AnalizadorSemantico.Tipo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class NodoSwitch extends NodoSentencia {
 
@@ -58,8 +59,8 @@ public class NodoSwitch extends NodoSentencia {
         if (!tipoExpresion.getNombreClase().getToken_id().equals("pr_int") && !tipoExpresion.getNombreClase().getToken_id().equals("pr_char") && !tipoExpresion.getNombreClase().getToken_id().equals("pr_boolean")) {
             throw new ExcepcionSemantica(token, "La expresion del switch debe ser de tipo entero");
         }
-        for (NodoSentencia sentencia : listaSentencias) {
-            sentencia.chequear();
+        for (Map.Entry<NodoOperandoLiteral, NodoSentencia> caso : casos.entrySet()) {
+            caso.getValue().chequear();
         }
         if (sentenciaDefault != null) {
             sentenciaDefault.chequear();
