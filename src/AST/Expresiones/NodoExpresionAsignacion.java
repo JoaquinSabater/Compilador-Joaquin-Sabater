@@ -54,8 +54,13 @@ public class NodoExpresionAsignacion extends NodoExpresion {
                 toReturn = tipoLadoDerecho;
             }
         }
-        //TODO cheaquear que el lado izquierdo es asignable
+
+        if(ladoIzquierdo.esAsignable()){
+            return toReturn;
+        }
+        else {
+            throw new ExcepcionSemantica(token, "El lado izquierdo de la asignacion no es asignable");
+        }
         //Fijarme que el lado izquierdo sea asiganble
-        return toReturn;
     }
 }
