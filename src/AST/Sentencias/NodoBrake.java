@@ -8,8 +8,6 @@ public class NodoBrake extends NodoSentencia {
 
     boolean esWhileOrSwitch = false;
 
-    Token token;
-
     public NodoBrake(Token token) {
         super(token);
     }
@@ -25,7 +23,7 @@ public class NodoBrake extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         if (!esWhileOrSwitch) {
-            throw new ExcepcionSemantica(token,"Error semántico en la línea " + token.getNro_linea() + ": la sentencia break solo puede ser utilizada dentro de un ciclo o un switch.");
+            throw new ExcepcionSemantica(token,": la sentencia break solo puede ser utilizada dentro de un ciclo o un switch.");
         }
     }
 }

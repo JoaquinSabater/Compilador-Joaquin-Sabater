@@ -2,19 +2,18 @@
 
 class A {
     int a1;
+
+    A a;
+
      void m1(){
-         switch (1) {
-             case 1:
-                 var y = 3;
-                 break;
-             case 2:
-                 var x = 1;
-             default:
-                var z = 2;
-         }
+         a = new A();
     }
     
-}    
+}
+
+class B {
+
+}
 
 
 class Init{
