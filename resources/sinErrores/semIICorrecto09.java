@@ -6,9 +6,14 @@ class A {
     A b2;
 
     void m1(){
-        if(b1 == b2){
+       if(1<2){
+           var x = 4;
+           var x = 5;
+       }
+    }
 
-        }
+    void m2(A b3){
+
     }
 
 }

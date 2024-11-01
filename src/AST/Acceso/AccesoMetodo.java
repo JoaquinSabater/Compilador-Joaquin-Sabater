@@ -54,7 +54,7 @@ public class AccesoMetodo extends NodoAcceso {
             for (Parametro parametro : parametros.values()) {
                 NodoExpresion expresion = listaExpresiones.get(i);
                 Tipo tipoExpresion = expresion.chequear();
-                if (!parametro.getTipo().equals(tipoExpresion)) {
+                if (!tipoExpresion.esCompatibleTipo(parametro.getTipo(), ts)) {
                     throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método");
                 }
                 i++;

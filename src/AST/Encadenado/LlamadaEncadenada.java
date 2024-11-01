@@ -10,12 +10,10 @@ import java.util.HashMap;
 public class LlamadaEncadenada extends Encadenado{
     private ArrayList<NodoExpresion> listaExpresiones;
 
-    TS ts;
 
     public LlamadaEncadenada(Token token,TS ts ,ArrayList<NodoExpresion> listaExpresiones){
         super(token,ts);
         this.listaExpresiones = listaExpresiones;
-        this.ts = ts;
     }
 
 
@@ -39,7 +37,7 @@ public class LlamadaEncadenada extends Encadenado{
         for (Parametro parametro : parametros.values()) {
             NodoExpresion expresion = listaExpresiones.get(i);
             Tipo tipoExpresion = expresion.chequear();
-            if (!parametro.getTipo().equals(tipoExpresion)) {
+            if (!tipoExpresion.esCompatibleTipo(parametro.getTipo(), ts)) {
                 throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método " + token.getLexema());
             }
             i++;
