@@ -46,9 +46,14 @@ public class NodoExpresionBinaria extends NodoExpresion{
         Tipo tipoLadoIzquierdo = ladoIzquierdo.chequear();
         Tipo tipoLadoDerecho = ladoDerecho.chequear();
         if (tipoLadoDerecho.esCompatibleOperador(operador) && tipoLadoIzquierdo.esCompatibleOperador(operador)) {
-            Tipo toReturn = new TipoPrimitivo();
-            toReturn.setNombreDelTipo(operador);
-            return toReturn;
+            if(tipoLadoIzquierdo.esCompatibleTipo(tipoLadoDerecho,ts) || tipoLadoDerecho.esCompatibleTipo(tipoLadoIzquierdo,ts)){
+                Tipo toReturn = new TipoPrimitivo();
+                toReturn.setNombreDelTipo(operador);
+                return toReturn;
+            }
+            else {
+                throw new ExcepcionSemantica(operador, ": Los tipos de los operandos no son compatibles con el operador " + operador.getLexema());
+            }
         } else {
             throw new ExcepcionSemantica(operador, ": Los tipos de los operandos no son compatibles con el operador " + operador.getLexema());
         }

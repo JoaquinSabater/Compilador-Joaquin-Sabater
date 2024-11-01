@@ -3,9 +3,14 @@ class A {
 
     B b1;
 
+    A b2;
+
     void m1(){
-        return b1;
+        if(b1 == b2){
+
+        }
     }
+
 }
 
 class B extends A {
