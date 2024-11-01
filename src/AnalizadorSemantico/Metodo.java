@@ -12,6 +12,8 @@ public class Metodo {
     private HashMap<String, Parametro> parametros = new HashMap<>();
     private boolean esVoid;
 
+    private boolean esConstructor = false;
+
     private NodoBloque bloqueContenedor;
 
     private boolean esStatic = false;
@@ -25,6 +27,13 @@ public class Metodo {
 
     // Getters and Setters
 
+    public boolean esConstructor(){
+        return esConstructor;
+    }
+
+    public void setEsConstructor(boolean esConstructor){
+        this.esConstructor = esConstructor;
+    }
 
     public NodoBloque getBloqueContenedor() {
         return bloqueContenedor;

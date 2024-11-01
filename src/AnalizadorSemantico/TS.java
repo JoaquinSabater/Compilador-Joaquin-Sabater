@@ -101,7 +101,9 @@ public class TS {
             m.setTipo(t);
             m.setNombre(nombre);
             m.setClasePadre(claseActual);
+            m.setEsConstructor(true);
             claseActual.insertarConstructor(m);
+            claseActual.insertarMetodo(nombre.getLexema(), m);
             metodoActual = m;
             //System.out.println("Constructor " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
         }else {
@@ -267,7 +269,10 @@ public class TS {
         }
         if (tipo instanceof TipoPrimitivo) {
             return true;
-        } else if (tipo instanceof TipoClase) {
+
+        }else if(tipo.getNombreClase().getToken_id().equals("pr_public")){
+            return true;
+        }else if(tipo instanceof TipoClase) {
             return Clases.containsKey(tipo.getNombreClase().getLexema());
         }
         return false;

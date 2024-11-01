@@ -129,7 +129,7 @@ public class AnalizadorSintactico {
         match("idClase");
         ts.insertarConstructor(tipoAuxiliar,nombreAuxiliar);
         ArgsFormales();
-        Bloque();
+        ts.getMetodoActual().setBloqueContenedor(Bloque());
         noEsMetodo = true;
     }
 
@@ -222,6 +222,7 @@ public class AnalizadorSintactico {
             bloqueActual = nodoBloque;
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
             ts.getMetodoActual().setBloqueContenedor(nodoBloque);
+            ts.setBloqueActual(nodoBloque);
         }
         else {
             nodoBloque= new NodoBloque(tokenActual,ts.getBloqueActual());

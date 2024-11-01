@@ -130,20 +130,14 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AST/Sentencias/NodoWhile.java</url>
-          <line>18</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AST/Expresiones/NodoExpresionAsignacion.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AST/Sentencias/NodoReturn.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="58" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/AnalizadorSemantico/Metodo.java</url>
+          <line>119</line>
+          <properties class="AnalizadorSemantico.Metodo" method="chequear">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="69" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

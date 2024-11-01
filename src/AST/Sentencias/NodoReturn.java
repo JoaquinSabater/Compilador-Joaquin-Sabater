@@ -39,6 +39,9 @@ public class NodoReturn extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         Tipo tipoMetodo = metodoPadre.getTipo();
+        if(metodoPadre.esConstructor()){
+            throw new ExcepcionSemantica(token, "No se puede retornar un valor en un constructor");
+        }
         if (expresion != null) {
             Tipo tipoExpresion = expresion.chequear();
             if (!tipoExpresion.esCompatibleTipo(tipoMetodo, ts)) {
