@@ -13,8 +13,6 @@ public class NodoReturn extends NodoSentencia {
 
     NodoExpresion expresion;
 
-    Token token;
-
     TS ts;
 
     public NodoReturn(Token token, TS ts) {
@@ -43,7 +41,7 @@ public class NodoReturn extends NodoSentencia {
         Tipo tipoMetodo = metodoPadre.getTipo();
         if (expresion != null) {
             Tipo tipoExpresion = expresion.chequear();
-            if (!tipoMetodo.esCompatibleTipo(tipoExpresion, ts)) {
+            if (!tipoExpresion.esCompatibleTipo(tipoMetodo, ts)) {
                 throw new ExcepcionSemantica(token, "El tipo de la expresion de retorno no es compatible con el tipo de retorno del metodo");
             }
         }
