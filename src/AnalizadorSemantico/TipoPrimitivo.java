@@ -43,7 +43,7 @@ public class TipoPrimitivo implements Tipo {
     }
 
     @Override
-    public boolean esCompatibleTipo(Tipo t) {
+    public boolean esCompatibleTipo(Tipo t, TS ts) {
         if(t.getNombreClase().getToken_id().equals("pr_var")){
             return true;
         }

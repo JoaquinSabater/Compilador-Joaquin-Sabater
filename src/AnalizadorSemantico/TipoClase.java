@@ -31,11 +31,20 @@ public class TipoClase implements Tipo {
 
     }
 
-    @Override
-    public boolean esCompatibleTipo(Tipo t) {
-        if(t.getNombreClase().getToken_id().equals("pr_var")){
+
+    public boolean esCompatibleTipo(Tipo t, TS ts) {
+        if (this.nombreDeClase.getLexema().equals(t.getNombreClase().getLexema())) {
             return true;
         }
-        return this.getNombreClase().getLexema().equals(t.getNombreClase().getLexema());
+
+        Clase claseActual = ts.getClase(this.nombreDeClase.getLexema());
+        while (claseActual != null) {
+            if (claseActual.getNombre().getLexema().equals(t.getNombreClase().getLexema())) {
+                return true;
+            }
+            claseActual = claseActual.getPadre();
+        }
+
+        return false;
     }
 }

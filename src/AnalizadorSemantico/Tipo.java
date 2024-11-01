@@ -13,5 +13,5 @@ public interface Tipo {
 
     public void setNombreDelTipo(Token token);
 
-    public abstract boolean esCompatibleTipo(Tipo t);
+    public abstract boolean esCompatibleTipo(Tipo t, TS ts);
 }

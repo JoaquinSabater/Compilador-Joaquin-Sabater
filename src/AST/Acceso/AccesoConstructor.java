@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 public class AccesoConstructor extends NodoAcceso {
     ArrayList<NodoExpresion> listaExpresiones;
+
+
     public AccesoConstructor(Token token, ArrayList<NodoExpresion> listaExpresiones, TS ts) {
         super(token,ts);
         this.listaExpresiones = listaExpresiones;

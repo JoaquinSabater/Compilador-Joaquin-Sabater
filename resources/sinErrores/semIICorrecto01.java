@@ -6,12 +6,16 @@ class A {
     A a;
 
      void m1(){
-         a = new A();
+         a = new B();
     }
     
 }
 
-class B {
+class C {
+
+}
+
+class B extends A {
 
 }
 

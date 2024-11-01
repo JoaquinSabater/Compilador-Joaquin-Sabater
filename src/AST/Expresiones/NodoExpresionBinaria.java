@@ -2,6 +2,7 @@ package AST.Expresiones;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import AnalizadorSemantico.TipoPrimitivo;
 
@@ -10,11 +11,14 @@ public class NodoExpresionBinaria extends NodoExpresion{
     private NodoExpresion ladoDerecho;
     private Token operador;
 
-    public NodoExpresionBinaria(NodoExpresion ladoIzquierdo, NodoExpresion ladoDerecho, Token operador) {
+    TS ts;
+
+    public NodoExpresionBinaria(NodoExpresion ladoIzquierdo, NodoExpresion ladoDerecho, Token operador, TS ts) {
         super(operador);
         this.ladoIzquierdo = ladoIzquierdo;
         this.ladoDerecho = ladoDerecho;
         this.operador = operador;
+        this.ts = ts;
     }
 
     public NodoExpresion getLadoIzquierdo() {

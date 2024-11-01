@@ -16,6 +16,7 @@ public class AccesoMetodoEstatico extends NodoAcceso {
     Clase claseContenedora;
 
     Token metodo;
+
     public AccesoMetodoEstatico(Token nombre, Token metodo, ArrayList<NodoExpresion> listaExpresiones, TS ts) {
         super(nombre,ts);
         this.listaExpresiones = listaExpresiones;

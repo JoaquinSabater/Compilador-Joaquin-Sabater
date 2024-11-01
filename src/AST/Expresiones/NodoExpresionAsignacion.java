@@ -2,16 +2,20 @@ package AST.Expresiones;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 
 public class NodoExpresionAsignacion extends NodoExpresion {
 
     protected NodoExpresion ladoIzquierdo;
     protected NodoExpresion ladoDerecho;
-    public NodoExpresionAsignacion(NodoExpresion ladoIzquierdo,Token operadorExpresion ,NodoExpresion ladoDerecho ){
+
+    TS ts;
+    public NodoExpresionAsignacion(NodoExpresion ladoIzquierdo, Token operadorExpresion , NodoExpresion ladoDerecho, TS ts){
         super(operadorExpresion);
         this.ladoIzquierdo = ladoIzquierdo;
         this.ladoDerecho = ladoDerecho;
+        this.ts = ts;
     }
     public void setLadoIzquierdo(NodoExpresion ladoIzquierdo){
         this.ladoIzquierdo = ladoIzquierdo;
@@ -43,7 +47,7 @@ public class NodoExpresionAsignacion extends NodoExpresion {
         Tipo tipoLadoIzquierdo = ladoIzquierdo.chequear();
         Tipo tipoLadoDerecho = ladoDerecho.chequear();
 
-        if (!tipoLadoDerecho.esCompatibleTipo(tipoLadoIzquierdo)) {
+        if (!tipoLadoDerecho.esCompatibleTipo(tipoLadoIzquierdo, ts)) {
             throw new ExcepcionSemantica(token, "Tipos incompatibles en la asignacion: " + tipoLadoDerecho.getNombreClase().getLexema() + " no conforma con " + tipoLadoIzquierdo.getNombreClase().getLexema());
         }
 

@@ -324,7 +324,7 @@ public class AnalizadorSintactico {
 
     //<Return> ::= return <ExpresionOpcional>
     private NodoSentencia Return() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoReturn nodoReturn = new NodoReturn(tokenActual);
+        NodoReturn nodoReturn = new NodoReturn(tokenActual,ts);
         NodoExpresion nodoExpresion;
         nodoReturn.setMetodoPadre(ts.getMetodoActual());
         match("pr_return");
@@ -457,7 +457,7 @@ public class AnalizadorSintactico {
         if (tokenActual.getToken_id().equals("asignacion") || tokenActual.getToken_id().equals("sumaAsignacion") || tokenActual.getToken_id().equals("restaAsignacion")) {
             Token operador = OperadorAsignacion();
             NodoExpresion ladoDerecho = ExpresionCompuesta();
-            return new NodoExpresionAsignacion(ladoIzquierdo, operador, ladoDerecho);
+            return new NodoExpresionAsignacion(ladoIzquierdo, operador, ladoDerecho,ts);
         }
         return ladoIzquierdo;
     }
@@ -486,7 +486,7 @@ public class AnalizadorSintactico {
         if (esOperadorBinario(tokenActual)) {
             Token operador = OperadorBinario();
             NodoExpresion ladoDerecho = ExpresionBasica();
-            NodoExpresionBinaria nodoExpresionBinaria = new NodoExpresionBinaria(ladoIzquierdo, ladoDerecho, operador);
+            NodoExpresionBinaria nodoExpresionBinaria = new NodoExpresionBinaria(ladoIzquierdo, ladoDerecho, operador,ts);
             return ExpresionCompuestaPrima(nodoExpresionBinaria);
         }
         return ladoIzquierdo;

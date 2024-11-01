@@ -10,9 +10,12 @@ import java.util.HashMap;
 public class LlamadaEncadenada extends Encadenado{
     private ArrayList<NodoExpresion> listaExpresiones;
 
+    TS ts;
+
     public LlamadaEncadenada(Token token,TS ts ,ArrayList<NodoExpresion> listaExpresiones){
         super(token,ts);
         this.listaExpresiones = listaExpresiones;
+        this.ts = ts;
     }
 
 
