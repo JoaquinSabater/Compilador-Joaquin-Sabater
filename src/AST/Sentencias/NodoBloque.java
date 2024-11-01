@@ -69,13 +69,18 @@ public class NodoBloque extends NodoSentencia {
     public boolean esVariableDeclaradaEnBloqueOEnPadre(String nombreVariable) {
         if (variablesDeclaradas.contains(nombreVariable)) {
             return true;
-        } else if (padre != null) {
+        }
+        if (padre != null) {
             return padre.esVariableDeclaradaEnBloqueOEnPadre(nombreVariable);
         }
         return false;
     }
 
-    public void agregarVariable(String nombreVariable) {
+    public void agregarVariable(String nombreVariable) throws ExcepcionSemantica {
         variablesDeclaradas.add(nombreVariable);
+    }
+
+    public boolean esVariableDelcarada(String lexema) {
+        return variablesDeclaradas.contains(lexema);
     }
 }

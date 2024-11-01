@@ -1,26 +1,13 @@
 // mediante la llamada a un metodo directo accede encadenadamente a una var
 class A {
+    char a1;
 
-    B b1;
-
-    A b2;
-
-    void m1(){
-       if(1<2){
-           var x = 4;
-           var x = 5;
-       }
-    }
-
-    void m2(A b3){
-
+    int m1(){
+       return a1;
     }
 
 }
 
-class B extends A {
-
-}
 
 
 class Init{

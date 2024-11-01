@@ -128,6 +128,19 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/AST/Sentencias/NodoBloque.java</url>
+          <line>78</line>
+          <properties class="AST.Sentencias.NodoBloque" method="agregarVariable">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="AnalizadorSintactico.AnalizadorSintactico" memberName="tokenActual" />

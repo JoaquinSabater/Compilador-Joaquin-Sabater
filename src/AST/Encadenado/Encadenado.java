@@ -15,6 +15,7 @@ public abstract class Encadenado {
 
     public Encadenado(Token token, TS ts){
         this.token = token;
+        this.ts = ts;
         esLadoIzquierdo = false;
     }
     public Encadenado getEncadenado(){
