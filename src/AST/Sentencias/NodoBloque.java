@@ -67,11 +67,8 @@ public class NodoBloque extends NodoSentencia {
     }
 
     public boolean esVariableDeclaradaEnBloqueOEnPadre(String nombreVariable) {
-        if (variablesDeclaradas.contains(nombreVariable)) {
-            return true;
-        }
         if (padre != null) {
-            return padre.esVariableDeclaradaEnBloqueOEnPadre(nombreVariable);
+            return padre.esVariableDeclarada(nombreVariable);
         }
         return false;
     }
@@ -80,7 +77,11 @@ public class NodoBloque extends NodoSentencia {
         variablesDeclaradas.add(nombreVariable);
     }
 
-    public boolean esVariableDelcarada(String lexema) {
-        return variablesDeclaradas.contains(lexema);
+    public boolean esVariableDeclarada(String lexema) {
+        if (variablesDeclaradas.contains(lexema)) {
+            return true;
+        }else{
+            return esVariableDeclaradaEnBloqueOEnPadre(lexema);
+        }
     }
 }

@@ -5,26 +5,12 @@ class A {
     
      void m1(int p1)
     {
-         var x = 1; 
-       
+         var x = 1;
         {
-            {
-                var y = 2;
-            }
-            var y = 3;
-
-           {
-                 var x = true;
-           }
-           
-           
+            var x = 3;
         }
-        
-       
     }
-    
- 
-  
+
 }
 
 

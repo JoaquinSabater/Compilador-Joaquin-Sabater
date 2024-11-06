@@ -228,7 +228,7 @@ public class AnalizadorSintactico {
             nodoBloque= new NodoBloque(tokenActual,ts.getBloqueActual());
             bloqueActual = nodoBloque;
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
-            ts.getMetodoActual().setBloqueContenedor(nodoBloque);
+            //ts.getMetodoActual().setBloqueContenedor(nodoBloque);
             ts.setBloqueActual(nodoBloque);
             flag = true;
         }
@@ -237,6 +237,7 @@ public class AnalizadorSintactico {
         match("llaveCerrada");
         if(flag){
             ts.setBloqueActual(nodoBloque.getPadre());
+            bloqueActual = nodoBloque.getPadre();
         }
         return nodoBloque;
     }
