@@ -3,6 +3,9 @@ package AST.Sentencias;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoBrake extends NodoSentencia {
 
@@ -25,5 +28,10 @@ public class NodoBrake extends NodoSentencia {
         if (!esWhileOrSwitch) {
             throw new ExcepcionSemantica(token,": la sentencia break solo puede ser utilizada dentro de un ciclo o un switch.");
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

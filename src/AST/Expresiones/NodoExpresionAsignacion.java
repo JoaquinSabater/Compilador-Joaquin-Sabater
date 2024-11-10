@@ -4,6 +4,9 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoExpresionAsignacion extends NodoExpresion {
 
@@ -66,5 +69,10 @@ public class NodoExpresionAsignacion extends NodoExpresion {
             throw new ExcepcionSemantica(token, "El lado izquierdo de la asignacion no es asignable");
         }
         //Fijarme que el lado izquierdo sea asiganble
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

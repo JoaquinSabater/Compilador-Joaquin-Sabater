@@ -3,7 +3,9 @@ package AST.Acceso;
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -77,5 +79,10 @@ public class AccesoConstructor extends NodoAcceso {
                 throw new ExcepcionSemantica(this.token, this.token.getLexema() + " no es una clase concreta declarada");
             }
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

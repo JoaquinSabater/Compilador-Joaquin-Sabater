@@ -14,7 +14,7 @@ public class Main {
 
             System.out.println(args[0]);
 
-            GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente();
+            //GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente();
 
             analizadorLexico AL = null;
             AnalizadorSintactico AS = null;

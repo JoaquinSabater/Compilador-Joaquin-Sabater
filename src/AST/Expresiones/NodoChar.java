@@ -3,6 +3,9 @@ package AST.Expresiones;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.Tipo;
 import AnalizadorSemantico.TipoPrimitivo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoChar extends NodoOperandoLiteral {
     public NodoChar(Token valor) {
@@ -24,5 +27,10 @@ public class NodoChar extends NodoOperandoLiteral {
         TipoPrimitivo tipo = new TipoPrimitivo();
         tipo.setNombreClase(new Token("charLiteral", "charLiteral", token.getNro_linea()));
         return tipo;
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

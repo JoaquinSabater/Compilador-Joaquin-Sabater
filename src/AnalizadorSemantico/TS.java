@@ -328,7 +328,14 @@ public class TS {
             c.chequeoDeSentencias();
         }
     }
-    
+
+    public void generar(GeneradorDeCodigoFuente GCF) throws IOException {
+        GCF.generamosLlamadaMain();
+        GCF.primitivasMalloc();
+        for (Clase c : Clases.values()) {
+            c.generar(GCF);
+        }
+    }
 
     public void mostrarInformacionClases() {
         for (Clase c : Clases.values()) {

@@ -3,6 +3,9 @@ package AST.Expresiones;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoExpresionUnaria extends NodoExpresion{
 
@@ -27,5 +30,10 @@ public class NodoExpresionUnaria extends NodoExpresion{
             return tipoOperando;
         else
             throw new ExcepcionSemantica(token,"El operador " + token.getLexema() + " no es compatible con el tipo " + tipoOperando.getNombreClase().getLexema());
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

@@ -4,6 +4,9 @@ import AST.Expresiones.NodoExpresion;
 import AST.Expresiones.NodoExpresionAsignacion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoAsignacionLlamada extends NodoSentencia {
 
@@ -29,5 +32,10 @@ public class NodoAsignacionLlamada extends NodoSentencia {
                 throw new ExcepcionSemantica(expresion.obtenerToken(), "La expresion no es invocable");
             }
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        expresion.generar(gcf);
     }
 }

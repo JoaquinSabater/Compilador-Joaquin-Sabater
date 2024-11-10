@@ -5,6 +5,9 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import AnalizadorSemantico.TipoPrimitivo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoExpresionBinaria extends NodoExpresion{
     private NodoExpresion ladoIzquierdo;
@@ -57,5 +60,10 @@ public class NodoExpresionBinaria extends NodoExpresion{
         } else {
             throw new ExcepcionSemantica(operador, ": Los tipos de los operandos no son compatibles con el operador " + operador.getLexema());
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

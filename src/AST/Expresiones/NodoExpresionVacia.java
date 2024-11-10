@@ -3,6 +3,9 @@ package AST.Expresiones;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoExpresionVacia extends NodoExpresion{
     public NodoExpresionVacia(Token token) {
@@ -19,5 +22,10 @@ public class NodoExpresionVacia extends NodoExpresion{
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
         return null;
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

@@ -4,6 +4,9 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AST.Expresiones.*;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoWhile extends NodoSentencia {
 
@@ -21,6 +24,11 @@ public class NodoWhile extends NodoSentencia {
             throw new ExcepcionSemantica(token, "La condición del while debe ser de tipo booleano");
         }
         sentencia.chequear();
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 
     public void setCondicion(NodoExpresion condicion) {

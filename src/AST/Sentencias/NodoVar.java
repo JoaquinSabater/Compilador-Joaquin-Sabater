@@ -7,6 +7,9 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import AnalizadorSemantico.Metodo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoVar extends NodoSentencia {
     private Token idMetVar;
@@ -50,5 +53,10 @@ public class NodoVar extends NodoSentencia {
         bloqueActual.agregarVariable(this.idMetVar.getLexema());
         //TODO: Chequear que el nombre de la variable no haya sido utilizado en el bloque actual
         expresion.chequear();
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

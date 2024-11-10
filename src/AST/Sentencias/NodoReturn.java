@@ -6,6 +6,9 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Metodo;
 import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoReturn extends NodoSentencia {
 
@@ -49,6 +52,11 @@ public class NodoReturn extends NodoSentencia {
             }
         }
         //Donde controlo si el tipo si un metodo con un tipo no tiene un return ?
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 
 }

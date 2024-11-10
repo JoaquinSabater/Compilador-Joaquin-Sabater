@@ -1,7 +1,9 @@
 package AnalizadorSemantico;
 
 import AnalizadorLexico.Token;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Clase {
@@ -98,5 +100,15 @@ public class Clase {
 
     public Atributo getAtributo(String lexema) {
         return atributos.get(lexema);
+    }
+
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        gcf.setModoData();
+        gcf.agregarInstruccion("lblVTInit:  NOP");
+        gcf.setModoCode();
+        for (Metodo metodo : metodos.values()) {
+            metodo.generar(gcf);
+        }
+        constructor.generar(gcf);
     }
 }

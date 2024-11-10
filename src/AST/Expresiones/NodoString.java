@@ -3,6 +3,9 @@ package AST.Expresiones;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.Tipo;
 import AnalizadorSemantico.TipoClase;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoString extends NodoOperandoLiteral {
     public NodoString(Token valor) {
@@ -24,5 +27,10 @@ public class NodoString extends NodoOperandoLiteral {
         TipoClase tipo = new TipoClase();
         tipo.setNombreClase(this.getValor());
         return tipo;
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

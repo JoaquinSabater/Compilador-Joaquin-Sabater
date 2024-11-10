@@ -3,6 +3,9 @@ package AST.Expresiones;
 
 import AnalizadorLexico.*;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 
 public abstract class NodoExpresion {
@@ -19,4 +22,6 @@ public abstract class NodoExpresion {
     public abstract boolean esInvocable();
 
     public abstract Tipo chequear() throws ExcepcionSemantica;
+
+    public abstract void generar(GeneradorDeCodigoFuente gcf) throws IOException;
 }

@@ -5,7 +5,9 @@ import AST.Expresiones.NodoOperandoLiteral;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +67,11 @@ public class NodoSwitch extends NodoSentencia {
         if (sentenciaDefault != null) {
             sentenciaDefault.chequear();
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 
     public void agregarCaso(NodoOperandoLiteral nodoOperandoLiteral, NodoSentencia sentencia) {

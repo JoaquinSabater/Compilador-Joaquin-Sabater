@@ -3,7 +3,9 @@ package AST.Acceso;
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -72,5 +74,14 @@ public class AccesoMetodo extends NodoAcceso {
                 return encadenado.chequear(metodo.getTipo());
             }
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        for (NodoExpresion expresion : listaExpresiones) {
+            expresion.generar(gcf);
+        }
+        gcf.agregarInstruccion("PUSH " + token.getLexema() + "; Apilar la dirección del método " + token.getLexema());
+        gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 }

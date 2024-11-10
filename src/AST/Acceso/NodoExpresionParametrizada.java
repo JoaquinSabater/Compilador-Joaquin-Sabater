@@ -5,8 +5,10 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import AST.Expresiones.NodoExpresion;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
 import java.beans.Expression;
+import java.io.IOException;
 
 public class NodoExpresionParametrizada extends NodoAcceso{
 
@@ -53,5 +55,10 @@ public class NodoExpresionParametrizada extends NodoAcceso{
             return this.encadenado.chequear(tipoExpresion);
         }
         return tipoExpresion;
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

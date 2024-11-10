@@ -2,6 +2,9 @@ package AST.Acceso;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoAccesoThis extends NodoAcceso{
 
@@ -40,5 +43,10 @@ public class NodoAccesoThis extends NodoAcceso{
         } else {
             return tipoClaseActual;
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 }

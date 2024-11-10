@@ -3,7 +3,9 @@ package AST.Acceso;
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,6 +68,11 @@ public class AccesoMetodoEstatico extends NodoAcceso {
                 return encadenado.chequear(metodo.getTipo());
             }
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 
     public boolean esAsignable(){

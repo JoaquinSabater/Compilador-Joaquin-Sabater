@@ -2,7 +2,9 @@ package AST.Sentencias;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +38,15 @@ public class NodoBloque extends NodoSentencia {
             NodoSentencia sentencia = listaSentencias.remove(0);
             sentencia.chequear();
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        for (NodoSentencia sentencia : listaSentencias) {
+            sentencia.generar(gcf);
+        }
+        //Libero la memoria de las variables locales
+        gcf.agregarInstruccion("FMEN 0");
     }
 
     public void setClaseContenedora(Clase claseContenedora) {

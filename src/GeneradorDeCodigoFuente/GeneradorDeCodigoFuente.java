@@ -21,7 +21,7 @@ public class GeneradorDeCodigoFuente {
         archivoSalida = new File("codigoFuente.java");
         FileWriter fileWriter = new FileWriter(archivoSalida);
         buffer = new BufferedWriter(fileWriter);
-        modoActual = null;
+        modoActual = ".";
         setModoCode();
     }
 

@@ -4,6 +4,9 @@ import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class NodoIf extends NodoSentencia {
 
@@ -25,6 +28,11 @@ public class NodoIf extends NodoSentencia {
         if (sentenciaElse != null) {
             sentenciaElse.chequear();
         }
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 
     public void setCondicion(NodoExpresion condicion) {

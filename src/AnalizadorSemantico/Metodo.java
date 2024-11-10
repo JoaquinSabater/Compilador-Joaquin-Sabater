@@ -2,7 +2,9 @@ package AnalizadorSemantico;
 
 import AST.Sentencias.NodoBloque;
 import AnalizadorLexico.Token;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Metodo {
@@ -120,6 +122,69 @@ public class Metodo {
     public void chequear() throws ExcepcionSemantica {
         if (bloqueContenedor != null) {
             bloqueContenedor.chequear();
+        }
+    }
+
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        gcf.agregarInstruccion("lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema() + ": LOADFP; Apilar el valor del registro");
+        gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
+        gcf.agregarInstruccion("STOREFP ; Guardar el valor del SP en el FP");
+        if (bloqueContenedor != null){
+            bloqueContenedor.generar(gcf);
+        }else {
+            generarCodigoMetodosPredefinidos(gcf);
+        }
+        gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
+        gcf.agregarInstruccion("RET 0");
+    }
+
+    private void generarCodigoMetodosPredefinidos(GeneradorDeCodigoFuente gcf) throws IOException {
+        if(this.nombre.getLexema().equals("debugPrint")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("IPRINT  ; Imprimir el valor del parametro");
+        }
+        if (this.nombre.getLexema().equals("read")){
+            gcf.agregarInstruccion("READ  ; Leer un byte de la entrada estandar");
+            gcf.agregarInstruccion("STORE 3  ; Almacena el valor leido en la variable");
+        }
+        if (this.nombre.getLexema().equals("printB")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("BPRINT  ; Imprimir el valor del parametro");
+        }
+        if (this.nombre.getLexema().equals("printC")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("CPRINT  ; Imprimir el valor del parametro");
+        }
+        if (this.nombre.getLexema().equals("printI")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("IPRINT  ; Imprimir el valor del parametro");
+        }
+        if (this.nombre.getLexema().equals("printS")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("SPRINT  ; Imprimir el valor del parametro");
+        }
+        if (this.nombre.getLexema().equals("println")){
+            gcf.agregarInstruccion("PRNLN  ; Leer un byte de la entrada estandar");
+        }
+        if (this.nombre.getLexema().equals("printBln")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("BPRINT  ; Imprimir el valor del parametro");
+            gcf.agregarInstruccion("PRNLN  ; Leer un byte de la entrada estandar");
+        }
+        if (this.nombre.getLexema().equals("printCln")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("CPRINT  ; Imprimir el valor del parametro");
+            gcf.agregarInstruccion("PRNLN  ; Leer un byte de la entrada estandar");
+        }
+        if (this.nombre.getLexema().equals("printIln")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("IPRINT  ; Imprimir el valor del parametro");
+            gcf.agregarInstruccion("PRNLN  ; Leer un byte de la entrada estandar");
+        }
+        if (this.nombre.getLexema().equals("printSln")){
+            gcf.agregarInstruccion("LOAD 3  ; Apilar el valor del parametro");
+            gcf.agregarInstruccion("SPRINT  ; Imprimir el valor del parametro");
+            gcf.agregarInstruccion("PRNLN  ; Leer un byte de la entrada estandar");
         }
     }
 }
