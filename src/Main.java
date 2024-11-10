@@ -1,4 +1,5 @@
 import AnalizadorLexico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 import sourcemanager.*;
 import AnalizadorSemantico.*;
 import AnalizadorSintactico.*;
@@ -10,6 +11,11 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) {
         try {
+
+            System.out.println(args[0]);
+
+            GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente();
+
             analizadorLexico AL = null;
             AnalizadorSintactico AS = null;
             SourceManager gestorDeArchivos = null;

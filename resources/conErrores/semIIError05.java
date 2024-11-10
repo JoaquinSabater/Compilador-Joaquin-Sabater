@@ -1,4 +1,4 @@
-///[Error:x|17]
+///[Error:x|10]
 // Nombre de variable local o parametro repetido x - ln: 17
 class A {
     int a1;

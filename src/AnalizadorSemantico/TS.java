@@ -2,7 +2,9 @@ package AnalizadorSemantico;
 
 import AST.Sentencias.NodoBloque;
 import AnalizadorLexico.Token;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
@@ -326,6 +328,7 @@ public class TS {
             c.chequeoDeSentencias();
         }
     }
+    
 
     public void mostrarInformacionClases() {
         for (Clase c : Clases.values()) {
