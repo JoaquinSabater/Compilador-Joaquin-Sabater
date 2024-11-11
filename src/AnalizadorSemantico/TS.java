@@ -329,11 +329,11 @@ public class TS {
         }
     }
 
-    public void generar(GeneradorDeCodigoFuente GCF) throws IOException {
-        GCF.generamosLlamadaMain();
-        GCF.primitivasMalloc();
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        gcf.generamosLlamadaMain();
+        gcf.primitivasMalloc();
         for (Clase c : Clases.values()) {
-            c.generar(GCF);
+            c.generar(gcf);
         }
     }
 

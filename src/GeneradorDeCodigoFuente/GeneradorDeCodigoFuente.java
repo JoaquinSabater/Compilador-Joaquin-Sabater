@@ -68,4 +68,8 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP");
         agregarInstruccion("RET 1   ; Retorna elimiando el parametro");
     }
+
+    public void cerrar() throws IOException {
+        buffer.close();
+    }
 }

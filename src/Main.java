@@ -14,7 +14,7 @@ public class Main {
 
             System.out.println(args[0]);
 
-            //GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente();
+            GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente();
 
             analizadorLexico AL = null;
             AnalizadorSintactico AS = null;
@@ -44,13 +44,22 @@ public class Main {
                 System.out.println(e.getMessage());
             }
 
+            try {
+                ts.generar(GCF);
+                GCF.cerrar();
+                System.out.println("La ejecucion del programa finalizo correctamente");
+            } catch (IOException e) {
+                bandera = false;
+                System.out.println(e.getMessage());
+            }
+
             if(bandera){
                 System.out.println("[SinErrores]");
                 ts.limpiarClases();
             }
 
             gestorDeArchivos.close();
-        } catch (IOException | ExcepcionLexica e) {
+        } catch (ExcepcionLexica | IOException e) {
             throw new RuntimeException("\n" + e);
         }
     }
