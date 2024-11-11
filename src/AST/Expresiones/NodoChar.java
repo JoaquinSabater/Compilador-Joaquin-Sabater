@@ -31,6 +31,6 @@ public class NodoChar extends NodoOperandoLiteral {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        gcf.agregarInstruccion("PUSH " + token.getLexema() +"; Apilar el caracter " + token.getLexema());
     }
 }

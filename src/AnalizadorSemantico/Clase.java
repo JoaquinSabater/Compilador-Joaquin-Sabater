@@ -109,6 +109,5 @@ public class Clase {
         for (Metodo metodo : metodos.values()) {
             metodo.generar(gcf);
         }
-        constructor.generar(gcf);
     }
 }

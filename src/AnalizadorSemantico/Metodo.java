@@ -126,16 +126,28 @@ public class Metodo {
     }
 
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        gcf.agregarInstruccion("lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema() + ": LOADFP; Apilar el valor del registro");
-        gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
-        gcf.agregarInstruccion("STOREFP ; Guardar el valor del SP en el FP");
-        if (bloqueContenedor != null){
-            bloqueContenedor.generar(gcf);
+        //TODO aca falta calcular el offset, en el caso de que tenga parametros ?
+        if(esConstructor){
+            gcf.agregarInstruccion("lbl" + clasePadre.getNombre().getLexema() + "_constructor: LOADFP; Apilar el valor del registro");
+            gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
+            gcf.agregarInstruccion("STOREFP ; Guardar el valor del SP en el FP");
+            if (bloqueContenedor != null){
+                bloqueContenedor.generar(gcf);
+            }
+            gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
+            gcf.agregarInstruccion("RET 1");
         }else {
-            generarCodigoMetodosPredefinidos(gcf);
+            gcf.agregarInstruccion("lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema() + ": LOADFP; Apilar el valor del registro");
+            gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
+            gcf.agregarInstruccion("STOREFP ; Guardar el valor del SP en el FP");
+            if (bloqueContenedor != null){
+                bloqueContenedor.generar(gcf);
+            }else {
+                generarCodigoMetodosPredefinidos(gcf);
+            }
+            gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
+            gcf.agregarInstruccion("RET 0");
         }
-        gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
-        gcf.agregarInstruccion("RET 0");
     }
 
     private void generarCodigoMetodosPredefinidos(GeneradorDeCodigoFuente gcf) throws IOException {

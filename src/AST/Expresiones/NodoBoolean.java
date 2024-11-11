@@ -31,6 +31,10 @@ public class NodoBoolean extends NodoOperandoLiteral {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        if(token.getLexema().equals("true")){
+            gcf.agregarInstruccion("PUSH 1; Apilar el booleano true");
+        } else {
+            gcf.agregarInstruccion("PUSH 0; Apilar el booleano false");
+        }
     }
 }
