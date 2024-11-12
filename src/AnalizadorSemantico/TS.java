@@ -335,6 +335,7 @@ public class TS {
         for (Clase c : Clases.values()) {
             c.generar(gcf);
         }
+        gcf.generarCodigoPredefinido();
     }
 
     public void mostrarInformacionClases() {

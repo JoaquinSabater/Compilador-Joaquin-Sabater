@@ -13,7 +13,7 @@ public class Main {
         try {
             System.out.println(args[1]);
 
-            //GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente(args[1]);
+            GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente(args[1]);
 
             analizadorLexico AL = null;
             AnalizadorSintactico AS = null;
@@ -44,8 +44,8 @@ public class Main {
             }
 
             try {
-                //ts.generar(GCF);
-                //GCF.cerrar();
+                ts.generar(GCF);
+                GCF.cerrar();
                 System.out.println("La ejecucion del programa finalizo correctamente");
             } catch (Exception e) {
                 bandera = false;

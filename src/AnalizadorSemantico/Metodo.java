@@ -126,30 +126,31 @@ public class Metodo {
     }
 
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        if (esConstructor) {
-            gcf.agregarInstruccion("lbl" + clasePadre.getNombre().getLexema() + "_constructor: LOADFP; Apilar el valor del registro");
-            gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
-            gcf.agregarInstruccion("STOREFP ; Guardar el valor del SP en el FP");
-            if (bloqueContenedor != null) {
-                bloqueContenedor.generar(gcf);
-            }
-            gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
-            gcf.agregarInstruccion("RET 1");
-        } else {
-            String etiqueta = "lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema();
-            if (!gcf.existeEtiqueta(etiqueta)) {
-                gcf.agregarInstruccion(etiqueta + ": LOADFP; Apilar el valor del registro");
+        if(!(clasePadre.getNombre().getLexema().equals("Object") || clasePadre.getNombre().getLexema().equals("String") || clasePadre.getNombre().getLexema().equals("System"))){
+            if (esConstructor) {
+                gcf.agregarInstruccion("lbl" + clasePadre.getNombre().getLexema() + "_constructor: LOADFP; Apilar el valor del registro");
                 gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
                 gcf.agregarInstruccion("STOREFP ; Guardar el valor del SP en el FP");
                 if (bloqueContenedor != null) {
                     bloqueContenedor.generar(gcf);
-                } else {
-                    generarCodigoMetodosPredefinidos(gcf);
                 }
                 gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
-                gcf.agregarInstruccion("RET "+parametros.size());
+                gcf.agregarInstruccion("RET 1");
+            } else {
+                String etiqueta = "lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema();
+                if (!gcf.existeEtiqueta(etiqueta)) {
+                    gcf.agregarInstruccion(etiqueta + ": LOADFP; Apilar el valor del registro");
+                    gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
+                    gcf.agregarInstruccion("STOREFP ; Guardar el valor del SP en el FP");
+                    if (bloqueContenedor != null) {
+                        bloqueContenedor.generar(gcf);
+                    }
+                    gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
+                    gcf.agregarInstruccion("RET "+parametros.size());
+                }
             }
         }
+        gcf.generarEspacioEnBlanco();
     }
 
     private void generarCodigoMetodosPredefinidos(GeneradorDeCodigoFuente gcf) throws IOException {

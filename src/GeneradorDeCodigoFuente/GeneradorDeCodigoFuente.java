@@ -61,6 +61,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("PUSH lblInit_main");
         agregarInstruccion("CALL");
         agregarInstruccion("HALT");
+        generarEspacioEnBlanco();
     }
 
     public void primitivasMalloc() throws IOException {
@@ -78,9 +79,145 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREHL ; Mueve el heap limit (h1). Expande el heap");
         agregarInstruccion("STOREFP");
         agregarInstruccion("RET 1   ; Retorna elimiando el parametro");
+        generarEspacioEnBlanco();
     }
 
     public void cerrar() throws IOException {
         buffer.close();
+    }
+
+    public void generarEspacioEnBlanco() throws IOException {
+        buffer.newLine();
+    }
+
+    public void generarCodigoPredefinido() throws IOException {
+        setModoData();
+        agregarInstruccion("lblVTObject: NOP");
+        setModoCode();
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblConstructor@Object: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("FMEM 0");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("debugPrint: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("IPRINT  ; Imprime el entero en el tope de la pila");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+
+        setModoData();
+        agregarInstruccion("lblVTString: NOP");
+        setModoCode();
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblConstructor@String: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("FMEM 0");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+
+        setModoData();
+        agregarInstruccion("lblVTSystem: NOP");
+        setModoCode();
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblConstructor@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("FMEM 0");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintC@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("CPRINT  ; Imprime el char en el tope de la pila");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintS@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("SPRINT  ; Imprime el string en el tope de la pila");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("PRNLN  ; Imprime el caracter de nueva línea");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 0");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintCln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("CPRINT  ; Imprime el char en el tope de la pila");
+        agregarInstruccion("PRNLN  ; Imprime el caracter de nueva línea");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintSln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("SPRINT  ; Imprime el booleano en el tope de la pila");
+        agregarInstruccion("PRNLN  ; Imprime el caracter de nueva línea");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetread@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("READ  ; Lee un valor entero");
+        agregarInstruccion("PUSH 48  ; Por ASCII");
+        agregarInstruccion("SUB");
+        agregarInstruccion("STORE 3  ; Devuelve el valor entero leído, poniendo el tope de la pila en la locación reservada");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 0");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintB@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("BPRINT  ; Imprime el booleano en el tope de la pila");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintIln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("IPRINT  ; Imprime el entero en el tope de la pila");
+        agregarInstruccion("PRNLN  ; Imprime el caracter de nueva línea");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintI@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("IPRINT  ; Imprime el entero en el tope de la pila");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
+        agregarInstruccion("lblMetprintBln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("LOAD 3  ; Apila el parámetro");
+        agregarInstruccion("BPRINT  ; Imprime el booleano en el tope de la pila");
+        agregarInstruccion("PRNLN  ; Imprime el caracter de nueva línea");
+        agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+        agregarInstruccion("RET 1");
+        generarEspacioEnBlanco();
     }
 }

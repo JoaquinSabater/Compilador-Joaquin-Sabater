@@ -13,6 +13,8 @@ public class NodoBloque extends NodoSentencia {
 
     private ArrayList<NodoSentencia> listaSentencias;
 
+    private ArrayList<NodoSentencia> listaSentenciasAux;
+
     private Set<String> variablesDeclaradas;
 
     Clase claseContenedora;
@@ -24,6 +26,7 @@ public class NodoBloque extends NodoSentencia {
     public NodoBloque(Token token, NodoBloque padre) {
         super(token);
         listaSentencias = new ArrayList<>();
+        listaSentenciasAux = new ArrayList<>();
         this.padre = padre;
         this.variablesDeclaradas = new HashSet<>();
     }
@@ -36,13 +39,14 @@ public class NodoBloque extends NodoSentencia {
     public void chequear() throws ExcepcionSemantica {
         while (!listaSentencias.isEmpty()) {
             NodoSentencia sentencia = listaSentencias.remove(0);
+            listaSentenciasAux.add(sentencia);
             sentencia.chequear();
         }
     }
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        for (NodoSentencia sentencia : listaSentencias) {
+        for (NodoSentencia sentencia : listaSentenciasAux) {
             sentencia.generar(gcf);
         }
         //Libero la memoria de las variables locales

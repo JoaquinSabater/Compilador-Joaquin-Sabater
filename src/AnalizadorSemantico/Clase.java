@@ -103,11 +103,23 @@ public class Clase {
     }
 
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        gcf.setModoData();
-        gcf.agregarInstruccion("lblVT"+nombre.getLexema()+":  NOP");
-        gcf.setModoCode();
-        for (Metodo metodo : metodos.values()) {
-            metodo.generar(gcf);
+        if(!nombre.getLexema().equals("Object") && !nombre.getLexema().equals("String") && !nombre.getLexema().equals("System")){
+            gcf.setModoData();
+            gcf.agregarInstruccion("lblVT"+nombre.getLexema()+":  NOP");
+            gcf.setModoCode();
+            gcf.generarEspacioEnBlanco();
+            if(!tieneConstructor){
+                gcf.agregarInstruccion("lblConstructor@" + nombre.getLexema() + ": LOADFP  ; Apila el valor del registro fp");
+                gcf.agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
+                gcf.agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+                gcf.agregarInstruccion("FMEM 0");
+                gcf.agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
+                gcf.agregarInstruccion("RET 1");
+                gcf.generarEspacioEnBlanco();
+            }
+            for (Metodo metodo : metodos.values()) {
+                metodo.generar(gcf);
+            }
         }
     }
 }

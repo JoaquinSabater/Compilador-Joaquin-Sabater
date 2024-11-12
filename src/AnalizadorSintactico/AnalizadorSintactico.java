@@ -221,7 +221,7 @@ public class AnalizadorSintactico {
             nodoBloque= new NodoBloque(tokenActual,null);
             bloqueActual = nodoBloque;
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
-            ts.getMetodoActual().setBloqueContenedor(nodoBloque);
+            ts.getMetodoActual().setBloqueContenedor(bloqueActual);
             ts.setBloqueActual(nodoBloque);
         }
         else {
@@ -239,7 +239,7 @@ public class AnalizadorSintactico {
             ts.setBloqueActual(nodoBloque.getPadre());
             bloqueActual = nodoBloque.getPadre();
         }
-        return nodoBloque;
+        return bloqueActual;
     }
 
     // <ListaSentencias> ::= <Sentencia> <ListaSentencias> | ε
