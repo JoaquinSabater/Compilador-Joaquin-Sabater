@@ -5,20 +5,23 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GeneradorDeCodigoFuente {
 
+    private Set<String> etiquetas = new HashSet<>();
     private File archivoSalida;
     private BufferedWriter buffer;
 
     private String modoActual;
 
-    public GeneradorDeCodigoFuente() throws IOException {
-        inicializador();
+    public GeneradorDeCodigoFuente(String aux) throws IOException {
+        inicializador(aux);
     }
 
-    public void inicializador() throws IOException {
-        archivoSalida = new File("codigoFuente.java");
+    public void inicializador(String aux) throws IOException {
+        archivoSalida = new File(aux);
         FileWriter fileWriter = new FileWriter(archivoSalida);
         buffer = new BufferedWriter(fileWriter);
         modoActual = ".";
@@ -43,11 +46,19 @@ public class GeneradorDeCodigoFuente {
     public void agregarInstruccion(String linea) throws IOException {
         buffer.write(linea);
         buffer.newLine();
+        if (linea.contains(":")) {
+            String etiqueta = linea.split(":")[0].trim();
+            etiquetas.add(etiqueta);
+        }
+    }
+
+    public boolean existeEtiqueta(String etiqueta) {
+        return etiquetas.contains(etiqueta);
     }
 
     public void generamosLlamadaMain() throws IOException {
         setModoCode();
-        agregarInstruccion("PUSH lblmain");
+        agregarInstruccion("PUSH lblInit_main");
         agregarInstruccion("CALL");
         agregarInstruccion("HALT");
     }

@@ -11,10 +11,9 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) {
         try {
+            System.out.println(args[1]);
 
-            System.out.println(args[0]);
-
-            GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente();
+            //GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente(args[1]);
 
             analizadorLexico AL = null;
             AnalizadorSintactico AS = null;
@@ -37,7 +36,7 @@ public class Main {
                 ts.consolidar();
                 ts.chequeoDeSentencias();
                 //ts.mostrarInformacionClases();
-            } catch (ExcepcionSintactica | ExcepcionSemantica e) {
+            } catch (Exception e) {
                 bandera = false;
                 assert ts != null;
                 ts.limpiarClases();
@@ -45,10 +44,10 @@ public class Main {
             }
 
             try {
-                ts.generar(GCF);
-                GCF.cerrar();
+                //ts.generar(GCF);
+                //GCF.cerrar();
                 System.out.println("La ejecucion del programa finalizo correctamente");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 bandera = false;
                 System.out.println(e.getMessage());
             }
@@ -59,7 +58,7 @@ public class Main {
             }
 
             gestorDeArchivos.close();
-        } catch (ExcepcionLexica | IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("\n" + e);
         }
     }

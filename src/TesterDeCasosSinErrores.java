@@ -1,5 +1,3 @@
-package minijavaCompiler;
-
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -66,7 +64,7 @@ public class TesterDeCasosSinErrores {
     }
 
 
-    void probarExito(String name){
+    void probarExito(String name) {
         String path = testFilesDirectoryPath+name;
         String[] expectedValues = getExpectedValues(path);
 

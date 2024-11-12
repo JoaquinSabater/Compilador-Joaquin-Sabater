@@ -104,7 +104,7 @@ public class Clase {
 
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         gcf.setModoData();
-        gcf.agregarInstruccion("lblVTInit:  NOP");
+        gcf.agregarInstruccion("lblVT"+nombre.getLexema()+":  NOP");
         gcf.setModoCode();
         for (Metodo metodo : metodos.values()) {
             metodo.generar(gcf);

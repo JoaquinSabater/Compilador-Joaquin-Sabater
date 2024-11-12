@@ -46,7 +46,7 @@ public class NodoBloque extends NodoSentencia {
             sentencia.generar(gcf);
         }
         //Libero la memoria de las variables locales
-        gcf.agregarInstruccion("FMEN 0");
+        gcf.agregarInstruccion("FMEM 0");
     }
 
     public void setClaseContenedora(Clase claseContenedora) {

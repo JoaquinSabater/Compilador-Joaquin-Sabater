@@ -35,7 +35,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "last_opened_file_path": "C:/Users/joaqu/Desktop/VVS/Verificacion/Actividad 6 JUnit/Verificacion/src",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -44,6 +47,7 @@
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src\AnalizadorLexico\AutomataFinito" />
@@ -85,6 +89,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TesterDeCasosSinErrores (3)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="demos" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="minijavaCompiler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="minijavaCompiler" />
+      <option name="MAIN_CLASS_NAME" value="minijavaCompiler.TesterDeCasosSinErrores" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TesterDeCasosSinErrores" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demos" />
       <option name="PACKAGE_NAME" value="" />
@@ -110,6 +129,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.TesterDeCasosSinErrores" />
+        <item itemvalue="JUnit.TesterDeCasosSinErrores (3)" />
         <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (2)" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores (1)" />
