@@ -73,6 +73,9 @@ public class NodoExpresionAsignacion extends NodoExpresion {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        if(ladoIzquierdo != null)
+            ladoIzquierdo.generar(gcf);
+        if(ladoDerecho != null)
+            ladoDerecho.generar(gcf);
     }
 }

@@ -19,6 +19,31 @@ STOREFP
 RET 1   ; Retorna elimiando el parametro
 
 .DATA
+lblVTA:  NOP
+.CODE
+
+lblConstructor@A: LOADFP  ; Apila el valor del registro fp
+LOADSP  ; Apila el valor del registro sp
+STOREFP  ; Almacena el tope de la pila en el registro fp
+FMEM 0
+STOREFP  ; Almacena el tope de la pila en el registro fp
+RET 1
+
+lblA_mc: LOADFP; Apilar el valor del registro
+LOADSP  ; Apilar el valor del SP
+STOREFP ; Guardar el valor del SP en el FP
+PUSH 1234; Apilar el entero 1234
+PUSH debugPrint; Apilar la dirección del método debugPrint
+CALL    ; Llamar al método debugPrint
+PUSH 33; Apilar el entero 33
+PUSH debugPrint; Apilar la dirección del método debugPrint
+CALL    ; Llamar al método debugPrint
+FMEM 0
+STOREFP ; Almacena el tope de la pila en el registro
+RET 0
+
+
+.DATA
 lblVTInit:  NOP
 .CODE
 
@@ -33,10 +58,6 @@ RET 1
 lblInit_main: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-PUSH 1234; Apilar el entero 1234
-PUSH debugPrint; Apilar la dirección del método debugPrint
-CALL    ; Llamar al método debugPrint
-FMEM 0
 STOREFP ; Almacena el tope de la pila en el registro
 RET 0
 

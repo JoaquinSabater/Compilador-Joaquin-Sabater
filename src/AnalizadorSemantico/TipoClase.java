@@ -37,6 +37,14 @@ public class TipoClase implements Tipo {
             return true;
         }
 
+        if (this.nombreDeClase.getToken_id().equals("stringLiteral") && t.getNombreClase().getLexema().equals("String")) {
+            return true;
+        }
+
+        if(this.nombreDeClase.getToken_id().equals("pr_null")){
+            return true;
+        }
+
         Clase claseActual = ts.getClase(this.nombreDeClase.getLexema());
         while (claseActual != null) {
             if (claseActual.getNombre().getLexema().equals(t.getNombreClase().getLexema())) {

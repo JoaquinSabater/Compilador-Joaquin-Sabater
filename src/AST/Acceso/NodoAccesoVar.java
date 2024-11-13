@@ -62,6 +62,12 @@ public class NodoAccesoVar extends NodoAcceso {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        if(atributo != null){
+            //gcf.agregarInstruccion("LOAD 3  ; ");
+            //gcf.agregarInstruccion("SWAP");
+            //gcf.agregarInstruccion("STOREREF 1");
+            //System.out.println("Entre aca");
+        }
+        //TODO falta ver que pasa si es de tipo static o no
     }
 }
