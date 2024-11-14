@@ -34,6 +34,11 @@ public class NodoExpresionUnaria extends NodoExpresion{
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        operando.generar(gcf);
+        if(token.getLexema().equals("-")){
+            gcf.agregarInstruccion("NEG; Negar el valor");
+        } else if(token.getLexema().equals("!")){
+            gcf.agregarInstruccion("NOT; Negar el valor");
+        }
     }
 }

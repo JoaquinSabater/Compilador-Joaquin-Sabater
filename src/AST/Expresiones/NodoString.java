@@ -8,6 +8,9 @@ import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 import java.io.IOException;
 
 public class NodoString extends NodoOperandoLiteral {
+
+    int cantidadString = 0;
+
     public NodoString(Token valor) {
         super(valor);
     }
@@ -31,6 +34,17 @@ public class NodoString extends NodoOperandoLiteral {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        gcf.setModoData();
+        String label = generarLebelString();
+        String introduccion = label +":";
+        gcf.agregarInstruccion(introduccion + " DW " + this.getValor().getLexema() + ", 0");
+        gcf.setModoCode();
+        gcf.agregarInstruccion("PUSH "+label);
+    }
 
+    private String generarLebelString() {
+        String label = "string_label_"+cantidadString;
+        cantidadString++;
+        return label;
     }
 }

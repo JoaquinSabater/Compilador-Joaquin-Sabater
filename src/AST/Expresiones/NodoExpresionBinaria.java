@@ -64,6 +64,62 @@ public class NodoExpresionBinaria extends NodoExpresion{
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        ladoIzquierdo.generar(gcf);
+        ladoDerecho.generar(gcf);
+        String operador = this.operador.getLexema();
+        switch (operador){
+            case "==": {
+                gcf.agregarInstruccion("EQ");
+                break;
+            }
+            case "!=": {
+                gcf.agregarInstruccion("NE");
+                break;
+            }
+            case "+": {
+                gcf.agregarInstruccion("ADD");
+                break;
+            }
+            case "-": {
+                gcf.agregarInstruccion("SUB");
+                break;
+            }
+            case "*": {
+                gcf.agregarInstruccion("MUL");
+                break;
+            }
+            case "/": {
+                gcf.agregarInstruccion("DIV");
+                break;
+            }
+            case "%": {
+                gcf.agregarInstruccion("MOD");
+                break;
+            }
+            case "<=": {
+                gcf.agregarInstruccion("LE");
+                break;
+            }
+            case ">=": {
+                gcf.agregarInstruccion("GE");
+                break;
+            }
+            case "<":{
+                gcf.agregarInstruccion("LT");
+                break;
+            }
+            case ">":{
+                gcf.agregarInstruccion("GT");
+                break;
+            }
+            case "||":{
+                gcf.agregarInstruccion("OR");
+                break;
+            }
+            case "&&":{
+                gcf.agregarInstruccion("AND");
+                break;
+            }
+        }
     }
 }

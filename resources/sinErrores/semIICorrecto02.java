@@ -1,4 +1,7 @@
 class A{
+
+
+
     void m2(){
         this.m1();
     }
