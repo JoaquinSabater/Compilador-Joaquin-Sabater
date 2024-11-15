@@ -23,6 +23,8 @@ public class NodoBloque extends NodoSentencia {
 
     NodoBloque padre;
 
+    int cantidadDeVariablesLocales;
+
     public NodoBloque(Token token, NodoBloque padre) {
         super(token);
         listaSentencias = new ArrayList<>();
@@ -86,6 +88,10 @@ public class NodoBloque extends NodoSentencia {
             return padre.esVariableDeclarada(nombreVariable);
         }
         return false;
+    }
+
+    public boolean esVariableDeclaradaEnEsteBloque(String nombreVariable) {
+        return variablesDeclaradas.contains(nombreVariable);
     }
 
     public void agregarVariable(String nombreVariable) throws ExcepcionSemantica {

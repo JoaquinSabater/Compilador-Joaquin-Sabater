@@ -13,7 +13,7 @@ public class Main {
         try {
             //System.out.println(args[1]);
 
-            //GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente(args[1]);
+            GeneradorDeCodigoFuente GCF = new GeneradorDeCodigoFuente(args[1]);
 
             analizadorLexico AL = null;
             AnalizadorSintactico AS = null;
@@ -43,14 +43,14 @@ public class Main {
                 System.out.println(e.getMessage());
             }
 
-            //try {
-                //ts.generar(GCF);
-                //GCF.cerrar();
+            try {
+                ts.generar(GCF);
+                GCF.cerrar();
                 //System.out.println("La ejecucion del programa finalizo correctamente");
-            //} catch (Exception e) {
+            } catch (Exception e) {
                // bandera = false;
-               // System.out.println(e.getMessage());
-            //}
+                System.out.println(e.getMessage());
+            }
 
             if(bandera){
                 System.out.println("[SinErrores]");

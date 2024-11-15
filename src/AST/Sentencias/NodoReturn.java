@@ -56,7 +56,11 @@ public class NodoReturn extends NodoSentencia {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        if (expresion != null) {
+            expresion.generar(gcf);
+            int offset = metodoPadre.getOffset() + 4;
+            gcf.agregarInstruccion("STORE "+offset);
+        }
     }
 
 }

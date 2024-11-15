@@ -774,61 +774,33 @@ public class AnalizadorSintactico {
         Token tokenAux = null;
         if (tokenActual.getToken_id().equals("punto")) {
             match("punto");
-            Encadenado nuevoEncadenado = null;
             if (tokenActual.getToken_id().equals("idMetVar")) {
                 tokenAux = tokenActual;
                 match("idMetVar");
-                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
-            } else if (tokenActual.getToken_id().equals("idClase")) {
-                tokenAux = tokenActual;
-                match("idClase");
-                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
+            } else{
+                throw new ExcepcionSintactica(tokenActual, "idMetVar");
             }
-            if (nuevoEncadenado != null) {
-                if (encadenado == null) {
-                    encadenado = nuevoEncadenado;
-                } else {
-                    encadenado.setEncadenado(nuevoEncadenado);
-                }
-            }
-            encadenado = EncadenadoOpcionalPrima(encadenado,tokenAux);
+            encadenado = EncadenadoOpcionalPrima(tokenAux);
         }
         return encadenado;
     }
 
-    private Encadenado EncadenadoOpcionalPrima(Encadenado encadenado,Token token) throws ExcepcionLexica, ExcepcionSintactica {
+    private Encadenado EncadenadoOpcionalPrima(Token nombre) throws ExcepcionLexica, ExcepcionSintactica {
         Token tokenAux = null;
+        Encadenado encadenadoARetornar;
         if (tokenActual.getToken_id().equals("parentesisAbierto")) {
             ArrayList<NodoExpresion> listaExpresiones = ArgsActuales();
-            Encadenado nuevoEncadenado = new LlamadaEncadenada(token,ts,listaExpresiones);
-            if (encadenado == null) {
-                encadenado = nuevoEncadenado;
-            } else {
-                encadenado.setEncadenado(nuevoEncadenado);
-            }
-            encadenado = EncadenadoOpcional();
-        } else if (tokenActual.getToken_id().equals("punto")) {
-            match("punto");
-            Encadenado nuevoEncadenado = null;
-            if (tokenActual.getToken_id().equals("idMetVar")) {
-                tokenAux = tokenActual;
-                match("idMetVar");
-                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
-            } else if (tokenActual.getToken_id().equals("idClase")) {
-                tokenAux = tokenActual;
-                match("idClase");
-                nuevoEncadenado = new VarEncadenada(tokenAux,ts);
-            }
-            if (nuevoEncadenado != null) {
-                if (encadenado == null) {
-                    encadenado = nuevoEncadenado;
-                } else {
-                    encadenado.setEncadenado(nuevoEncadenado);
-                }
-            }
-            encadenado = EncadenadoOpcionalPrima(encadenado,tokenAux);
+             encadenadoARetornar = new LlamadaEncadenada(nombre,ts,listaExpresiones);
+        } else {
+            encadenadoARetornar = new VarEncadenada(nombre, ts);
         }
-        return encadenado;
+
+            if (tokenActual.getToken_id().equals("punto")) {
+            match("punto");
+                Encadenado nuevoEncadenado = EncadenadoOpcional();
+                encadenadoARetornar.setEncadenado(nuevoEncadenado);
+            }
+        return encadenadoARetornar;
     }
 
     // Método auxiliar para verificar si el token actual puede ser el inicio de una expresión

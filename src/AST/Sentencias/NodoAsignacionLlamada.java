@@ -27,11 +27,6 @@ public class NodoAsignacionLlamada extends NodoSentencia {
     @Override
     public void chequear() throws ExcepcionSemantica {
         expresion.chequear();
-        if (!(expresion instanceof NodoExpresionAsignacion)){
-            if (!expresion.esInvocable()){
-                throw new ExcepcionSemantica(expresion.obtenerToken(), "La expresion no es invocable");
-            }
-        }
     }
 
     @Override
