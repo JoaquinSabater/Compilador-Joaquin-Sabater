@@ -4,6 +4,7 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
 public abstract class Encadenado {
     protected Token token;
@@ -39,4 +40,8 @@ public abstract class Encadenado {
     }
 
     public abstract Tipo chequear(Tipo tipoLadoIzquierdo) throws ExcepcionSemantica;
+
+    public void generar(GeneradorDeCodigoFuente gcf) {
+
+    }
 }

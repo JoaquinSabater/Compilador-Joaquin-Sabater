@@ -16,6 +16,8 @@ public class Clase {
 
     boolean tieneConstructor = false;
 
+    int tamanioCIR = 0;
+
     private Metodo constructor;
 
     private Clase padre;
@@ -100,6 +102,11 @@ public class Clase {
 
     public Atributo getAtributo(String lexema) {
         return atributos.get(lexema);
+    }
+
+    public int getTamanioCIR() {
+        tamanioCIR = atributos.size() + 1;
+        return tamanioCIR;
     }
 
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {

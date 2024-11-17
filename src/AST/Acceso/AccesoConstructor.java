@@ -83,6 +83,26 @@ public class AccesoConstructor extends NodoAcceso {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        Clase clase = ts.getClase(token.getLexema());
+        int CIR = clase.getTamanioCIR();
+        gcf.agregarInstruccion("RMEM 1");
+        gcf.agregarInstruccion("PUSH "+ CIR +";");
+        gcf.agregarInstruccion("PUSH simple_malloc  ;");
+        gcf.agregarInstruccion("CALL    ;");
+        gcf.agregarInstruccion("DUP");
+        gcf.agregarInstruccion("PUSH lblVT"+clase.getNombre().getLexema()+" ;");
+        gcf.agregarInstruccion("STOREREF 0 ;");
+        gcf.agregarInstruccion("DUP");
+        if(listaExpresiones != null) {
+            for (NodoExpresion expresion : listaExpresiones) {
+                expresion.generar(gcf);
+                gcf.agregarInstruccion("SWAP    ;");
+            }
+        }
+        gcf.agregarInstruccion("PUSH lblConstructor@"+clase.getNombre().getLexema()+";");
+        gcf.agregarInstruccion("CALL    ;");
+        if(encadenado != null){
+            encadenado.generar(gcf);
+        }
     }
 }
