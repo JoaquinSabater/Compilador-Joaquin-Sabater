@@ -65,7 +65,6 @@ public class NodoAccesoVar extends NodoAcceso {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        //TODO Falta logica para generar el acceso a la variable, la generacion del nodod perse
         if (this.encadenado != null) {
             this.encadenado.generar(gcf);
         }

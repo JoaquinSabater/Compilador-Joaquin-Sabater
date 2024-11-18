@@ -59,6 +59,9 @@ public class NodoExpresionParametrizada extends NodoAcceso{
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        nodoExpresion.generar(gcf);
+        if(this.encadenado != null){
+            encadenado.generar(gcf);
+        }
     }
 }

@@ -21,6 +21,31 @@ STOREFP
 RET 1   ; Retorna elimiando el parametro
 
 .DATA
+lblVTA:  DW lblA_mc
+.CODE
+
+lblConstructor@A: LOADFP  ; Apila el valor del registro fp
+LOADSP  ; Apila el valor del registro sp
+STOREFP  ; Almacena el tope de la pila en el registro fp
+FMEM 0
+STOREFP  ; Almacena el tope de la pila en el registro fp
+RET 1
+
+lblA_mc: LOADFP; Apilar el valor del registro
+LOADSP  ; Apilar el valor del SP
+STOREFP ; Guardar el valor del SP en el FP
+PUSH 1234; Apilar el entero 1234
+PUSH debugPrint; Apilar la dirección del método debugPrint
+CALL    ; Llamar al método debugPrint
+PUSH 33; Apilar el entero 33
+PUSH debugPrint; Apilar la dirección del método debugPrint
+CALL    ; Llamar al método debugPrint
+FMEM 0
+STOREFP ; Almacena el tope de la pila en el registro
+RET 01
+
+
+.DATA
 lblVTInit:  NOP
 .CODE
 
@@ -36,15 +61,23 @@ lblInit_main: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
 RMEM 1; Reservo espacio para la variable a
-PUSH 1; Apilar el entero 1
+RMEM 1  ; Reservamos memoria para el resultado del malloc
+PUSH 2; Apilo la cantidad de var de instancia del CIR de A +1 por VT
+PUSH simple_malloc  ; La dirección de la rutina para alojar memoria en el heap
+CALL    ; Llamo a malloc
+DUP ; Para no perder la referencia al nuevo CIR
+PUSH lblVTA ; Apilamos la dirección del comienzo de la VT de la clase A
+STOREREF 0 ; Guardamos la Referencia a la VT en el CIR que creamos
+DUP
+PUSH lblConstructor@A
+CALL    ; LLamo al constructor
 STORE 0 ; Guardo el valor de la variable a
-RMEM 1; Reservo espacio para la variable b
-PUSH 2; Apilar el entero 2
-STORE -1 ; Guardo el valor de la variable b
-RMEM 1; Reservo espacio para la variable c
-PUSH 3; Apilar el entero 3
-STORE -2 ; Guardo el valor de la variable c
-FMEM 3
+LOAD 0; Cargar la dirección de la instancia
+DUP
+LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
+LOADREF 0; Apilo el offset del metdo mc en la VT
+CALL    ; Llamar al método mc
+FMEM 1
 STOREFP ; Almacena el tope de la pila en el registro
 RET 0
 

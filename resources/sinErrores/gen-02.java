@@ -1,11 +1,22 @@
 ///1234&33&exitosamente
 
+class A{
+    int x;
+
+
+      void mc(){
+        debugPrint(1234);
+        x = 33;
+        debugPrint(x);
+      }
+}
+
+
 class Init{
     static void main()
     {
-        var a = 1;
-        var b = 2;
-        var c = 3;
+        var a = new A();
+        a.mc();
     }
 }
 

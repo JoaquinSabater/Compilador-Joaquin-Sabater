@@ -47,6 +47,7 @@ public class NodoAccesoThis extends NodoAcceso{
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        gcf.agregarInstruccion("LOAD 3  ; apilo el this");
         if (this.encadenado != null) {
             encadenado.generar(gcf);
         }
