@@ -152,7 +152,12 @@ public class Metodo {
                         bloqueContenedor.generar(gcf);
                     }
                     gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
-                    gcf.agregarInstruccion("RET "+parametros.size() + 1);
+                    if(esStatic){
+                        gcf.agregarInstruccion("RET "+parametros.size());
+                    }else {
+                        gcf.agregarInstruccion("RET "+parametros.size() + 1);
+                    }
+
                 }
             }
         }

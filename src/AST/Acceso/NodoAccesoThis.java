@@ -47,6 +47,8 @@ public class NodoAccesoThis extends NodoAcceso{
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        if (this.encadenado != null) {
+            encadenado.generar(gcf);
+        }
     }
 }

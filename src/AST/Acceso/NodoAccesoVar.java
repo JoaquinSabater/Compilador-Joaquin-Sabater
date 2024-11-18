@@ -65,15 +65,9 @@ public class NodoAccesoVar extends NodoAcceso {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        if(atributo != null){
-            //gcf.agregarInstruccion("LOAD 3  ; ");
-            //gcf.agregarInstruccion("SWAP");
-            //gcf.agregarInstruccion("STOREREF 1");
-            //System.out.println("Entre aca");
-        }
+        //TODO Falta logica para generar el acceso a la variable, la generacion del nodod perse
         if (this.encadenado != null) {
             this.encadenado.generar(gcf);
         }
-        //TODO Tengo que generar el encadenado
     }
 }
