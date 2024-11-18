@@ -85,13 +85,13 @@ public class AccesoConstructor extends NodoAcceso {
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         Clase clase = ts.getClase(token.getLexema());
         int CIR = clase.getTamanioCIR();
-        gcf.agregarInstruccion("RMEM 1");
-        gcf.agregarInstruccion("PUSH "+ CIR +";");
-        gcf.agregarInstruccion("PUSH simple_malloc  ;");
-        gcf.agregarInstruccion("CALL    ;");
-        gcf.agregarInstruccion("DUP");
-        gcf.agregarInstruccion("PUSH lblVT"+clase.getNombre().getLexema()+" ;");
-        gcf.agregarInstruccion("STOREREF 0 ;");
+        gcf.agregarInstruccion("RMEM 1  ; Reservamos memoria para el resultado del malloc");
+        gcf.agregarInstruccion("PUSH "+ CIR +"; Apilo la cantidad de var de instancia del CIR de A +1 por VT");
+        gcf.agregarInstruccion("PUSH simple_malloc  ; La dirección de la rutina para alojar memoria en el heap");
+        gcf.agregarInstruccion("CALL    ; Llamo a malloc");
+        gcf.agregarInstruccion("DUP ; Para no perder la referencia al nuevo CIR");
+        gcf.agregarInstruccion("PUSH lblVT"+clase.getNombre().getLexema()+" ; Apilamos la dirección del comienzo de la VT de la clase A");
+        gcf.agregarInstruccion("STOREREF 0 ; Guardamos la Referencia a la VT en el CIR que creamos");
         gcf.agregarInstruccion("DUP");
         if(listaExpresiones != null) {
             for (NodoExpresion expresion : listaExpresiones) {
@@ -99,8 +99,8 @@ public class AccesoConstructor extends NodoAcceso {
                 gcf.agregarInstruccion("SWAP    ;");
             }
         }
-        gcf.agregarInstruccion("PUSH lblConstructor@"+clase.getNombre().getLexema()+";");
-        gcf.agregarInstruccion("CALL    ;");
+        gcf.agregarInstruccion("PUSH lblConstructor@"+clase.getNombre().getLexema());
+        gcf.agregarInstruccion("CALL    ; LLamo al constructor");
         if(encadenado != null){
             encadenado.generar(gcf);
         }

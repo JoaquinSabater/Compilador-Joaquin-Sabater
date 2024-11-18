@@ -6,6 +6,8 @@ import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
+
 public abstract class Encadenado {
     protected Token token;
     protected Encadenado encadenado;
@@ -41,7 +43,5 @@ public abstract class Encadenado {
 
     public abstract Tipo chequear(Tipo tipoLadoIzquierdo) throws ExcepcionSemantica;
 
-    public void generar(GeneradorDeCodigoFuente gcf) {
-
-    }
+    public abstract void generar(GeneradorDeCodigoFuente gcf) throws IOException;
 }

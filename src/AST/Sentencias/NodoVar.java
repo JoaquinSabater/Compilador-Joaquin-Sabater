@@ -15,6 +15,8 @@ public class NodoVar extends NodoSentencia {
     private Token idMetVar;
     private NodoExpresion expresion;
 
+    int offset = 0;
+
     TS ts;
 
     public NodoVar(Token idMetVar, NodoExpresion expresion, TS ts) {
@@ -51,11 +53,21 @@ public class NodoVar extends NodoSentencia {
         }
 
         bloqueActual.agregarVariable(this.idMetVar.getLexema());
-        expresion.chequear();
+        Tipo tipoAux = expresion.chequear();
+        TS.AgregarVariableYTipo(this.idMetVar.getLexema(), tipoAux);
     }
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        //Aca solo tengo que guardar
+        //TODO Hay un posible problema, si una variable no es utilizada en este caso esoy contando con us offset igual
+        gcf.agregarInstruccion("RMEM 1; Reservo espacio para la variable "+idMetVar.getLexema());
+        if (expresion != null) {
+            expresion.generar(gcf);
+        }
+        gcf.agregarInstruccion("STORE "+offset+" ; Guardo el valor de la variable "+idMetVar.getLexema());
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }

@@ -13,6 +13,8 @@ import java.util.Set;
 public class TS {
     private HashMap<String, Clase> Clases;
 
+    private static HashMap<String,Tipo> variablesYTipos = new HashMap<>();
+
     Clase claseActual;
 
     Metodo metodoActual;
@@ -21,6 +23,7 @@ public class TS {
 
     public TS() throws ExcepcionSemantica {
         Clases = new HashMap<>();
+        variablesYTipos = new HashMap<>();
         claseActual = null;
         metodoActual = null;
         bloqueActual = null;
@@ -64,6 +67,14 @@ public class TS {
 
     }
 
+    public static Tipo getTipo(String lexema) {
+        return variablesYTipos.get(lexema);
+    }
+
+    public static void AgregarVariableYTipo(String lexema, Tipo tipoAux) {
+        variablesYTipos.put(lexema,tipoAux);
+    }
+
     public NodoBloque getBloqueActual() {
         return bloqueActual;
     }
@@ -74,6 +85,7 @@ public class TS {
 
     public void limpiarClases() {
         Clases.clear();
+        variablesYTipos.clear();
     }
 
     public Clase getClase(String nombre) {

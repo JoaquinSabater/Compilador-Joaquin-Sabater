@@ -2,8 +2,8 @@
 
 class A{
     int x;
-    
-   
+
+
       void mc(){
         debugPrint(1234);
         x = 33;
@@ -14,7 +14,7 @@ class A{
 
 class Init{
     static void main()
-    { 
+    {
         var a = new A();
         a.mc();
     }

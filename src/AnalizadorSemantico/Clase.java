@@ -112,7 +112,7 @@ public class Clase {
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         if(!nombre.getLexema().equals("Object") && !nombre.getLexema().equals("String") && !nombre.getLexema().equals("System")){
             gcf.setModoData();
-            gcf.agregarInstruccion("lblVT"+nombre.getLexema()+":  NOP");
+            generarVT(gcf);
             gcf.setModoCode();
             gcf.generarEspacioEnBlanco();
             if(!tieneConstructor){
@@ -127,6 +127,25 @@ public class Clase {
             for (Metodo metodo : metodos.values()) {
                 metodo.generar(gcf);
             }
+        }
+    }
+
+    private void generarVT(GeneradorDeCodigoFuente gcf) throws IOException {
+        StringBuilder toReturn = new StringBuilder();
+        boolean bandera = false;
+        for (Metodo metodo : metodos.values()) {
+            if (!metodo.getEsStatic()) {
+                if (bandera) {
+                    toReturn.append(",");
+                }
+                toReturn.append("lbl").append(nombre.getLexema()).append("_").append(metodo.getNombre().getLexema());
+                bandera = true;
+            }
+        }
+        if (!bandera) {
+            gcf.agregarInstruccion("lblVT" + nombre.getLexema() + ":  NOP");
+        } else {
+            gcf.agregarInstruccion("lblVT" + nombre.getLexema() + ":  DW " + toReturn);
         }
     }
 }

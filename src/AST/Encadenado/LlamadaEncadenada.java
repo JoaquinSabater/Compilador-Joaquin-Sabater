@@ -3,12 +3,16 @@ package AST.Encadenado;
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LlamadaEncadenada extends Encadenado{
     private ArrayList<NodoExpresion> listaExpresiones;
+
+    Metodo metodo;
 
 
     public LlamadaEncadenada(Token token,TS ts ,ArrayList<NodoExpresion> listaExpresiones){
@@ -19,11 +23,15 @@ public class LlamadaEncadenada extends Encadenado{
 
     @Override
     public Tipo chequear(Tipo tipoLadoIzquierdo) throws ExcepcionSemantica {
+        if(tipoLadoIzquierdo.getNombreClase().getToken_id().equals("pr_var")){
+            Tipo TipoVar = TS.getTipo(tipoLadoIzquierdo.getNombreClase().getLexema());
+            tipoLadoIzquierdo = TipoVar;
+        }
         Clase claseActual = ts.getClase(tipoLadoIzquierdo.getNombreClase().getLexema());
 
         Tipo toReturn;
 
-        Metodo metodo = claseActual.getMetodo(token.getLexema());
+        metodo = claseActual.getMetodo(token.getLexema());
         if (metodo == null) {
             throw new ExcepcionSemantica(token, "Método " + token.getLexema() + " no encontrado en la clase " + claseActual.getNombre());
         }
@@ -52,6 +60,32 @@ public class LlamadaEncadenada extends Encadenado{
         }
 
         return toReturn;
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        if(metodo.getEsStatic()){
+            generarCodigoStatic(gcf);
+        }else {
+            generarCodigoNoStatic(gcf);
+        }
+    }
+
+    private void generarCodigoStatic(GeneradorDeCodigoFuente gcf) {
+
+    }
+
+    private void generarCodigoNoStatic(GeneradorDeCodigoFuente gcf) throws IOException {
+        gcf.agregarInstruccion("LOAD 0; Cargar la dirección de la instancia"); //TODO esto es temporal el offset se tiene que calcular
+        if(listaExpresiones != null){
+            for (NodoExpresion expresion : listaExpresiones) {
+                expresion.generar(gcf);
+            }
+        }
+        gcf.agregarInstruccion("DUP");
+        gcf.agregarInstruccion("LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)");
+        gcf.agregarInstruccion("LOADREF 0; Apilo el offset del metdo mc en la VT"); //TODO esto tambien es temporal
+        gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 
     public boolean esAsignable(){

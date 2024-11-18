@@ -46,7 +46,6 @@ public class Main {
             try {
                 ts.generar(GCF);
                 GCF.cerrar();
-                //System.out.println("La ejecucion del programa finalizo correctamente");
             } catch (Exception e) {
                // bandera = false;
                 System.out.println(e.getMessage());

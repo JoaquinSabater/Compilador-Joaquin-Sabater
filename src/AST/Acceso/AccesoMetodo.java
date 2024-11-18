@@ -78,6 +78,27 @@ public class AccesoMetodo extends NodoAcceso {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        claseContenedora = ts.getClaseActual();
+        Metodo metodo = claseContenedora.getMetodo(token.getLexema());
+        if (metodo.getEsStatic()){
+            generarCodigoMetodoStatic(gcf,metodo);
+        }else {
+            generarCodigoMetodoNoStatic(gcf,metodo);
+        }
+    }
+
+    private void generarCodigoMetodoNoStatic(GeneradorDeCodigoFuente gcf,Metodo metodo) throws IOException {
+        gcf.agregarInstruccion("LOAD 0; Cargar la dirección de la instancia"); //TODO esto es temporal el offset se tiene que calcular
+        for (NodoExpresion expresion : listaExpresiones) {
+            expresion.generar(gcf);
+        }
+        gcf.agregarInstruccion("DUP");
+        gcf.agregarInstruccion("LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)");
+        gcf.agregarInstruccion("LOADREF 0; Apilo el offset del metdo mc en la VT"); //TODO esto tambien es temporal
+        gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
+    }
+
+    private void generarCodigoMetodoStatic(GeneradorDeCodigoFuente gcf,Metodo metodo) throws IOException {
         for (NodoExpresion expresion : listaExpresiones) {
             expresion.generar(gcf);
         }

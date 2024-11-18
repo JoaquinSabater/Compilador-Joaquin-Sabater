@@ -2,6 +2,9 @@ package AST.Encadenado;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
+
+import java.io.IOException;
 
 public class VarEncadenada extends Encadenado {
 
@@ -37,6 +40,11 @@ public class VarEncadenada extends Encadenado {
         }
 
         return tipoVariableEncadenada;
+    }
+
+    @Override
+    public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+
     }
 
     public boolean esAsignable(){

@@ -58,6 +58,8 @@ public class GeneradorDeCodigoFuente {
 
     public void generamosLlamadaMain() throws IOException {
         setModoCode();
+        agregarInstruccion("PUSH simple_heap_init");
+        agregarInstruccion("CALL");
         agregarInstruccion("PUSH lblInit_main");
         agregarInstruccion("CALL");
         agregarInstruccion("HALT");

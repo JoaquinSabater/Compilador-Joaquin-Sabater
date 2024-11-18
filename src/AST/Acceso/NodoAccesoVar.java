@@ -48,10 +48,10 @@ public class NodoAccesoVar extends NodoAcceso {
             toReturn = this.parametro.getTipo();
         } else if (bloqueActual.esVariableDeclaradaEnBloqueOEnPadre(this.token.getLexema())) {
             toReturn = new TipoClase();
-            toReturn.setNombreClase(new Token("pr_var", "pr_var", this.token.getNro_linea()));
+            toReturn.setNombreClase(new Token("pr_var", token.getLexema(), this.token.getNro_linea()));
         } else if (bloqueActual.esVariableDeclaradaEnEsteBloque(this.token.getLexema())) {
             toReturn = new TipoClase();
-            toReturn.setNombreClase(new Token("pr_var", "pr_var", this.token.getNro_linea()));
+            toReturn.setNombreClase(new Token("pr_var", token.getLexema(), this.token.getNro_linea()));
         } else{
             throw new ExcepcionSemantica(this.token, "No se encontro el atributo o parametro " + this.token.getLexema());
         }
@@ -71,6 +71,9 @@ public class NodoAccesoVar extends NodoAcceso {
             //gcf.agregarInstruccion("STOREREF 1");
             //System.out.println("Entre aca");
         }
-        //TODO falta ver que pasa si es de tipo static o no
+        if (this.encadenado != null) {
+            this.encadenado.generar(gcf);
+        }
+        //TODO Tengo que generar el encadenado
     }
 }

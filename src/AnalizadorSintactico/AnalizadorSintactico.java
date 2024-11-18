@@ -228,7 +228,7 @@ public class AnalizadorSintactico {
             nodoBloque= new NodoBloque(tokenActual,ts.getBloqueActual());
             bloqueActual = nodoBloque;
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
-            //ts.getMetodoActual().setBloqueContenedor(nodoBloque);
+            ts.getMetodoActual().setBloqueContenedor(nodoBloque);
             ts.setBloqueActual(nodoBloque);
             flag = true;
         }
@@ -239,7 +239,7 @@ public class AnalizadorSintactico {
             ts.setBloqueActual(nodoBloque.getPadre());
             bloqueActual = nodoBloque.getPadre();
         }
-        return bloqueActual;
+        return nodoBloque;
     }
 
     // <ListaSentencias> ::= <Sentencia> <ListaSentencias> | ε
@@ -280,6 +280,7 @@ public class AnalizadorSintactico {
                 break;
             case "pr_var":
                 nodoSentencia = VarLocal();
+                ts.getBloqueActual().agregarVariableLocal((NodoVar) nodoSentencia);
                 match("puntoComa");
                 break;
             case "pr_return":
