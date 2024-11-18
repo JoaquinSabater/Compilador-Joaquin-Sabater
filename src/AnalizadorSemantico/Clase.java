@@ -113,6 +113,7 @@ public class Clase {
         if(!nombre.getLexema().equals("Object") && !nombre.getLexema().equals("String") && !nombre.getLexema().equals("System")){
             gcf.setModoData();
             generarVT(gcf);
+            generarOffsetAtributos();
             gcf.setModoCode();
             gcf.generarEspacioEnBlanco();
             if(!tieneConstructor){
@@ -127,6 +128,14 @@ public class Clase {
             for (Metodo metodo : metodos.values()) {
                 metodo.generar(gcf);
             }
+        }
+    }
+
+    private void generarOffsetAtributos() {
+        int offset = 1;
+        for (Atributo atributo : atributos.values()) {
+            atributo.setOffset(offset);
+            offset++;
         }
     }
 

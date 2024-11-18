@@ -10,6 +10,8 @@ public class Atributo {
 
     boolean esStatic = false;
 
+    private int offset;
+
     public Atributo(Tipo tipo, Token nombre) {
         this.tipo = tipo;
         this.nombre = nombre;
@@ -39,4 +41,7 @@ public class Atributo {
         this.nombre = nombre;
     }
 
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
 }

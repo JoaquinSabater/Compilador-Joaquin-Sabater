@@ -280,7 +280,6 @@ public class AnalizadorSintactico {
                 break;
             case "pr_var":
                 nodoSentencia = VarLocal();
-                ts.getBloqueActual().agregarVariableLocal((NodoVar) nodoSentencia);
                 match("puntoComa");
                 break;
             case "pr_return":
@@ -322,7 +321,7 @@ public class AnalizadorSintactico {
         match("idMetVar");
         match("asignacion");
         NodoExpresion expresion = ExpresionCompuesta();
-        return new NodoVar(idMetVar, expresion,ts);
+        return new NodoVar(idMetVar, expresion,ts,bloqueActual);
     }
 
     //<Return> ::= return <ExpresionOpcional>

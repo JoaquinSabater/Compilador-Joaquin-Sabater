@@ -50,7 +50,6 @@ public class NodoBloque extends NodoSentencia {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        calcularOffsetVariablesLocales();
         for (NodoSentencia sentencia : listaSentenciasAux) {
             sentencia.generar(gcf);
         }
@@ -58,14 +57,19 @@ public class NodoBloque extends NodoSentencia {
         gcf.agregarInstruccion("FMEM "+variablesDeclaradas.size());
     }
 
-    private void calcularOffsetVariablesLocales() {
-        //int offset = contarVariablesDeclaradasAncestros();
-        //offset++;
-        //for (NodoVar variable : variablesLocales) {
-            //variable.setOffset(offset);
-            //offset++;
-        //}
+    public int obtenerSiguienteOffsetDisponible() {
+        NodoBloque bloqueActual = this;
+        int contador = -1;
+
+        // Recorremos el bloque actual y todos los bloques ancestros
+        while (bloqueActual != null) {
+            contador += bloqueActual.variablesDeclaradas.size();
+            bloqueActual = bloqueActual.padre;
+        }
+
+        return -contador;
     }
+
 
     public void setClaseContenedora(Clase claseContenedora) {
         this.claseContenedora = claseContenedora;
@@ -135,4 +139,5 @@ public class NodoBloque extends NodoSentencia {
             variablesLocales.add(nodoSentencia);
         }
     }
+
 }

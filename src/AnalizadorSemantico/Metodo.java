@@ -165,10 +165,15 @@ public class Metodo {
     }
 
     public void setOffsetsParametro(){
-        int i = parametros.size();
+        int i = 0;
+        if (esStatic){
+            i = 3;
+        }else {
+            i = 4;
+        }
         for (Parametro p : parametros.values()) {
             p.setOffset(i);
-            i--;
+            i++;
         }
     }
 
