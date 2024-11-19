@@ -75,6 +75,9 @@ public class TS {
         variablesYTipos.put(lexema,tipoAux);
     }
 
+    public static Tipo getTipoVariable(String lexema) {
+        return variablesYTipos.get(lexema);
+    }
     public NodoBloque getBloqueActual() {
         return bloqueActual;
     }

@@ -53,15 +53,13 @@ public class NodoAccesoVar extends NodoAcceso {
             this.parametro = metodoActual.getParametro(this.token.getLexema());
             toReturn = this.parametro.getTipo();
         } else if (bloqueActual.esVariableDeclaradaEnBloqueOEnPadre(this.token.getLexema())) {
-            toReturn = new TipoClase();
+            toReturn = TS.getTipoVariable(this.token.getLexema());
             offset = bloqueActual.obtenerOffsetVariable(this.token.getLexema());
             esVar = true;
-            toReturn.setNombreClase(new Token("pr_var", token.getLexema(), this.token.getNro_linea()));
         } else if (bloqueActual.esVariableDeclaradaEnEsteBloque(this.token.getLexema())) {
-            toReturn = new TipoClase();
+            toReturn = TS.getTipoVariable(this.token.getLexema());
             offset = bloqueActual.obtenerOffsetVariable(this.token.getLexema());
             esVar = true;
-            toReturn.setNombreClase(new Token("pr_var", token.getLexema(), this.token.getNro_linea()));
         }else if(token.getToken_id().equals("idClase")){
             toReturn = new TipoClase();
             toReturn.setNombreClase(token);
@@ -103,12 +101,6 @@ public class NodoAccesoVar extends NodoAcceso {
                 gcf.agregarInstruccion("STORE "+offset+" ; AccesoVar Guardo la variable "+token.getLexema());
             }
         }
-        //if (parametro != null){
-            //gcf.agregarInstruccion("LOAD "+parametro.getOffset()+"; Cargo el parametro "+parametro.getNombre());
-        //}
-        //if (atributo != null){
-            //gcf.agregarInstruccion("LOAD "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
-        //}
         if (this.encadenado != null) {
             this.encadenado.generar(gcf);
         }

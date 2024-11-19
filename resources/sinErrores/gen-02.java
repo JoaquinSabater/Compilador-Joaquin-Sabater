@@ -1,12 +1,12 @@
 ///1234&33&exitosamente
 
 class A{
-    int x;
+
       void mc(){
-        var y = 10;
-        var z = 10;
-        x = y + z;
-        debugPrint(x);
+         var x = 10;
+         var y = 12;
+         var z = x + y;
+         debugPrint(z);
       }
 }
 
