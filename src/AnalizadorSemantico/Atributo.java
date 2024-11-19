@@ -44,4 +44,8 @@ public class Atributo {
     public void setOffset(int offset) {
         this.offset = offset;
     }
+
+    public int getOffset() {
+        return offset;
+    }
 }

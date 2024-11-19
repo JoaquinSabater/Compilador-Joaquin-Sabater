@@ -31,6 +31,7 @@ public class NodoAsignacionLlamada extends NodoSentencia {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        //TODO aca puede ser que haya que hacer algo mas
         expresion.generar(gcf);
     }
 }

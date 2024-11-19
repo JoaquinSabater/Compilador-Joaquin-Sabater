@@ -88,9 +88,14 @@ public class AccesoMetodo extends NodoAcceso {
     }
 
     private void generarCodigoMetodoNoStatic(GeneradorDeCodigoFuente gcf,Metodo metodo) throws IOException {
-        gcf.agregarInstruccion("LOAD 0; Cargar la dirección de la instancia"); //TODO esto es temporal el offset se tiene que calcular
+        gcf.agregarInstruccion("LOAD 3; Cargar la dirección de la instancia"); //TODO esto es temporal el offset se tiene que calcular
+        if (!metodo.getEsStatic()){
+            gcf.agregarInstruccion("RMEM 1  ; Guardo lugar para el retorno");
+            gcf.agregarInstruccion("SWAP");
+        }
         for (NodoExpresion expresion : listaExpresiones) {
             expresion.generar(gcf);
+            gcf.agregarInstruccion("SWAP");
         }
         gcf.agregarInstruccion("DUP");
         gcf.agregarInstruccion("LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)");
@@ -99,6 +104,9 @@ public class AccesoMetodo extends NodoAcceso {
     }
 
     private void generarCodigoMetodoStatic(GeneradorDeCodigoFuente gcf,Metodo metodo) throws IOException {
+        if (!metodo.isEsVoid()){
+            gcf.agregarInstruccion("RMEM 1  ; Guardo lugar para el retorno");
+        }
         for (NodoExpresion expresion : listaExpresiones) {
             expresion.generar(gcf);
         }

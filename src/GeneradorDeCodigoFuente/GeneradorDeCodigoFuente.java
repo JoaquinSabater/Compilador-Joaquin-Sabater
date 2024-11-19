@@ -136,7 +136,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintC@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printC: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");
@@ -144,7 +144,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintS@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printS: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");
@@ -152,14 +152,14 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("println: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("PRNLN  ; Imprime el caracter de nueva línea");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 0");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintCln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printCln: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");
@@ -168,7 +168,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintSln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printSln: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");
@@ -177,7 +177,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetread@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("read: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("READ  ; Lee un valor entero");
@@ -187,7 +187,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 0");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintB@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printB: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");
@@ -195,7 +195,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintIln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printIln: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");
@@ -204,7 +204,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintI@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printI: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");
@@ -212,7 +212,7 @@ public class GeneradorDeCodigoFuente {
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("RET 1");
         generarEspacioEnBlanco();
-        agregarInstruccion("lblMetprintBln@System: LOADFP  ; Apila el valor del registro fp");
+        agregarInstruccion("printBln: LOADFP  ; Apila el valor del registro fp");
         agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
         agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
         agregarInstruccion("LOAD 3  ; Apila el parámetro");

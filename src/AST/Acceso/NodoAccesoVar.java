@@ -11,6 +11,8 @@ public class NodoAccesoVar extends NodoAcceso {
 
     private Atributo atributo;
     private Parametro parametro;
+
+
     public NodoAccesoVar(Token token, TS ts) {
         super(token,ts);
         this.esAsignable = true;
@@ -63,8 +65,32 @@ public class NodoAccesoVar extends NodoAcceso {
         }
     }
 
+
+
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        if(atributo != null){
+            gcf.agregarInstruccion("LOAD 3  ; Agrego el this");
+            if(encadenado != null){
+                gcf.agregarInstruccion("LOADREF "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
+            }else {
+                gcf.agregarInstruccion("SWAP");
+                gcf.agregarInstruccion("STOREREF "+atributo.getOffset()+" ; Guardo el atributo "+atributo.getNombre());
+            }
+        }
+        if(parametro != null){
+            if(encadenado != null){
+                gcf.agregarInstruccion("LOAD "+parametro.getOffset()+" ; Cargo el parametro "+parametro.getNombre());
+            }else {
+                gcf.agregarInstruccion("STORE "+parametro.getOffset()+" ; Guardo el parametro "+parametro.getNombre());
+            }
+        }
+        //if (parametro != null){
+            //gcf.agregarInstruccion("LOAD "+parametro.getOffset()+"; Cargo el parametro "+parametro.getNombre());
+        //}
+        //if (atributo != null){
+            //gcf.agregarInstruccion("LOAD "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
+        //}
         if (this.encadenado != null) {
             this.encadenado.generar(gcf);
         }

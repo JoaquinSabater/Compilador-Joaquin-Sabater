@@ -58,8 +58,20 @@ public class NodoReturn extends NodoSentencia {
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         if (expresion != null) {
             expresion.generar(gcf);
-            int offset = metodoPadre.getOffset() + 4;
-            gcf.agregarInstruccion("STORE "+offset);
+            int offset = 0;
+            int memToFree= 0;
+            if (metodoPadre.getEsStatic()){
+                offset = metodoPadre.getParametros().size() + 3;
+                memToFree = metodoPadre.getParametros().size();
+            }else {
+                memToFree = metodoPadre.getParametros().size() + 1;
+                offset = metodoPadre.getParametros().size() + 4;
+            }
+            int variablesLocales = metodoPadre.getBloqueContenedor().cantidadDeVariablesLocales();
+            gcf.agregarInstruccion("STORE "+offset+"; Nodo Return guardo el valor de retorno en la posicion de retorno");
+            gcf.agregarInstruccion("STOREFP; Nodo Return guardo el FP en la posicion de retorno");
+            gcf.agregarInstruccion("RET "+memToFree+"; Nodo Return Libero la memoria");
+            //gcf.agregarInstruccion("FMEM "+variablesLocales+"; Nodo Return libero las variables locales");
         }
     }
 

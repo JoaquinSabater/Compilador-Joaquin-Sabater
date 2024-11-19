@@ -34,15 +34,23 @@ RET 1
 lblA_mc: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
+RMEM 1  ; Guardo lugar para el retorno
 PUSH 1234; Apilar el entero 1234
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
+LOAD 3  ; Agrego el this
+SWAP
+STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@2096442d
 PUSH 33; Apilar el entero 33
+RMEM 1  ; Guardo lugar para el retorno
+LOAD 3  ; Agrego el this
+SWAP
+STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@2096442d
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 FMEM 0
 STOREFP ; Almacena el tope de la pila en el registro
-RET 01
+RET 1
 
 
 .DATA
@@ -122,7 +130,7 @@ FMEM 0
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetprintC@System: LOADFP  ; Apila el valor del registro fp
+printC: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro
@@ -130,7 +138,7 @@ CPRINT  ; Imprime el char en el tope de la pila
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetprintS@System: LOADFP  ; Apila el valor del registro fp
+printS: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro
@@ -138,14 +146,14 @@ SPRINT  ; Imprime el string en el tope de la pila
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetprintln@System: LOADFP  ; Apila el valor del registro fp
+println: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 PRNLN  ; Imprime el caracter de nueva línea
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 0
 
-lblMetprintCln@System: LOADFP  ; Apila el valor del registro fp
+printCln: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro
@@ -154,7 +162,7 @@ PRNLN  ; Imprime el caracter de nueva línea
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetprintSln@System: LOADFP  ; Apila el valor del registro fp
+printSln: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro
@@ -163,7 +171,7 @@ PRNLN  ; Imprime el caracter de nueva línea
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetread@System: LOADFP  ; Apila el valor del registro fp
+read: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 READ  ; Lee un valor entero
@@ -173,7 +181,7 @@ STORE 3  ; Devuelve el valor entero leído, poniendo el tope de la pila en la lo
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 0
 
-lblMetprintB@System: LOADFP  ; Apila el valor del registro fp
+printB: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro
@@ -181,7 +189,7 @@ BPRINT  ; Imprime el booleano en el tope de la pila
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetprintIln@System: LOADFP  ; Apila el valor del registro fp
+printIln: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro
@@ -190,7 +198,7 @@ PRNLN  ; Imprime el caracter de nueva línea
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetprintI@System: LOADFP  ; Apila el valor del registro fp
+printI: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro
@@ -198,7 +206,7 @@ IPRINT  ; Imprime el entero en el tope de la pila
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblMetprintBln@System: LOADFP  ; Apila el valor del registro fp
+printBln: LOADFP  ; Apila el valor del registro fp
 LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 LOAD 3  ; Apila el parámetro

@@ -4,11 +4,11 @@ class A{
     int x;
 
 
-      void mc(){
+    void mc(){
         debugPrint(1234);
         x = 33;
         debugPrint(x);
-      }
+    }
 }
 
 
@@ -17,7 +17,6 @@ class Init{
     {
         var a = new A();
         a.mc();
+
     }
 }
-
-

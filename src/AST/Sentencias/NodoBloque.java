@@ -140,4 +140,7 @@ public class NodoBloque extends NodoSentencia {
         }
     }
 
+    public int cantidadDeVariablesLocales() {
+        return variablesDeclaradas.size();
+    }
 }
