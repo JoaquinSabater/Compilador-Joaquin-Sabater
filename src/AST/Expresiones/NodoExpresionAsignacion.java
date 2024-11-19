@@ -48,6 +48,7 @@ public class NodoExpresionAsignacion extends NodoExpresion {
     @Override
     public Tipo chequear() throws ExcepcionSemantica {
         Tipo tipoLadoIzquierdo = ladoIzquierdo.chequear();
+        //Sete
         Tipo tipoLadoDerecho = ladoDerecho.chequear();
 
         if (!tipoLadoDerecho.esCompatibleTipo(tipoLadoIzquierdo, ts)) {
@@ -73,9 +74,13 @@ public class NodoExpresionAsignacion extends NodoExpresion {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        if(ladoIzquierdo != null)
-            ladoIzquierdo.generar(gcf);
-        if(ladoDerecho != null)
+        if(ladoDerecho != null){
             ladoDerecho.generar(gcf);
+        }
+        gcf.agregarInstruccion("DUP ");
+        ladoIzquierdo.setComoLadoIzquierdo();
+        if(ladoIzquierdo != null){
+            ladoIzquierdo.generar(gcf);
+        }
     }
 }

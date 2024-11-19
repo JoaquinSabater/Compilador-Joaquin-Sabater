@@ -1,6 +1,7 @@
 package AST.Acceso;
 
 import AST.Sentencias.NodoBloque;
+import AST.Sentencias.NodoVar;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
@@ -12,6 +13,9 @@ public class NodoAccesoVar extends NodoAcceso {
     private Atributo atributo;
     private Parametro parametro;
 
+    private int offset ;
+
+    private boolean esVar = false;
 
     public NodoAccesoVar(Token token, TS ts) {
         super(token,ts);
@@ -50,9 +54,13 @@ public class NodoAccesoVar extends NodoAcceso {
             toReturn = this.parametro.getTipo();
         } else if (bloqueActual.esVariableDeclaradaEnBloqueOEnPadre(this.token.getLexema())) {
             toReturn = new TipoClase();
+            offset = bloqueActual.obtenerOffsetVariable(this.token.getLexema());
+            esVar = true;
             toReturn.setNombreClase(new Token("pr_var", token.getLexema(), this.token.getNro_linea()));
         } else if (bloqueActual.esVariableDeclaradaEnEsteBloque(this.token.getLexema())) {
             toReturn = new TipoClase();
+            offset = bloqueActual.obtenerOffsetVariable(this.token.getLexema());
+            esVar = true;
             toReturn.setNombreClase(new Token("pr_var", token.getLexema(), this.token.getNro_linea()));
         } else{
             throw new ExcepcionSemantica(this.token, "No se encontro el atributo o parametro " + this.token.getLexema());
@@ -71,7 +79,7 @@ public class NodoAccesoVar extends NodoAcceso {
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         if(atributo != null){
             gcf.agregarInstruccion("LOAD 3  ; Agrego el this");
-            if(encadenado != null){
+            if(!esLadoIzquierdo || encadenado != null){
                 gcf.agregarInstruccion("LOADREF "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
             }else {
                 gcf.agregarInstruccion("SWAP");
@@ -79,10 +87,17 @@ public class NodoAccesoVar extends NodoAcceso {
             }
         }
         if(parametro != null){
-            if(encadenado != null){
+            if(!esLadoIzquierdo || encadenado != null){
                 gcf.agregarInstruccion("LOAD "+parametro.getOffset()+" ; Cargo el parametro "+parametro.getNombre());
             }else {
                 gcf.agregarInstruccion("STORE "+parametro.getOffset()+" ; Guardo el parametro "+parametro.getNombre());
+            }
+        }
+        if(esVar){
+            if(!esLadoIzquierdo || encadenado != null){
+                gcf.agregarInstruccion("LOAD "+offset+" ; AccesoVar Cargo la variable "+token.getLexema());
+            }else {
+                gcf.agregarInstruccion("STORE "+offset+" ; AccesoVar Guardo la variable "+token.getLexema());
             }
         }
         //if (parametro != null){

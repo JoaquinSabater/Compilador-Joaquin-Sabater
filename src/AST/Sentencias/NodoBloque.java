@@ -6,6 +6,7 @@ import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,8 @@ public class NodoBloque extends NodoSentencia {
     private ArrayList<NodoSentencia> listaSentenciasAux;
 
     private Set<String> variablesDeclaradas;
+
+    private HashMap<String,Integer> offsetVariables;
 
     private ArrayList<NodoVar> variablesLocales;
 
@@ -33,6 +36,7 @@ public class NodoBloque extends NodoSentencia {
         listaSentenciasAux = new ArrayList<>();
         this.padre = padre;
         this.variablesDeclaradas = new HashSet<>();
+        this.offsetVariables = new HashMap<String,Integer>();
     }
 
     public NodoBloque getPadre() {
@@ -122,25 +126,25 @@ public class NodoBloque extends NodoSentencia {
         }
     }
 
-    public int contarVariablesDeclaradasAncestros() {
-        int contador = 0;
-        NodoBloque bloqueActual = this.padre;
-
-        while (bloqueActual != null) {
-            contador += bloqueActual.variablesDeclaradas.size();
-            bloqueActual = bloqueActual.padre;
-        }
-
-        return contador;
-    }
-
-    public void agregarVariableLocal(NodoVar nodoSentencia) {
-        if(variablesLocales != null){
-            variablesLocales.add(nodoSentencia);
-        }
-    }
-
     public int cantidadDeVariablesLocales() {
         return variablesDeclaradas.size();
     }
+
+    public void agregarOffsetVariable(String nombreVariable, int offset){
+        offsetVariables.put(nombreVariable,offset);
+    }
+
+    public int obtenerOffsetVariable(String nombreVariable){
+        NodoBloque bloqueActual = this;
+
+        while (bloqueActual != null) {
+            if (bloqueActual.offsetVariables.containsKey(nombreVariable)) {
+                return bloqueActual.offsetVariables.get(nombreVariable);
+            }
+            bloqueActual = bloqueActual.padre;
+        }
+
+        return -1;
+    }
+
 }

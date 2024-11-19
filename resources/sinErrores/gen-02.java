@@ -1,13 +1,12 @@
-///1234&33&exitosamente
+///33&exitosamente
 
 class A{
-    int x;
+    void m1(int p1){
+        debugPrint(p1);
+    }
 
-
-    void mc(){
-        debugPrint(1234);
-        x = 33;
-        debugPrint(x);
+    int m2(){
+        return 33;
     }
 }
 
@@ -15,8 +14,9 @@ class A{
 class Init{
     static void main()
     {
-        var a = new A();
-        a.mc();
-
+        var x = new A();
+        x.m2();
+        debugPrint(x.m2());
     }
 }
+

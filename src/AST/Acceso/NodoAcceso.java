@@ -10,8 +10,8 @@ import AST.Encadenado.*;
 
 public abstract class NodoAcceso extends NodoOperando {
     protected Encadenado encadenado;
+    
     protected boolean esAsignable;
-    private boolean esLadoIzquierdo;
 
     TS ts;
 

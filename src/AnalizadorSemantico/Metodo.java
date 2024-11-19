@@ -20,6 +20,8 @@ public class Metodo {
 
     private boolean esStatic = false;
 
+    private int offset;
+
     public void insertarParametro(Parametro p) throws ExcepcionSemantica {
         if (parametros.containsKey(p.getNombre().getLexema())) {
             throw new ExcepcionSemantica(p.getNombre(),"El parametro con el nombre " + p.getNombre().getLexema() + " ya existe.");
@@ -180,6 +182,10 @@ public class Metodo {
     }
 
     public int getOffset() {
-        return parametros.size();
+        return offset;
+    }
+
+    public void setOffset(int i) {
+        this.offset = i;
     }
 }

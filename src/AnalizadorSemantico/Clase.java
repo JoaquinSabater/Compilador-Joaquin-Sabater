@@ -142,7 +142,10 @@ public class Clase {
     private void generarVT(GeneradorDeCodigoFuente gcf) throws IOException {
         StringBuilder toReturn = new StringBuilder();
         boolean bandera = false;
+        int i = 0;
         for (Metodo metodo : metodos.values()) {
+            metodo.setOffset(i);
+            i++;
             if (!metodo.getEsStatic()) {
                 if (bandera) {
                     toReturn.append(",");

@@ -76,15 +76,18 @@ public class LlamadaEncadenada extends Encadenado{
     }
 
     private void generarCodigoNoStatic(GeneradorDeCodigoFuente gcf) throws IOException {
-        gcf.agregarInstruccion("LOAD 0; Cargar la dirección de la instancia"); //TODO esto es temporal el offset se tiene que calcular
-        if(listaExpresiones != null){
-            for (NodoExpresion expresion : listaExpresiones) {
-                expresion.generar(gcf);
-            }
+        //gcf.agregarInstruccion("LOAD 3; LlamdaEncadenada Cargar la dirección de la instancia"); //TODO esto es temporal el offset se tiene que calcular
+        if (!metodo.isEsVoid()){
+            gcf.agregarInstruccion("RMEM 1  ; Guardo lugar para el retorno");
+            gcf.agregarInstruccion("SWAP");
+        }
+        for (NodoExpresion expresion : listaExpresiones) {
+            expresion.generar(gcf);
+            gcf.agregarInstruccion("SWAP");
         }
         gcf.agregarInstruccion("DUP");
         gcf.agregarInstruccion("LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)");
-        gcf.agregarInstruccion("LOADREF 0; Apilo el offset del metdo mc en la VT"); //TODO esto tambien es temporal
+        gcf.agregarInstruccion("LOADREF "+metodo.getOffset()+"; Apilo el offset del metdo mc en la VT"); //TODO esto tambien es temporal
         gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 

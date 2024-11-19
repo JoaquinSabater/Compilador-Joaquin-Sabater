@@ -88,8 +88,9 @@ public class AccesoMetodo extends NodoAcceso {
     }
 
     private void generarCodigoMetodoNoStatic(GeneradorDeCodigoFuente gcf,Metodo metodo) throws IOException {
-        gcf.agregarInstruccion("LOAD 3; Cargar la dirección de la instancia"); //TODO esto es temporal el offset se tiene que calcular
-        if (!metodo.getEsStatic()){
+        //haces load 3 cuando sos el priemro del encadenado
+        //gcf.agregarInstruccion("LOAD 3; AccesoMetodo Cargar la dirección de la instancia");
+        if (!metodo.isEsVoid()){
             gcf.agregarInstruccion("RMEM 1  ; Guardo lugar para el retorno");
             gcf.agregarInstruccion("SWAP");
         }
@@ -99,7 +100,7 @@ public class AccesoMetodo extends NodoAcceso {
         }
         gcf.agregarInstruccion("DUP");
         gcf.agregarInstruccion("LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)");
-        gcf.agregarInstruccion("LOADREF 0; Apilo el offset del metdo mc en la VT"); //TODO esto tambien es temporal
+        gcf.agregarInstruccion("LOADREF "+metodo.getOffset()+"; Apilo el offset del metdo mc en la VT");
         gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 

@@ -57,6 +57,7 @@ public class NodoVar extends NodoSentencia {
 
         bloqueActualM.agregarVariable(this.idMetVar.getLexema());
         offset = bloqueActual.obtenerSiguienteOffsetDisponible();
+        bloqueActual.agregarOffsetVariable(this.idMetVar.getLexema(),offset);
         Tipo tipoAux = expresion.chequear();
         TS.AgregarVariableYTipo(this.idMetVar.getLexema(), tipoAux);
     }

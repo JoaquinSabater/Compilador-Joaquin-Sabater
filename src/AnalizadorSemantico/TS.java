@@ -145,6 +145,9 @@ public class TS {
         claseActual.insertarMetodo(nombre.getLexema(), m);
         metodoActual = m;
         m.setEsStatic(esStatic);
+        if (tipo.getToken_id().equals("pr_void")) {
+            m.setEsVoid(true);
+        }
         //System.out.println("Metodo " + nombre.getLexema() + " insertado en la clase: " + claseActual.getNombre().getLexema());
     }
 
