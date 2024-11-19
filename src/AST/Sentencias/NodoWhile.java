@@ -16,6 +16,8 @@ public class NodoWhile extends NodoSentencia {
     private int finNumeroLabel = 0;
     private int inicioNumeroLabel = 0;
 
+    private String etiquetaFin;
+
     public NodoWhile(Token token) {
         super(token);
     }
@@ -32,7 +34,7 @@ public class NodoWhile extends NodoSentencia {
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         String etiquetaInicio = generarEtiquetaInicio();
-        String etiquetaFin = generarEtiquetaFin();
+        etiquetaFin = generarEtiquetaFin();
         gcf.agregarInstruccion(etiquetaInicio + ": NOP ; Inicio del while");
         condicion.generar(gcf);
         gcf.agregarInstruccion("BF " + etiquetaFin + "; ");
@@ -67,5 +69,9 @@ public class NodoWhile extends NodoSentencia {
 
     public NodoSentencia getSentencia() {
         return sentencia;
+    }
+
+    public String getEtiquetaFin() {
+        return etiquetaFin;
     }
 }

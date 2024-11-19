@@ -11,6 +11,11 @@ public class NodoBrake extends NodoSentencia {
 
     boolean esWhileOrSwitch = false;
 
+    NodoWhile nodoWhile = null;
+
+    NodoSwitch nodoSwitch = null;
+
+
     public NodoBrake(Token token) {
         super(token);
     }
@@ -30,8 +35,16 @@ public class NodoBrake extends NodoSentencia {
         }
     }
 
+    public void setNodoWhile(NodoWhile nodoWhile) {
+        this.nodoWhile = nodoWhile;
+    }
+
+    public void setNodoSwitch(NodoSwitch nodoSwitch) {
+        this.nodoSwitch = nodoSwitch;
+    }
+
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        //gcf.agregarInstruccion("JUMP " + nodoWhile.getEtiquetaFin() + "; ");
     }
 }

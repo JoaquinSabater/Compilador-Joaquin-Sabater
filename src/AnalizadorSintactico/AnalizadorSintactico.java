@@ -33,6 +33,8 @@ public class AnalizadorSintactico {
 
     NodoSwitch nodoSwitchActual;
 
+    NodoWhile nodoWhileActual;
+
     public AnalizadorSintactico(analizadorLexico lexico,TS ts) throws ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica {
         this.lexico = lexico;
         this.tokenActual = lexico.proximoToken();
@@ -228,13 +230,14 @@ public class AnalizadorSintactico {
             nodoBloque= new NodoBloque(tokenActual,ts.getBloqueActual());
             bloqueActual = nodoBloque;
             nodoBloque.setMetodoContenedor(ts.getMetodoActual());
-            ts.getMetodoActual().setBloqueContenedor(nodoBloque);
+            ts.getMetodoActual().setBloqueContenedor(bloqueActual);
             ts.setBloqueActual(nodoBloque);
             flag = true;
         }
         match("llaveAbierta");
         ListaSentencias();
         match("llaveCerrada");
+        ts.getMetodoActual().setBloqueContenedor(bloqueActual);
         if(flag){
             ts.setBloqueActual(nodoBloque.getPadre());
             bloqueActual = nodoBloque.getPadre();
@@ -339,6 +342,7 @@ public class AnalizadorSintactico {
     private NodoSentencia Break() throws ExcepcionSintactica, ExcepcionLexica {
         NodoBrake nodoBrake = new NodoBrake(tokenActual);
         nodoBrake.setEsWhileOrSwitch(esWhileOrSwich);
+        nodoBrake.setNodoWhile(nodoWhileActual);
         match("pr_break");
         return nodoBrake;
     }
@@ -389,6 +393,7 @@ public class AnalizadorSintactico {
         match("parentesisCerrado");
         NodoSentencia sentencia = Sentencia();
         nodoWhile.setSentencia(sentencia);
+        nodoWhileActual = nodoWhile;
         return nodoWhile;
     }
 

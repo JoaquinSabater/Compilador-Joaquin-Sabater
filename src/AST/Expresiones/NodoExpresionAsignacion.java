@@ -77,6 +77,7 @@ public class NodoExpresionAsignacion extends NodoExpresion {
         if(ladoDerecho != null){
             ladoDerecho.generar(gcf);
         }
+        gcf.agregarInstruccion("DUP");
         ladoIzquierdo.setComoLadoIzquierdo();
         if(ladoIzquierdo != null){
             ladoIzquierdo.generar(gcf);
