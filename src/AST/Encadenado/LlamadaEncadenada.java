@@ -71,8 +71,15 @@ public class LlamadaEncadenada extends Encadenado{
         }
     }
 
-    private void generarCodigoStatic(GeneradorDeCodigoFuente gcf) {
-
+    private void generarCodigoStatic(GeneradorDeCodigoFuente gcf) throws IOException {
+        if (!metodo.isEsVoid()){
+            gcf.agregarInstruccion("RMEM 1  ; Guardo lugar para el retorno");
+        }
+        for (NodoExpresion expresion : listaExpresiones) {
+            expresion.generar(gcf);
+        }
+        gcf.agregarInstruccion("PUSH " + token.getLexema() + "; Apilar la dirección del método " + token.getLexema());
+        gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 
     private void generarCodigoNoStatic(GeneradorDeCodigoFuente gcf) throws IOException {

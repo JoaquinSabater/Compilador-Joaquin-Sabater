@@ -62,7 +62,10 @@ public class NodoAccesoVar extends NodoAcceso {
             offset = bloqueActual.obtenerOffsetVariable(this.token.getLexema());
             esVar = true;
             toReturn.setNombreClase(new Token("pr_var", token.getLexema(), this.token.getNro_linea()));
-        } else{
+        }else if(token.getToken_id().equals("idClase")){
+            toReturn = new TipoClase();
+            toReturn.setNombreClase(token);
+        }else{
             throw new ExcepcionSemantica(this.token, "No se encontro el atributo o parametro " + this.token.getLexema());
         }
 

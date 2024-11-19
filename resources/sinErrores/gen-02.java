@@ -1,9 +1,8 @@
-///1234&2468&hola&4000&55&exitosamente
-//
+///1234&33&exitosamente
 
 class Init{
     static void main()
     {
-        System.printSln("a3");
+        System.printSln("Hola");
     }
 }

@@ -21,6 +21,31 @@ STOREFP
 RET 1   ; Retorna elimiando el parametro
 
 .DATA
+lblVTInit:  NOP
+.CODE
+
+lblConstructor@Init: LOADFP  ; Apila el valor del registro fp
+LOADSP  ; Apila el valor del registro sp
+STOREFP  ; Almacena el tope de la pila en el registro fp
+FMEM 0
+STOREFP  ; Almacena el tope de la pila en el registro fp
+RET 1
+
+
+lblInit_main: LOADFP; Apilar el valor del registro
+LOADSP  ; Apilar el valor del SP
+STOREFP ; Guardar el valor del SP en el FP
+.DATA
+string_label_0: DW "Hola", 0
+.CODE
+PUSH string_label_0
+PUSH printSln; Apilar la dirección del método printSln
+CALL    ; Llamar al método printSln
+FMEM 0
+STOREFP ; Almacena el tope de la pila en el registro
+RET 0
+
+.DATA
 lblVTObject: NOP
 .CODE
 
