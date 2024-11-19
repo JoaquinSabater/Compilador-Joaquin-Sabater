@@ -150,7 +150,7 @@ public class Clase {
                 if (bandera) {
                     toReturn.append(",");
                 }
-                toReturn.append("lbl").append(nombre.getLexema()).append("_").append(metodo.getNombre().getLexema());
+                toReturn.append("lbl").append(metodo.getClasePadre().nombre.getLexema()).append("_").append(metodo.getNombre().getLexema());
                 bandera = true;
             }
         }
