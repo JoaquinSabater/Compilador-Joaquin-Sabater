@@ -113,6 +113,7 @@ public class Clase {
         if(!nombre.getLexema().equals("Object") && !nombre.getLexema().equals("String") && !nombre.getLexema().equals("System")){
             gcf.setModoData();
             generarVT(gcf);
+            generarAtributosStaticos(gcf);
             generarOffsetAtributos();
             gcf.setModoCode();
             gcf.generarEspacioEnBlanco();
@@ -127,6 +128,14 @@ public class Clase {
             }
             for (Metodo metodo : metodos.values()) {
                 metodo.generar(gcf);
+            }
+        }
+    }
+
+    private void generarAtributosStaticos(GeneradorDeCodigoFuente gcf) throws IOException {
+        for (Atributo atributo : atributos.values()) {
+            if (atributo.getEsStatic()) {
+                gcf.agregarInstruccion("lbl_" + atributo.getNombre().getLexema() + ":  DW 0");
             }
         }
     }

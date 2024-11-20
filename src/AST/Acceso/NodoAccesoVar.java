@@ -79,12 +79,22 @@ public class NodoAccesoVar extends NodoAcceso {
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         if(atributo != null){
-            gcf.agregarInstruccion("LOAD 3  ; Agrego el this");
-            if(!esLadoIzquierdo || encadenado != null){
-                gcf.agregarInstruccion("LOADREF "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
+            if (atributo.getEsStatic()){
+                gcf.agregarInstruccion("PUSH lbl_"+atributo.getNombre().getLexema());
+                if(!esLadoIzquierdo || encadenado != null){
+                    gcf.agregarInstruccion("LOADREF "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
+                }else {
+                    gcf.agregarInstruccion("SWAP");
+                    gcf.agregarInstruccion("STOREREF "+atributo.getOffset()+" ; Guardo el atributo "+atributo.getNombre());
+                }
             }else {
-                gcf.agregarInstruccion("SWAP");
-                gcf.agregarInstruccion("STOREREF "+atributo.getOffset()+" ; Guardo el atributo "+atributo.getNombre());
+                gcf.agregarInstruccion("LOAD 3  ; Agrego el this");
+                if(!esLadoIzquierdo || encadenado != null){
+                    gcf.agregarInstruccion("LOADREF "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
+                }else {
+                    gcf.agregarInstruccion("SWAP");
+                    gcf.agregarInstruccion("STOREREF "+atributo.getOffset()+" ; Guardo el atributo "+atributo.getNombre());
+                }
             }
         }
         if(parametro != null){

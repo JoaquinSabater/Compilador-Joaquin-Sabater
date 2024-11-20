@@ -22,6 +22,7 @@ RET 1   ; Retorna elimiando el parametro
 
 .DATA
 lblVTA:  DW lblA_mc
+lbl_x:  DW 0
 .CODE
 
 lblA_constructor: LOADFP  ; Apila el valor del registro fp
@@ -39,11 +40,11 @@ PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 PUSH 33; Apilar el entero 33
 DUP
-LOAD 3  ; Agrego el this
+PUSH lbl_x
 SWAP
 STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@675d3402
 POP
-LOAD 3  ; Agrego el this
+PUSH lbl_x
 LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@675d3402
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint

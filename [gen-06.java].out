@@ -40,12 +40,12 @@ DUP ; Duplicar el valor de la expresion
 EQ ; Swich_Fin_label_1
 BF Swich_Fin_label_1 ; 
 DUP ; Duplicar el valor de la expresion
-PUSH 3333; Apilar el entero 3333
-PUSH debugPrint; Apilar la dirección del método debugPrint
-CALL    ; Llamar al método debugPrint
 EQ ; Swich_Fin_label_1
 BF Swich_Fin_label_1 ; 
 DUP ; Duplicar el valor de la expresion
+PUSH 3333; Apilar el entero 3333
+PUSH debugPrint; Apilar la dirección del método debugPrint
+CALL    ; Llamar al método debugPrint
 EQ ; Swich_Fin_label_1
 BF Swich_Fin_label_1 ; 
 Swich_Fin_label_1: NOP ; Fin del switch
