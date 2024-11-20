@@ -22,6 +22,8 @@ public class NodoSwitch extends NodoSentencia {
 
     NodoSentencia sentenciaDefault;
 
+    int inicioNumeroLabel = 0;
+
     public NodoSwitch(Token token) {
         super(token);
         casos = new HashMap<NodoOperandoLiteral,NodoSentencia>();
@@ -71,7 +73,42 @@ public class NodoSwitch extends NodoSentencia {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
+        String etiquetaInicioSwitch = getEtiquetaInicio() ;
+        String etiquetaFinSwitch = getEtiquetaFin();
+        String etiquetaDefault = getEtiquetaDefault();
+        gcf.agregarInstruccion(etiquetaInicioSwitch + ": NOP ; Inicio del switch");
+        expresion.generar(gcf);
+        for (Map.Entry<NodoOperandoLiteral, NodoSentencia> entrada : casos.entrySet()) {
+            gcf.agregarInstruccion("DUP ; Duplicar el valor de la expresion");
+            if (expresion.obtenerToken().getLexema().equals(entrada.getKey().obtenerToken().getLexema())) {
+                entrada.getValue().generar(gcf);
+            }
+            gcf.agregarInstruccion("EQ ; "+etiquetaFinSwitch);
+            gcf.agregarInstruccion("BF "+etiquetaFinSwitch+" ; ");
+        }
+        if (sentenciaDefault != null) {
+            gcf.agregarInstruccion(etiquetaDefault+": NOP ; Default");
+            sentenciaDefault.generar(gcf);
+        }
+        gcf.agregarInstruccion(etiquetaFinSwitch+": NOP ; Fin del switch");
+    }
 
+    private String getEtiquetaDefault() {
+        String nombreLabel = "Swich_Default_label_"+inicioNumeroLabel;
+        inicioNumeroLabel += 1;
+        return nombreLabel;
+    }
+
+    private String getEtiquetaFin() {
+        String nombreLabel = "Swich_Fin_label_"+inicioNumeroLabel;
+        inicioNumeroLabel += 1;
+        return nombreLabel;
+    }
+
+    private String getEtiquetaInicio() {
+        String nombreLabel = "Swich_Inicio_label_"+inicioNumeroLabel;
+        inicioNumeroLabel += 1;
+        return nombreLabel;
     }
 
     public void agregarCaso(NodoOperandoLiteral nodoOperandoLiteral, NodoSentencia sentencia) {

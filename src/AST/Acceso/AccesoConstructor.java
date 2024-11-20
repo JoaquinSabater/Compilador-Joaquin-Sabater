@@ -99,7 +99,7 @@ public class AccesoConstructor extends NodoAcceso {
                 gcf.agregarInstruccion("SWAP    ;");
             }
         }
-        gcf.agregarInstruccion("PUSH lblConstructor@"+clase.getNombre().getLexema());
+        gcf.agregarInstruccion("PUSH lbl"+clase.getNombre().getLexema()+"_constructor ; Apilamos la dirección de la rutina del constructor");
         gcf.agregarInstruccion("CALL    ; LLamo al constructor");
         if(encadenado != null){
             encadenado.generar(gcf);

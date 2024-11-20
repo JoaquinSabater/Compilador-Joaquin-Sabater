@@ -117,7 +117,7 @@ public class Clase {
             gcf.setModoCode();
             gcf.generarEspacioEnBlanco();
             if(!tieneConstructor){
-                gcf.agregarInstruccion("lblConstructor@" + nombre.getLexema() + ": LOADFP  ; Apila el valor del registro fp");
+                gcf.agregarInstruccion("lbl" + nombre.getLexema() + "_constructor: LOADFP  ; Apila el valor del registro fp");
                 gcf.agregarInstruccion("LOADSP  ; Apila el valor del registro sp");
                 gcf.agregarInstruccion("STOREFP  ; Almacena el tope de la pila en el registro fp");
                 gcf.agregarInstruccion("FMEM 0");
@@ -144,9 +144,13 @@ public class Clase {
         boolean bandera = false;
         int i = 0;
         for (Metodo metodo : metodos.values()) {
-            metodo.setOffset(i);
-            i++;
-            if (!metodo.getEsStatic()) {
+            if(metodo.esConstructor()){
+                metodo.setOffset(0);
+            }else {
+                metodo.setOffset(i);
+                i++;
+            }
+            if (!metodo.getEsStatic() && !metodo.esConstructor()) {
                 if (bandera) {
                     toReturn.append(",");
                 }

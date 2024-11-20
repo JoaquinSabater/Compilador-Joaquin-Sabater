@@ -136,11 +136,12 @@ public class Metodo {
                 if (!parametros.isEmpty()) {
                     setOffsetsParametro();
                 }
+                int memToFree = parametros.size() + 1;
                 if (bloqueContenedor != null) {
                     bloqueContenedor.generar(gcf);
                 }
                 gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
-                gcf.agregarInstruccion("RET 1");
+                gcf.agregarInstruccion("RET "+memToFree);
             } else {
                 String etiqueta = "lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema();
                 if (!gcf.existeEtiqueta(etiqueta)) {
