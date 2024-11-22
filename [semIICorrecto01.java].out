@@ -34,22 +34,32 @@ RET 1
 lblA_mc: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-Swich_Inicio_label_0: NOP ; Inicio del switch
+RMEM 1; Reservo espacio para la variable x
+PUSH 1; Apilar el entero 1
+STORE 0 ; Guardo el valor de la variable x
+RMEM 1; Reservo espacio para la variable y
 PUSH 2; Apilar el entero 2
-DUP ; Duplicar el valor de la expresion
-EQ ; Swich_Fin_label_1
-BF Swich_Fin_label_1 ; 
-DUP ; Duplicar el valor de la expresion
-EQ ; Swich_Fin_label_1
-BF Swich_Fin_label_1 ; 
-DUP ; Duplicar el valor de la expresion
-PUSH 3333; Apilar el entero 3333
+STORE -1 ; Guardo el valor de la variable y
+RMEM 1; Reservo espacio para la variable z
+PUSH 3; Apilar el entero 3
+STORE -2 ; Guardo el valor de la variable z
+PUSH 1; Apilar el booleano true
+BF if_else_label_0; 
+PUSH 1; Apilar el entero 1
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
-EQ ; Swich_Fin_label_1
-BF Swich_Fin_label_1 ; 
-Swich_Fin_label_1: NOP ; Fin del switch
 FMEM 0
+JUMP if_end_label_0; 
+if_else_label_0: NOP ; Inicio del else 
+PUSH 2; Apilar el entero 2
+PUSH debugPrint; Apilar la dirección del método debugPrint
+CALL    ; Llamar al método debugPrint
+FMEM 0
+if_end_label_0: NOP ; Final del if 
+RMEM 1; Reservo espacio para la variable w
+PUSH 3; Apilar el entero 3
+STORE -3 ; Guardo el valor de la variable w
+FMEM 4
 STOREFP ; Almacena el tope de la pila en el registro
 RET 1
 
@@ -80,8 +90,8 @@ STOREREF 0 ; Guardamos la Referencia a la VT en el CIR que creamos
 DUP
 PUSH lblA_constructor ; Apilamos la dirección de la rutina del constructor
 CALL    ; LLamo al constructor
-STORE 0 ; Guardo el valor de la variable a
-LOAD 0 ; AccesoVar Cargo la variable a
+STORE -4 ; Guardo el valor de la variable a
+LOAD -4 ; AccesoVar Cargo la variable a
 DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
 LOADREF 0; Apilo el offset del metdo mc en la VT

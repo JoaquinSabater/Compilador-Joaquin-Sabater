@@ -26,8 +26,7 @@ public class TesterDeCasosSinErrores {
    
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-    
-     
+
     @Before
     public  void setUpClass() {
         System.setOut(new PrintStream(outContent));
@@ -56,8 +55,6 @@ public class TesterDeCasosSinErrores {
         this.input = input;
     }
 
-       
-        
     @Test
     public void testIterado() {
         probarExito(input);

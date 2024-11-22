@@ -34,7 +34,7 @@
     &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater/resources/sinErrores&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/joaqu/Desktop/Compilador Joaquin Sabater/Compilador-Joaquin-Sabater&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -47,8 +47,8 @@
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src" />
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src\AnalizadorLexico\AutomataFinito" />
@@ -148,15 +148,6 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AST/Sentencias/NodoBloque.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="AnalizadorSintactico.AnalizadorSintactico" memberName="tokenActual" />

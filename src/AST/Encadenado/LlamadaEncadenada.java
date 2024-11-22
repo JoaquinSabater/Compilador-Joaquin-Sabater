@@ -69,6 +69,10 @@ public class LlamadaEncadenada extends Encadenado{
         }else {
             generarCodigoNoStatic(gcf);
         }
+
+        if (this.encadenado != null) {
+            this.encadenado.generar(gcf);
+        }
     }
 
     private void generarCodigoStatic(GeneradorDeCodigoFuente gcf) throws IOException {

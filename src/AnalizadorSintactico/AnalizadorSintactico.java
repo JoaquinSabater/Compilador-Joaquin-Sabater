@@ -708,7 +708,7 @@ public class AnalizadorSintactico {
 
     // <AccesoVarMetodoPrima> ::= <ArgsActuales> | ε
     private NodoAcceso AccesoVarMetodoPrima(Token tokenVarMetodo) throws ExcepcionSintactica, ExcepcionLexica {
-        if (tokenActual.getToken_id().equals("parentesisAbierto")) {
+        if (tokenActual.getToken_id().equals("parentesisAbierto") ) {
             return new AccesoMetodo(tokenVarMetodo, ArgsActuales(),ts);
         } else {
             return new NodoAccesoVar(tokenVarMetodo,ts);
@@ -799,12 +799,10 @@ public class AnalizadorSintactico {
         } else {
             encadenadoARetornar = new VarEncadenada(nombre, ts);
         }
-
-            if (tokenActual.getToken_id().equals("punto")) {
-            match("punto");
-                Encadenado nuevoEncadenado = EncadenadoOpcional();
-                encadenadoARetornar.setEncadenado(nuevoEncadenado);
-            }
+        if (tokenActual.getToken_id().equals("punto")) {
+            Encadenado nuevoEncadenado = EncadenadoOpcional();
+            encadenadoARetornar.setEncadenado(nuevoEncadenado);
+        }
         return encadenadoARetornar;
     }
 

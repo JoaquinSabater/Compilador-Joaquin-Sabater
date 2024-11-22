@@ -24,6 +24,8 @@ public class NodoSwitch extends NodoSentencia {
 
     int inicioNumeroLabel = 0;
 
+    int etiqueta = 0;
+
     public NodoSwitch(Token token) {
         super(token);
         casos = new HashMap<NodoOperandoLiteral,NodoSentencia>();
@@ -76,21 +78,33 @@ public class NodoSwitch extends NodoSentencia {
         String etiquetaInicioSwitch = getEtiquetaInicio() ;
         String etiquetaFinSwitch = getEtiquetaFin();
         String etiquetaDefault = getEtiquetaDefault();
+        int i = 0;
         gcf.agregarInstruccion(etiquetaInicioSwitch + ": NOP ; Inicio del switch");
         expresion.generar(gcf);
         for (Map.Entry<NodoOperandoLiteral, NodoSentencia> entrada : casos.entrySet()) {
             gcf.agregarInstruccion("DUP ; Duplicar el valor de la expresion");
-            if (expresion.obtenerToken().getLexema().equals(entrada.getKey().obtenerToken().getLexema())) {
-                entrada.getValue().generar(gcf);
-            }
-            gcf.agregarInstruccion("EQ ; "+etiquetaFinSwitch);
-            gcf.agregarInstruccion("BF "+etiquetaFinSwitch+" ; ");
+            gcf.agregarInstruccion("PUSH "+entrada.getKey().getValor().getLexema()+"; ");
+            gcf.agregarInstruccion("EQ ; "+etiqueta);
+            gcf.agregarInstruccion("BT Swich_Case_label_"+i+" ; ");
+            i++;
+        }
+        for (Map.Entry<NodoOperandoLiteral, NodoSentencia> entrada : casos.entrySet()) {
+            String etiqueta = generarEtiquetaCase();
+            gcf.agregarInstruccion(etiqueta+": NOP ; caso "+etiqueta+" del switch");
+            entrada.getValue().generar(gcf);
         }
         if (sentenciaDefault != null) {
             gcf.agregarInstruccion(etiquetaDefault+": NOP ; Default");
             sentenciaDefault.generar(gcf);
         }
+        gcf.agregarInstruccion("POP ; Eliminar el valor de la expresion");
         gcf.agregarInstruccion(etiquetaFinSwitch+": NOP ; Fin del switch");
+    }
+
+    private String generarEtiquetaCase() {
+        String nombreLabel = "Swich_Case_label_"+etiqueta;
+        etiqueta += 1;
+        return nombreLabel;
     }
 
     private String getEtiquetaDefault() {

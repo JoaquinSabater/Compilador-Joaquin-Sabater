@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class VarEncadenada extends Encadenado {
 
+    Atributo atributo;
+
     public VarEncadenada(Token token, TS ts) {
         super(token, ts);
         this.esAsignable = true;
@@ -24,7 +26,7 @@ public class VarEncadenada extends Encadenado {
             throw new ExcepcionSemantica(token, "Clase " + tipoLadoIzquierdo.getNombreClase().getLexema() + " no encontrada");
         }
 
-        Atributo atributo = claseActual.getAtributo(token.getLexema());
+        atributo = claseActual.getAtributo(token.getLexema());
         if (atributo == null) {
             throw new ExcepcionSemantica(token, "Atributo " + token.getLexema() + " no encontrado en la clase " + claseActual.getNombre());
         }
@@ -44,7 +46,15 @@ public class VarEncadenada extends Encadenado {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        if(!esLadoIzquierdo || encadenado != null){
+            gcf.agregarInstruccion("LOADREF "+atributo.getOffset()+" ; Cargo el atributo "+atributo.getNombre());
+        }else {
+            gcf.agregarInstruccion("SWAP");
+            gcf.agregarInstruccion("STOREREF "+atributo.getOffset()+" ; Guardo el atributo "+atributo.getNombre());
+        }
+        if(encadenado != null){
+            encadenado.generar(gcf);
+        }
     }
 
     public boolean esAsignable(){
