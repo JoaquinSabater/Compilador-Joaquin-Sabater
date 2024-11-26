@@ -72,7 +72,16 @@ public class AccesoMetodoEstatico extends NodoAcceso {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-
+        claseContenedora = ts.getClaseActual();
+        Metodo metodo = claseContenedora.getMetodo(token.getLexema());
+        if (!metodo.isEsVoid()){
+            gcf.agregarInstruccion("RMEM 1  ; Guardo lugar para el retorno");
+        }
+        for (NodoExpresion expresion : listaExpresiones) {
+            expresion.generar(gcf);
+        }
+        gcf.agregarInstruccion("PUSH lbl"+claseContenedora.getNombre().getLexema()+"_" + token.getLexema() + "; Apilar la dirección del método " + token.getLexema());
+        gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 
     public boolean esAsignable(){

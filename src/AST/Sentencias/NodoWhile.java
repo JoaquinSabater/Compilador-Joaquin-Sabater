@@ -3,6 +3,7 @@ package AST.Sentencias;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AST.Expresiones.*;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
@@ -16,10 +17,11 @@ public class NodoWhile extends NodoSentencia {
     private int finNumeroLabel = 0;
     private int inicioNumeroLabel = 0;
 
-    private String etiquetaFin;
+    TS ts;
 
-    public NodoWhile(Token token) {
+    public NodoWhile(Token token, TS ts) {
         super(token);
+        this.ts = ts;
     }
 
     @Override
@@ -33,26 +35,14 @@ public class NodoWhile extends NodoSentencia {
 
     @Override
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
-        String etiquetaInicio = generarEtiquetaInicio();
-        etiquetaFin = generarEtiquetaFin();
+        String etiquetaInicio = ts.generarEtiquetaInicioWhile();
+        String etiquetaFin = ts.generarEtiquetaFinWhile();
         gcf.agregarInstruccion(etiquetaInicio + ": NOP ; Inicio del while");
         condicion.generar(gcf);
         gcf.agregarInstruccion("BF " + etiquetaFin + "; ");
         sentencia.generar(gcf);
         gcf.agregarInstruccion("JUMP " + etiquetaInicio + "; ");
         gcf.agregarInstruccion(etiquetaFin + ": NOP ; Fin del while");
-    }
-
-    private String generarEtiquetaFin() {
-        String nombreLabel = "while_end_label_"+finNumeroLabel;
-        finNumeroLabel += 1;
-        return nombreLabel;
-    }
-
-    private String generarEtiquetaInicio() {
-        String nombreLabel = "while_begin_label_"+inicioNumeroLabel;
-        inicioNumeroLabel += 1;
-        return nombreLabel;
     }
 
     public void setCondicion(NodoExpresion condicion) {
@@ -71,7 +61,4 @@ public class NodoWhile extends NodoSentencia {
         return sentencia;
     }
 
-    public String getEtiquetaFin() {
-        return etiquetaFin;
-    }
 }

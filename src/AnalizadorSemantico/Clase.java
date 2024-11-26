@@ -156,8 +156,10 @@ public class Clase {
             if(metodo.esConstructor()){
                 metodo.setOffset(0);
             }else {
-                metodo.setOffset(i);
-                i++;
+                if (!metodo.getEsStatic()){
+                    metodo.setOffset(i);
+                    i++;
+                }
             }
             if (!metodo.getEsStatic() && !metodo.esConstructor()) {
                 if (bandera) {

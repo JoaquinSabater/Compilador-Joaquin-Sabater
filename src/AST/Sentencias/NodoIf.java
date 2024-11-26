@@ -3,6 +3,7 @@ package AST.Sentencias;
 import AST.Expresiones.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
@@ -14,12 +15,11 @@ public class NodoIf extends NodoSentencia {
     private NodoSentencia sentencia;
     private NodoSentencia sentenciaElse;
 
-    int labelIf = 0;
+    TS ts;
 
-    int labelIfElse = 0;
-
-    public NodoIf(Token token) {
+    public NodoIf(Token token,TS ts) {
         super(token);
+        this.ts = ts;
     }
 
     @Override
@@ -45,22 +45,16 @@ public class NodoIf extends NodoSentencia {
     }
 
     private void generacionIf(GeneradorDeCodigoFuente gcf) throws IOException {
-        String etiquetaIf = generarEtiquetaIf();
+        String etiquetaIf = ts.generarEtiquetaIf();
         condicion.generar(gcf);
         gcf.agregarInstruccion("BF "+etiquetaIf+"; ");
         sentencia.generar(gcf);
         gcf.agregarInstruccion(etiquetaIf+": NOP ; Final del then ");
     }
 
-    private String generarEtiquetaIf() {
-        String nombreLabel = "if_end_label_"+labelIf;
-        labelIf+=1;
-        return nombreLabel;
-    }
-
     private void generacionIfElse(GeneradorDeCodigoFuente gcf) throws IOException {
-        String outetiquetaIf = generarEtiquetaIf();
-        String etiquetaElse = generarEtiquetaElse();
+        String outetiquetaIf = ts.generarEtiquetaIf();
+        String etiquetaElse = ts.generarEtiquetaElse();
         condicion.generar(gcf);
         gcf.agregarInstruccion("BF "+etiquetaElse+"; ");
         sentencia.generar(gcf);
@@ -68,12 +62,6 @@ public class NodoIf extends NodoSentencia {
         gcf.agregarInstruccion(etiquetaElse+": NOP ; Inicio del else ");
         sentenciaElse.generar(gcf);
         gcf.agregarInstruccion(outetiquetaIf+": NOP ; Final del if ");
-    }
-
-    private String generarEtiquetaElse() {
-        String nombreLabel = "if_else_label_"+labelIfElse;
-        labelIfElse+=1;
-        return nombreLabel;
     }
 
     public void setCondicion(NodoExpresion condicion) {

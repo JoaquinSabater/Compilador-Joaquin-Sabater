@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.Set;
 
 public class TS {
+
+    //TODO cambiar la etiqueta de los metodos staticos
+
     private HashMap<String, Clase> Clases;
 
     private static HashMap<String,Tipo> variablesYTipos = new HashMap<>();
@@ -20,6 +23,14 @@ public class TS {
     Metodo metodoActual;
 
     NodoBloque bloqueActual;
+
+    int labelIf = 0;
+
+    int labelIfElse = 0;
+
+    private int finWhileNumeroLabel = 0;
+    private int inicioWhileNumeroLabel = 0;
+
 
     public TS() throws ExcepcionSemantica {
         Clases = new HashMap<>();
@@ -351,9 +362,34 @@ public class TS {
         gcf.generamosLlamadaMain();
         gcf.primitivasMalloc();
         for (Clase c : Clases.values()) {
+            claseActual = c;
             c.generar(gcf);
         }
         gcf.generarCodigoPredefinido();
+    }
+
+    public String generarEtiquetaIf() {
+        String nombreLabel = "if_end_label_"+labelIf;
+        labelIf+=1;
+        return nombreLabel;
+    }
+
+    public String generarEtiquetaElse() {
+        String nombreLabel = "if_else_label_"+labelIfElse;
+        labelIfElse+=1;
+        return nombreLabel;
+    }
+
+    public String generarEtiquetaFinWhile() {
+        String nombreLabel = "while_end_label_"+finWhileNumeroLabel;
+        finWhileNumeroLabel += 1;
+        return nombreLabel;
+    }
+
+    public String generarEtiquetaInicioWhile() {
+        String nombreLabel = "while_begin_label_"+inicioWhileNumeroLabel;
+        inicioWhileNumeroLabel += 1;
+        return nombreLabel;
     }
 
     public void mostrarInformacionClases() {

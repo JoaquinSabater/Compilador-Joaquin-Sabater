@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Metodo {
+
+    //TODO hacer ejempos con parametros Rebuscasdas
+    //TODO revisar el tamaño de los objetos en los Instanrecord
+    //TODO Revisar todas las clases actuales, hay una mal acutlaizada
     private Tipo tipo;
     private Clase clasePadre;
     private Token nombre;

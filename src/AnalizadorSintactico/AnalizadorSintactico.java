@@ -360,7 +360,7 @@ public class AnalizadorSintactico {
 
     // <If> ::= if ( <Expresion> ) <Sentencia> <IfPrima>
     private NodoIf If() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoIf nodoIf = new NodoIf(tokenActual);
+        NodoIf nodoIf = new NodoIf(tokenActual,ts);
         match("pr_if");
         match("parentesisAbierto");
         NodoExpresion condicion = Expresion();
@@ -385,7 +385,7 @@ public class AnalizadorSintactico {
 
     // <While> ::= while ( <Expresion> ) <Sentencia>
     private NodoWhile While() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoWhile nodoWhile = new NodoWhile(tokenActual);
+        NodoWhile nodoWhile = new NodoWhile(tokenActual,ts);
         match("pr_while");
         match("parentesisAbierto");
         NodoExpresion condocion = Expresion();
