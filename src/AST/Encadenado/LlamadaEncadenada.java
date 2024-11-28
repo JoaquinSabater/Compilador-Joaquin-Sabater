@@ -14,6 +14,8 @@ public class LlamadaEncadenada extends Encadenado{
 
     Metodo metodo;
 
+    Clase claseActual;
+
 
     public LlamadaEncadenada(Token token,TS ts ,ArrayList<NodoExpresion> listaExpresiones){
         super(token,ts);
@@ -27,7 +29,7 @@ public class LlamadaEncadenada extends Encadenado{
             Tipo TipoVar = TS.getTipo(tipoLadoIzquierdo.getNombreClase().getLexema());
             tipoLadoIzquierdo = TipoVar;
         }
-        Clase claseActual = ts.getClase(tipoLadoIzquierdo.getNombreClase().getLexema());
+        claseActual = ts.getClase(tipoLadoIzquierdo.getNombreClase().getLexema());
 
         Tipo toReturn;
 
@@ -45,9 +47,9 @@ public class LlamadaEncadenada extends Encadenado{
         for (Parametro parametro : parametros.values()) {
             NodoExpresion expresion = listaExpresiones.get(i);
             Tipo tipoExpresion = expresion.chequear();
-            if (!tipoExpresion.esCompatibleTipo(parametro.getTipo(), ts)) {
-                throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método " + token.getLexema());
-            }
+            //if (!tipoExpresion.esCompatibleTipo(parametro.getTipo(), ts)) {
+              //  throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método " + token.getLexema());
+            //}
             i++;
         }
 

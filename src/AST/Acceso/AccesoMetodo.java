@@ -56,9 +56,9 @@ public class AccesoMetodo extends NodoAcceso {
             for (Parametro parametro : parametros.values()) {
                 NodoExpresion expresion = listaExpresiones.get(i);
                 Tipo tipoExpresion = expresion.chequear();
-                if (!tipoExpresion.esCompatibleTipo(parametro.getTipo(), ts)) {
-                    throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método");
-                }
+                //if (!tipoExpresion.esCompatibleTipo(parametro.getTipo(), ts)) {
+                    //throw new ExcepcionSemantica(token, "Tipo de parámetro no coincide con el método");
+                //}
                 i++;
             }
         } else {
@@ -111,7 +111,7 @@ public class AccesoMetodo extends NodoAcceso {
         for (NodoExpresion expresion : listaExpresiones) {
             expresion.generar(gcf);
         }
-        gcf.agregarInstruccion("PUSH "+ token.getLexema() + "; Apilar la dirección del método " + token.getLexema());
+        gcf.agregarInstruccion("PUSH "+token.getLexema()+"; Apilar la dirección del método " + token.getLexema());
         gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 }

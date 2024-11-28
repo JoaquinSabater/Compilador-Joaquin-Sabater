@@ -60,7 +60,7 @@ public class GeneradorDeCodigoFuente {
         setModoCode();
         agregarInstruccion("PUSH simple_heap_init");
         agregarInstruccion("CALL");
-        agregarInstruccion("PUSH lblInit_main");
+        agregarInstruccion("PUSH main");
         agregarInstruccion("CALL");
         agregarInstruccion("HALT");
         generarEspacioEnBlanco();

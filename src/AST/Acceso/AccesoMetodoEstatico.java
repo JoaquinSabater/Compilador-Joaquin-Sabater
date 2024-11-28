@@ -80,7 +80,7 @@ public class AccesoMetodoEstatico extends NodoAcceso {
         for (NodoExpresion expresion : listaExpresiones) {
             expresion.generar(gcf);
         }
-        gcf.agregarInstruccion("PUSH lbl"+claseContenedora.getNombre().getLexema()+"_" + token.getLexema() + "; Apilar la dirección del método " + token.getLexema());
+        gcf.agregarInstruccion("PUSH "+token.getLexema() + "; Apilar la dirección del método " + token.getLexema());
         gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 

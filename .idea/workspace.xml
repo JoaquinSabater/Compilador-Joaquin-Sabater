@@ -47,11 +47,11 @@
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src" />
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\back" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\sinErrores" />
+      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater" />
       <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\resources\conErrores" />
-      <recent name="C:\Users\joaqu\Desktop\Compilador Joaquin Sabater\Compilador-Joaquin-Sabater\src\AnalizadorLexico\AutomataFinito" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -148,15 +148,6 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AnalizadorSemantico/TS.java</url>
-          <line>364</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="AnalizadorSintactico.AnalizadorSintactico" memberName="tokenActual" />

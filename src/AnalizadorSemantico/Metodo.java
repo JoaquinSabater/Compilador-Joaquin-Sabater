@@ -5,7 +5,10 @@ import AnalizadorLexico.Token;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Metodo {
 
@@ -16,6 +19,8 @@ public class Metodo {
     private Clase clasePadre;
     private Token nombre;
     private HashMap<String, Parametro> parametros = new HashMap<>();
+
+    private ArrayList<Parametro> parametrosOrdenados = new ArrayList<>();
     private boolean esVoid;
 
     private boolean esConstructor = false;
@@ -30,6 +35,7 @@ public class Metodo {
         if (parametros.containsKey(p.getNombre().getLexema())) {
             throw new ExcepcionSemantica(p.getNombre(),"El parametro con el nombre " + p.getNombre().getLexema() + " ya existe.");
         }
+        parametrosOrdenados.add(p);
         parametros.put(p.getNombre().getLexema(), p);
     }
 
@@ -147,7 +153,12 @@ public class Metodo {
                 gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
                 gcf.agregarInstruccion("RET "+memToFree);
             } else {
-                String etiqueta = "lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema();
+                String etiqueta;
+                if(esStatic){
+                    etiqueta = nombre.getLexema();
+                }else {
+                    etiqueta = "lbl" + clasePadre.getNombre().getLexema() + "_" + nombre.getLexema();
+                }
                 if (!gcf.existeEtiqueta(etiqueta)) {
                     gcf.agregarInstruccion(etiqueta + ": LOADFP; Apilar el valor del registro");
                     gcf.agregarInstruccion("LOADSP  ; Apilar el valor del SP");
@@ -160,10 +171,10 @@ public class Metodo {
                     }
                     gcf.agregarInstruccion("STOREFP ; Almacena el tope de la pila en el registro");
                     if(esStatic){
-                        int i = parametros.size();
+                        int i = parametrosOrdenados.size();
                         gcf.agregarInstruccion("RET "+i);
                     }else {
-                        int i = parametros.size()+1;
+                        int i = parametrosOrdenados.size()+1;
                         gcf.agregarInstruccion("RET "+i);
                     }
 
@@ -176,13 +187,13 @@ public class Metodo {
     public void setOffsetsParametro(){
         int i = 0;
         if (esStatic){
-            i = 3;
+            i = parametrosOrdenados.size() + 2;
         }else {
-            i = 4;
+            i = parametrosOrdenados.size() + 3;
         }
-        for (Parametro p : parametros.values()) {
+        for (Parametro p : parametrosOrdenados) {
             p.setOffset(i);
-            i++;
+            i--;
         }
     }
 
