@@ -276,6 +276,7 @@ public class AnalizadorSintactico {
             nodoSentencia = toReturn;
             //Creo un nodoAsiginacionLlamada que herede de sentencia y guardo la expresion
             match("puntoComa");
+            return nodoSentencia;
         }
         switch (tokenActual.getToken_id()) {
             case "puntoComa":

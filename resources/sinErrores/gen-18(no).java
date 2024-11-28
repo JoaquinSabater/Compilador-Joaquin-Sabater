@@ -1,14 +1,13 @@
 ///33&exitosamente
 
 class A{
-    void m1(C c1){
-        c1.m3(3);
-    }
-
-    C m2(){
+    void m2(){
+        debugPrint(1);
+        debugPrint(1);
+        var x = 1;
         debugPrint(1);
         var c = new C();
-        return c;
+        var x = 1;
     }
 }
 
@@ -23,7 +22,6 @@ class Init{
 
     static void main()
     {
-        var a = new A();
-        a.m1(a.m2());
+
     }
 }
