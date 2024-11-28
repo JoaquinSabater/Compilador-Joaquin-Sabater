@@ -199,6 +199,7 @@ PUSH lblA_constructor ; Apilamos la dirección de la rutina del constructor
 CALL    ; LLamo al constructor
 STORE 0 ; Guardo el valor de la variable a
 RMEM 1; Reservo espacio para la variable result
+PUSH 1; Apilar el entero 1
 LOAD 0 ; AccesoVar Cargo la variable a
 RMEM 1  ; Guardo lugar para el retorno
 SWAP
@@ -230,6 +231,7 @@ DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
 LOADREF 0; Apilo el offset del metdo mc en la VT
 CALL    ; Llamar al método getInt
+ADD
 STORE -1 ; Guardo el valor de la variable result
 LOAD -1 ; AccesoVar Cargo la variable result
 PUSH debugPrint; Apilar la dirección del método debugPrint

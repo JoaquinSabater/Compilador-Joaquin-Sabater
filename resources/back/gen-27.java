@@ -1,25 +1,19 @@
-///333233&exitosamente
+///3&exitosamente
 
 class A{
-
-    int x;
-
     void m1(C c1){
-        x = 33;
-        debugPrint(x);
-        c1.m2(x);
+        c1.m3();
     }
 }
 
 class C extends A{
-    void m2(int c){
-        x = 32;
-        debugPrint(x);
-        debugPrint(c);
+    void m3(){
+        debugPrint(3);
     }
 }
 
 class Init{
+
     static void main()
     {
         var a = new A();

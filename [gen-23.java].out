@@ -85,7 +85,7 @@ STOREFP ; Almacena el tope de la pila en el registro
 RET 1
 
 .DATA
-lblVTC:  DW lblC_getD
+lblVTC:  DW lblC_getInt,lblC_getD
 .CODE
 
 lblC_constructor: LOADFP  ; Apila el valor del registro fp
@@ -93,6 +93,17 @@ LOADSP  ; Apila el valor del registro sp
 STOREFP  ; Almacena el tope de la pila en el registro fp
 FMEM 0
 STOREFP  ; Almacena el tope de la pila en el registro fp
+RET 1
+
+lblC_getInt: LOADFP; Apilar el valor del registro
+LOADSP  ; Apilar el valor del SP
+STOREFP ; Guardar el valor del SP en el FP
+PUSH 42; Apilar el entero 42
+STORE 4; Nodo Return guardo el valor de retorno en la posicion de retorno
+STOREFP; Nodo Return guardo el FP en la posicion de retorno
+RET 1; Nodo Return Libero la memoria
+FMEM 0
+STOREFP ; Almacena el tope de la pila en el registro
 RET 1
 
 
@@ -212,18 +223,6 @@ DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
 LOADREF 0; Apilo el offset del metdo mc en la VT
 CALL    ; Llamar al método getC
-RMEM 1  ; Guardo lugar para el retorno
-SWAP
-DUP
-LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
-LOADREF 0; Apilo el offset del metdo mc en la VT
-CALL    ; Llamar al método getD
-RMEM 1  ; Guardo lugar para el retorno
-SWAP
-DUP
-LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
-LOADREF 0; Apilo el offset del metdo mc en la VT
-CALL    ; Llamar al método getE
 RMEM 1  ; Guardo lugar para el retorno
 SWAP
 DUP

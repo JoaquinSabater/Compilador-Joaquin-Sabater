@@ -117,7 +117,7 @@ STOREFP ; Almacena el tope de la pila en el registro
 RET 1
 
 .DATA
-lblVTD:  DW lblD_getE
+lblVTD:  DW lblD_compute
 .CODE
 
 lblD_constructor: LOADFP  ; Apila el valor del registro fp
@@ -127,48 +127,18 @@ FMEM 0
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-
-lblD_getE: LOADFP; Apilar el valor del registro
+lblD_compute: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-RMEM 1  ; Reservamos memoria para el resultado del malloc
-PUSH 1; Apilo la cantidad de var de instancia del CIR de A +1 por VT
-PUSH simple_malloc  ; La dirección de la rutina para alojar memoria en el heap
-CALL    ; Llamo a malloc
-DUP ; Para no perder la referencia al nuevo CIR
-PUSH lblVTE ; Apilamos la dirección del comienzo de la VT de la clase A
-STOREREF 0 ; Guardamos la Referencia a la VT en el CIR que creamos
-DUP
-PUSH lblE_constructor ; Apilamos la dirección de la rutina del constructor
-CALL    ; LLamo al constructor
-STORE 4; Nodo Return guardo el valor de retorno en la posicion de retorno
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@548e7350
+PUSH 2; Apilar el entero 2
+MUL
+STORE 5; Nodo Return guardo el valor de retorno en la posicion de retorno
 STOREFP; Nodo Return guardo el FP en la posicion de retorno
-RET 1; Nodo Return Libero la memoria
+RET 2; Nodo Return Libero la memoria
 FMEM 0
 STOREFP ; Almacena el tope de la pila en el registro
-RET 1
-
-.DATA
-lblVTE:  DW lblE_getInt
-.CODE
-
-lblE_constructor: LOADFP  ; Apila el valor del registro fp
-LOADSP  ; Apila el valor del registro sp
-STOREFP  ; Almacena el tope de la pila en el registro fp
-FMEM 0
-STOREFP  ; Almacena el tope de la pila en el registro fp
-RET 1
-
-lblE_getInt: LOADFP; Apilar el valor del registro
-LOADSP  ; Apilar el valor del SP
-STOREFP ; Guardar el valor del SP en el FP
-PUSH 42; Apilar el entero 42
-STORE 4; Nodo Return guardo el valor de retorno en la posicion de retorno
-STOREFP; Nodo Return guardo el FP en la posicion de retorno
-RET 1; Nodo Return Libero la memoria
-FMEM 0
-STOREFP ; Almacena el tope de la pila en el registro
-RET 1
+RET 2
 
 
 .DATA
@@ -220,16 +190,12 @@ LOADREF 0; Apilo el offset del metdo mc en la VT
 CALL    ; Llamar al método getD
 RMEM 1  ; Guardo lugar para el retorno
 SWAP
-DUP
-LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
-LOADREF 0; Apilo el offset del metdo mc en la VT
-CALL    ; Llamar al método getE
-RMEM 1  ; Guardo lugar para el retorno
+PUSH 21; Apilar el entero 21
 SWAP
 DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
 LOADREF 0; Apilo el offset del metdo mc en la VT
-CALL    ; Llamar al método getInt
+CALL    ; Llamar al método compute
 STORE -1 ; Guardo el valor de la variable result
 LOAD -1 ; AccesoVar Cargo la variable result
 PUSH debugPrint; Apilar la dirección del método debugPrint
