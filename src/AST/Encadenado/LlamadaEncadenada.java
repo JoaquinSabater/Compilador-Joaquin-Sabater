@@ -78,6 +78,7 @@ public class LlamadaEncadenada extends Encadenado{
     }
 
     private void generarCodigoStatic(GeneradorDeCodigoFuente gcf) throws IOException {
+        gcf.agregarInstruccion("POP");
         if (!metodo.isEsVoid()){
             gcf.agregarInstruccion("RMEM 1  ; Guardo lugar para el retorno");
         }

@@ -148,11 +148,25 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/AST/Encadenado/LlamadaEncadenada.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="AnalizadorSintactico.AnalizadorSintactico" memberName="tokenActual" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="((HashMap.Node)((HashMap)((Clase)((HashMap.Node)((HashMap)((TS)this).Clases).entrySet().toArray()[0]).getValue()).metodos).entrySet().toArray()[2]).getValue()" custom="AnalizadorSemantico.TS,java.util.HashMap.Node,java.util.HashMap,AnalizadorSemantico.Clase" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

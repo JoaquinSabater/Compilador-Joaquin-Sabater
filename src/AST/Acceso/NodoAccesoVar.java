@@ -17,6 +17,8 @@ public class NodoAccesoVar extends NodoAcceso {
 
     private boolean esVar = false;
 
+    private boolean esClase = false;
+
     public NodoAccesoVar(Token token, TS ts) {
         super(token,ts);
         this.esAsignable = true;
@@ -61,6 +63,7 @@ public class NodoAccesoVar extends NodoAcceso {
             offset = bloqueActual.obtenerOffsetVariable(this.token.getLexema());
             esVar = true;
         }else if(token.getToken_id().equals("idClase")){
+            esClase = true;
             toReturn = new TipoClase();
             toReturn.setNombreClase(token);
         }else{
@@ -110,6 +113,9 @@ public class NodoAccesoVar extends NodoAcceso {
             }else {
                 gcf.agregarInstruccion("STORE "+offset+" ; AccesoVar Guardo la variable "+token.getLexema());
             }
+        }
+        if (esClase){
+            gcf.agregarInstruccion("PUSH 0");
         }
         if (this.encadenado != null) {
             this.encadenado.generar(gcf);
