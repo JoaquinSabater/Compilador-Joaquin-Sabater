@@ -17,7 +17,6 @@ class A{
         debugPrint(a1);
         debugPrint(a2);
         System.printSln(a3);
-
     }
 }
 
@@ -41,7 +40,7 @@ class B extends A{
 class Init{
     static void main()
     {
-        var x = new B();
+        var x = new A();
         x.seta4();
         x.setall(1234);
         x.m1();

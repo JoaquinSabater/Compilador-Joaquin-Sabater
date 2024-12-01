@@ -35,6 +35,7 @@ public class Main {
                 ts.chequeoDeDeclaraciones();
                 ts.consolidar();
                 ts.chequeoDeSentencias();
+                //ts.generarOffsetMetodos();
                 //ts.mostrarInformacionClases();
             } catch (ExcepcionSintactica | ExcepcionSemantica e) {
                 bandera = false;

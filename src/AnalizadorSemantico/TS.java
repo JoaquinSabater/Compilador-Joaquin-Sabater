@@ -363,6 +363,9 @@ public class TS {
         gcf.primitivasMalloc();
         for (Clase c : Clases.values()) {
             claseActual = c;
+            if(!c.getNombre().getLexema().equals("Object") && !c.getNombre().getLexema().equals("String") && !c.getNombre().getLexema().equals("System")){
+                c.generarOffsetMetodos();
+            }
             c.generar(gcf);
         }
         gcf.generarCodigoPredefinido();
@@ -418,4 +421,11 @@ public class TS {
         }
     }
 
+    public void generarOffsetMetodos() {
+        for (Clase c : Clases.values()) {
+            if(!c.getNombre().getLexema().equals("Object") && !c.getNombre().getLexema().equals("String") && !c.getNombre().getLexema().equals("System")){
+                c.generarOffsetMetodos();
+            }
+        }
+    }
 }

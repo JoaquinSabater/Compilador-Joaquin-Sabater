@@ -26,6 +26,10 @@ public class Clase {
 
     TS ts;
 
+    private int maximoOffset = 0;
+
+    private boolean calculeElOffset = false;
+
 
     public Clase(Token nombre, TS ts) {
         this.nombre = nombre;
@@ -140,6 +144,56 @@ public class Clase {
         }
     }
 
+    public void generarOffsetMetodos(){
+        if(padre.getNombre().getLexema().equals("Object")){
+            int i = 0;
+            for (Metodo metodo : metodos.values()) {
+                if(metodo.esConstructor()){
+                    metodo.setOffset(0);
+                }else {
+                    if (!metodo.getEsStatic()){
+                        metodo.setOffset(i);
+                        i++;
+                    }
+                }
+            }
+            maximoOffset = i;
+            calculeElOffset = true;
+        }
+        else{
+            if (!padre.getCalculeElOffset()){
+                padre.generameLosOffsets();
+            }
+            int i = padre.getMaximoOffset();
+            for (Metodo metodo : metodos.values()) {
+                if(metodo.esConstructor()){
+                    metodo.setOffset(0);
+                }else {
+                    if (!metodo.getEsStatic()){
+                        if(metodo.getClasePadre().getNombre().getLexema().equals(nombre.getLexema())){
+                            metodo.setOffset(i);
+                            i++;
+                        }
+                    }
+                }
+            }
+            maximoOffset = i;
+            calculeElOffset = true;
+        }
+    }
+
+    public void generameLosOffsets(){
+        generarOffsetMetodos();
+    }
+
+    public boolean getCalculeElOffset(){
+        return calculeElOffset;
+    }
+
+    public int getMaximoOffset(){
+        return maximoOffset;
+    }
+
     private void generarOffsetAtributos() {
         int offset = 1;
         for (Atributo atributo : atributos.values()) {
@@ -149,18 +203,10 @@ public class Clase {
     }
 
     private void generarVT(GeneradorDeCodigoFuente gcf) throws IOException {
+        //El error esta en la VT, tengo que tener en cuenta los offsets tambien de los metodos
         StringBuilder toReturn = new StringBuilder();
         boolean bandera = false;
-        int i = 0;
         for (Metodo metodo : metodos.values()) {
-            if(metodo.esConstructor()){
-                metodo.setOffset(0);
-            }else {
-                if (!metodo.getEsStatic()){
-                    metodo.setOffset(i);
-                    i++;
-                }
-            }
             if (!metodo.getEsStatic() && !metodo.esConstructor()) {
                 if (bandera) {
                     toReturn.append(",");

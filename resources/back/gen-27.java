@@ -2,7 +2,6 @@
 
 class A{
     void m1(C c1){
-        debugPrint(123423);
         c1.m3();
     }
 }

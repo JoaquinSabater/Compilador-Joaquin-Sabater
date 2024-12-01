@@ -148,15 +148,6 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/AST/Encadenado/LlamadaEncadenada.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="AnalizadorSintactico.AnalizadorSintactico" memberName="tokenActual" />
