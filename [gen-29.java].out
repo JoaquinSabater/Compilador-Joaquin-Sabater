@@ -38,7 +38,7 @@ PUSH 1000; Apilar el entero 1000
 DUP
 LOAD 3  ; Agrego el this
 SWAP
-STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@239963d8
+STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@3abbfa04
 POP
 FMEM 0
 STOREFP ; Almacena el tope de la pila en el registro
@@ -49,7 +49,7 @@ lblA_mostrar2: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
 LOAD 3  ; Agrego el this
-LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@239963d8
+LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@3abbfa04
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 FMEM 0
@@ -74,7 +74,7 @@ PUSH 4000; Apilar el entero 4000
 DUP
 LOAD 3  ; Agrego el this
 SWAP
-STOREREF 2 ; Guardo el atributo AnalizadorLexico.Token@3abbfa04
+STOREREF 2 ; Guardo el atributo AnalizadorLexico.Token@57fffcd7
 POP
 FMEM 0
 STOREFP ; Almacena el tope de la pila en el registro
@@ -87,7 +87,7 @@ lblB_mostrar: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
 LOAD 3  ; Agrego el this
-LOADREF 2 ; Cargo el atributo AnalizadorLexico.Token@3abbfa04
+LOADREF 2 ; Cargo el atributo AnalizadorLexico.Token@57fffcd7
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 FMEM 0

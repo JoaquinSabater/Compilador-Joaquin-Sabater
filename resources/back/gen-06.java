@@ -1,4 +1,4 @@
-///33334444&exitosamente
+///333344445555&exitosamente
 
 class A{
     void mc(){
@@ -9,6 +9,8 @@ class A{
                 debugPrint(3333);
             case 3:
                 debugPrint(4444);
+            case 5:
+                debugPrint(5555);
         }
     }
 }

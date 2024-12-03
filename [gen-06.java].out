@@ -36,6 +36,22 @@ LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
 Swich_Inicio_label_0: NOP ; Inicio del switch
 PUSH 2; Apilar el entero 2
+DUP ; Duplicar el valor de la expresion
+PUSH 1; 
+EQ ; 0
+BT Swich_Case_label_0 ; 
+DUP ; Duplicar el valor de la expresion
+PUSH 2; 
+EQ ; 0
+BT Swich_Case_label_1 ; 
+DUP ; Duplicar el valor de la expresion
+PUSH 3; 
+EQ ; 0
+BT Swich_Case_label_2 ; 
+DUP ; Duplicar el valor de la expresion
+PUSH 5; 
+EQ ; 0
+BT Swich_Case_label_3 ; 
 Swich_Case_label_0: NOP ; caso Swich_Case_label_0 del switch
 PUSH 2222; Apilar el entero 2222
 PUSH debugPrint; Apilar la dirección del método debugPrint
@@ -46,6 +62,10 @@ PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 Swich_Case_label_2: NOP ; caso Swich_Case_label_2 del switch
 PUSH 4444; Apilar el entero 4444
+PUSH debugPrint; Apilar la dirección del método debugPrint
+CALL    ; Llamar al método debugPrint
+Swich_Case_label_3: NOP ; caso Swich_Case_label_3 del switch
+PUSH 5555; Apilar el entero 5555
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 POP ; Eliminar el valor de la expresion

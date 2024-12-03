@@ -132,6 +132,7 @@ public class NodoSwitch extends NodoSentencia {
     }
 
     public void agregarCaso(NodoOperandoLiteral nodoOperandoLiteral, NodoSentencia sentencia) {
+        operandosOrdenados.add(nodoOperandoLiteral);
         casosOrdenados.add(sentencia);
         casos.put(nodoOperandoLiteral, sentencia);
     }

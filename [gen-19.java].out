@@ -38,15 +38,15 @@ PUSH 33; Apilar el entero 33
 DUP
 LOAD 3  ; Agrego el this
 SWAP
-STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@5442a311
+STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@548e7350
 POP
 LOAD 3  ; Agrego el this
-LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@5442a311
+LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@548e7350
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@548e7350
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@1a968a59
 LOAD 3  ; Agrego el this
-LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@5442a311
+LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@548e7350
 SWAP
 DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
@@ -71,7 +71,7 @@ RET 1
 lblC_m2: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@1a968a59
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@4667ae56
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 FMEM 0

@@ -21,8 +21,8 @@ STOREFP
 RET 1   ; Retorna elimiando el parametro
 
 .DATA
-lblVTA:  DW lblA_mc
-lbl_x:  DW 0
+lblVTA:  DW lblA_m2
+lbl_a:  DW 0
 .CODE
 
 lblA_constructor: LOADFP  ; Apila el valor del registro fp
@@ -32,20 +32,34 @@ FMEM 0
 STOREFP  ; Almacena el tope de la pila en el registro fp
 RET 1
 
-lblA_mc: LOADFP; Apilar el valor del registro
+m1: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-PUSH 1234; Apilar el entero 1234
+PUSH 1; Apilar el entero 1
+DUP
+PUSH lbl_a
+SWAP
+STOREREF 0 ; Guardo el atributo AnalizadorLexico.Token@598067a5
+POP
+PUSH lbl_a
+LOADREF 0 ; Cargo el atributo AnalizadorLexico.Token@598067a5
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
-PUSH 33; Apilar el entero 33
+FMEM 0
+STOREFP ; Almacena el tope de la pila en el registro
+RET 0
+
+lblA_m2: LOADFP; Apilar el valor del registro
+LOADSP  ; Apilar el valor del SP
+STOREFP ; Guardar el valor del SP en el FP
+PUSH 2; Apilar el entero 2
 DUP
-PUSH lbl_x
+LOAD 3  ; Agrego el this
 SWAP
-STOREREF 0 ; Guardo el atributo AnalizadorLexico.Token@4cc0edeb
+STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@3c0ecd4b
 POP
-PUSH lbl_x
-LOADREF 0 ; Cargo el atributo AnalizadorLexico.Token@4cc0edeb
+LOAD 3  ; Agrego el this
+LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@3c0ecd4b
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 FMEM 0
@@ -68,9 +82,9 @@ RET 1
 main: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-RMEM 1; Reservo espacio para la variable a
+RMEM 1; Reservo espacio para la variable x
 RMEM 1  ; Reservamos memoria para el resultado del malloc
-PUSH 2; Apilo la cantidad de var de instancia del CIR de A +1 por VT
+PUSH 3; Apilo la cantidad de var de instancia del CIR de A +1 por VT
 PUSH simple_malloc  ; La dirección de la rutina para alojar memoria en el heap
 CALL    ; Llamo a malloc
 DUP ; Para no perder la referencia al nuevo CIR
@@ -79,12 +93,16 @@ STOREREF 0 ; Guardamos la Referencia a la VT en el CIR que creamos
 DUP
 PUSH lblA_constructor ; Apilamos la dirección de la rutina del constructor
 CALL    ; LLamo al constructor
-STORE 0 ; Guardo el valor de la variable a
-LOAD 0 ; AccesoVar Cargo la variable a
+STORE 0 ; Guardo el valor de la variable x
+LOAD 0 ; AccesoVar Cargo la variable x
+POP
+PUSH m1; Apilar la dirección del método m1
+CALL    ; Llamar al método m1
+LOAD 0 ; AccesoVar Cargo la variable x
 DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
-LOADREF 0; Apilo el offset del metodo mc en la VT
-CALL    ; Llamar al método mc
+LOADREF 0; Apilo el offset del metodo m2 en la VT
+CALL    ; Llamar al método m2
 FMEM 1
 STOREFP ; Almacena el tope de la pila en el registro
 RET 0

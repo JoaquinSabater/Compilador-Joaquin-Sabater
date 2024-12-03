@@ -202,8 +202,10 @@ public class Clase {
         if(padre.getNombre().getLexema().equals("Object")){
             int i = 1;
             for (Atributo atributo : atributos.values()) {
-                atributo.setOffset(i);
-                i++;
+                if (!atributo.getEsStatic()){
+                    atributo.setOffset(i);
+                    i++;
+                }
             }
             maximoOffsetAtributos = i;
             calculeElOffsetAtributos = true;
@@ -215,8 +217,10 @@ public class Clase {
             int i = padre.getMaximoOffsetAtributos();
             for (Atributo atributo : atributos.values()) {
                 if (atributo.getClasePadre().getNombre().getLexema().equals(nombre.getLexema())) {
-                    atributo.setOffset(i);
-                    i++;
+                    if (!atributo.getEsStatic()){
+                        atributo.setOffset(i);
+                        i++;
+                    }
                 }
             }
             maximoOffsetAtributos = i;
