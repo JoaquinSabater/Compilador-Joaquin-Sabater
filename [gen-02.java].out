@@ -42,10 +42,10 @@ PUSH 33; Apilar el entero 33
 DUP
 PUSH lbl_x
 SWAP
-STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@7823a2f9
+STOREREF 1 ; Guardo el atributo AnalizadorLexico.Token@4cc0edeb
 POP
 PUSH lbl_x
-LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@7823a2f9
+LOADREF 1 ; Cargo el atributo AnalizadorLexico.Token@4cc0edeb
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 FMEM 0

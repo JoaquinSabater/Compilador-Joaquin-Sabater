@@ -34,8 +34,8 @@ RET 1
 lblA_m1: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@589838eb
-LOAD 5 ; Cargo el parametro AnalizadorLexico.Token@42dafa95
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@7d9d1a19
+LOAD 5 ; Cargo el parametro AnalizadorLexico.Token@39c0f4a
 SWAP
 DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
@@ -60,7 +60,7 @@ RET 1
 lblC_m3: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@6500df86
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@1794d431
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 PUSH 3; Apilar el entero 3

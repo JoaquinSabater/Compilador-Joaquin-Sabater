@@ -22,6 +22,8 @@ public class NodoSwitch extends NodoSentencia {
 
     private ArrayList<NodoSentencia> casosOrdenados;
 
+    private ArrayList<NodoOperandoLiteral> operandosOrdenados;
+
     NodoSentencia sentenciaDefault;
 
     int inicioNumeroLabel = 0;
@@ -31,6 +33,7 @@ public class NodoSwitch extends NodoSentencia {
     public NodoSwitch(Token token) {
         super(token);
         casos = new HashMap<NodoOperandoLiteral,NodoSentencia>();
+        operandosOrdenados = new ArrayList<NodoOperandoLiteral>();
         casosOrdenados = new ArrayList<NodoSentencia>();
     }
 
@@ -84,17 +87,17 @@ public class NodoSwitch extends NodoSentencia {
         int i = 0;
         gcf.agregarInstruccion(etiquetaInicioSwitch + ": NOP ; Inicio del switch");
         expresion.generar(gcf);
-        for (Map.Entry<NodoOperandoLiteral, NodoSentencia> entrada : casos.entrySet()) {
+        for (NodoOperandoLiteral entrada : operandosOrdenados) {
             gcf.agregarInstruccion("DUP ; Duplicar el valor de la expresion");
-            gcf.agregarInstruccion("PUSH "+entrada.getKey().getValor().getLexema()+"; ");
+            gcf.agregarInstruccion("PUSH "+entrada.getValor().getLexema()+"; ");
             gcf.agregarInstruccion("EQ ; "+etiqueta);
             gcf.agregarInstruccion("BT Swich_Case_label_"+i+" ; ");
             i++;
         }
-        for (Map.Entry<NodoOperandoLiteral, NodoSentencia> entrada : casos.entrySet()) {
+        for (NodoSentencia entrada : casosOrdenados) {
             String etiqueta = generarEtiquetaCase();
             gcf.agregarInstruccion(etiqueta+": NOP ; caso "+etiqueta+" del switch");
-            entrada.getValue().generar(gcf);
+            entrada.generar(gcf);
         }
         if (sentenciaDefault != null) {
             gcf.agregarInstruccion(etiquetaDefault+": NOP ; Default");
@@ -129,6 +132,7 @@ public class NodoSwitch extends NodoSentencia {
     }
 
     public void agregarCaso(NodoOperandoLiteral nodoOperandoLiteral, NodoSentencia sentencia) {
+        casosOrdenados.add(sentencia);
         casos.put(nodoOperandoLiteral, sentencia);
     }
 }

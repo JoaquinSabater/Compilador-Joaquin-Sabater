@@ -34,7 +34,7 @@ RET 1
 lblA_m1: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@59ec2012
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@57baeedf
 PUSH 3; Apilar el entero 3
 SWAP
 DUP
@@ -60,7 +60,7 @@ RET 1
 lblC_m3: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@4cf777e8
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@343f4d3d
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 PUSH 3; Apilar el entero 3

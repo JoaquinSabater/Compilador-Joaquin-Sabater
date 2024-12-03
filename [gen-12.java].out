@@ -85,13 +85,13 @@ RET 1
 lblB_m2: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 6 ; Cargo el parametro AnalizadorLexico.Token@464bee09
+LOAD 6 ; Cargo el parametro AnalizadorLexico.Token@3bfdc050
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
-LOAD 5 ; Cargo el parametro AnalizadorLexico.Token@f6c48ac
+LOAD 5 ; Cargo el parametro AnalizadorLexico.Token@1bce4f0a
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@13deb50e
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@5e3a8624
 PUSH debugPrint; Apilar la dirección del método debugPrint
 CALL    ; Llamar al método debugPrint
 FMEM 0

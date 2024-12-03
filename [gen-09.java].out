@@ -34,7 +34,7 @@ RET 1
 lblA_mc: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@548e7350
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@ae45eb6
 DUP
 LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)
 LOADREF 0; Apilo el offset del metodo mostrar en la VT

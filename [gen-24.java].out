@@ -130,7 +130,7 @@ RET 1
 lblD_compute: LOADFP; Apilar el valor del registro
 LOADSP  ; Apilar el valor del SP
 STOREFP ; Guardar el valor del SP en el FP
-LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@e45f292
+LOAD 4 ; Cargo el parametro AnalizadorLexico.Token@754ba872
 PUSH 2; Apilar el entero 2
 MUL
 STORE 5; Nodo Return guardo el valor de retorno en la posicion de retorno
