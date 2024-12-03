@@ -12,6 +12,8 @@ public class Atributo {
 
     private int offset;
 
+    private Clase clasePadre;
+
     public Atributo(Tipo tipo, Token nombre) {
         this.tipo = tipo;
         this.nombre = nombre;
@@ -47,5 +49,13 @@ public class Atributo {
 
     public int getOffset() {
         return offset;
+    }
+
+    public void setClasePadre(Clase clasePadre) {
+        this.clasePadre = clasePadre;
+    }
+
+    public Clase getClasePadre() {
+        return clasePadre;
     }
 }

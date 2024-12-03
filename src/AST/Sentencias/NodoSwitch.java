@@ -20,6 +20,8 @@ public class NodoSwitch extends NodoSentencia {
 
     private HashMap<NodoOperandoLiteral, NodoSentencia> casos;
 
+    private ArrayList<NodoSentencia> casosOrdenados;
+
     NodoSentencia sentenciaDefault;
 
     int inicioNumeroLabel = 0;
@@ -29,6 +31,7 @@ public class NodoSwitch extends NodoSentencia {
     public NodoSwitch(Token token) {
         super(token);
         casos = new HashMap<NodoOperandoLiteral,NodoSentencia>();
+        casosOrdenados = new ArrayList<NodoSentencia>();
     }
 
     public NodoExpresion getExpresion() {

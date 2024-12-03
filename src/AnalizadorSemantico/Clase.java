@@ -4,7 +4,10 @@ import AnalizadorLexico.Token;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 public class Clase {
 
@@ -26,9 +29,13 @@ public class Clase {
 
     TS ts;
 
-    private int maximoOffset = 0;
+    private int maximoOffsetMetodos = 0;
 
-    private boolean calculeElOffset = false;
+    private int maximoOffsetAtributos = 0;
+
+    private boolean calculeElOffsetAtributos = false;
+
+    private boolean calculeElOffsetMetodos = false;
 
 
     public Clase(Token nombre, TS ts) {
@@ -118,7 +125,7 @@ public class Clase {
             gcf.setModoData();
             generarVT(gcf);
             generarAtributosStaticos(gcf);
-            generarOffsetAtributos();
+            //generarOffsetAtributos2();
             gcf.setModoCode();
             gcf.generarEspacioEnBlanco();
             if(!tieneConstructor){
@@ -157,8 +164,8 @@ public class Clase {
                     }
                 }
             }
-            maximoOffset = i;
-            calculeElOffset = true;
+            maximoOffsetMetodos = i;
+            calculeElOffsetMetodos = true;
         }
         else{
             if (!padre.getCalculeElOffset()){
@@ -177,24 +184,13 @@ public class Clase {
                     }
                 }
             }
-            maximoOffset = i;
-            calculeElOffset = true;
+            maximoOffsetMetodos = i;
+            calculeElOffsetMetodos = true;
         }
     }
 
-    public void generameLosOffsets(){
-        generarOffsetMetodos();
-    }
 
-    public boolean getCalculeElOffset(){
-        return calculeElOffset;
-    }
-
-    public int getMaximoOffset(){
-        return maximoOffset;
-    }
-
-    private void generarOffsetAtributos() {
+    private void generarOffsetAtributos2() {
         int offset = 1;
         for (Atributo atributo : atributos.values()) {
             atributo.setOffset(offset);
@@ -202,11 +198,60 @@ public class Clase {
         }
     }
 
+   public void generarOffsetAtributos() {
+        if(padre.getNombre().getLexema().equals("Object")){
+            int i = 1;
+            for (Atributo atributo : atributos.values()) {
+                atributo.setOffset(i);
+                i++;
+            }
+            maximoOffsetAtributos = i;
+            calculeElOffsetAtributos = true;
+        }
+        else{
+            if (!padre.getCalculeElOffsetAtributos()){
+                padre.generarOffsetAtributos();
+            }
+            int i = padre.getMaximoOffsetAtributos();
+            for (Atributo atributo : atributos.values()) {
+                if (atributo.getClasePadre().getNombre().getLexema().equals(nombre.getLexema())) {
+                    atributo.setOffset(i);
+                    i++;
+                }
+            }
+            maximoOffsetAtributos = i;
+            calculeElOffsetAtributos = true;
+        }
+    }
+
+    private int getMaximoOffsetAtributos() {
+        return maximoOffsetAtributos;
+    }
+
+    private boolean getCalculeElOffsetAtributos() {
+        return calculeElOffsetAtributos;
+    }
+
+    public void generameLosOffsets(){
+        generarOffsetMetodos();
+    }
+
+    public boolean getCalculeElOffset(){
+        return calculeElOffsetMetodos;
+    }
+
+    public int getMaximoOffset(){
+        return maximoOffsetMetodos;
+    }
+
     private void generarVT(GeneradorDeCodigoFuente gcf) throws IOException {
-        //El error esta en la VT, tengo que tener en cuenta los offsets tambien de los metodos
+        List<Metodo> metodosOrdenados = new ArrayList<>(metodos.values());
+
+        // Sort the methods by their offset in ascending order
+        metodosOrdenados.sort(Comparator.comparingInt(Metodo::getOffset));
         StringBuilder toReturn = new StringBuilder();
         boolean bandera = false;
-        for (Metodo metodo : metodos.values()) {
+        for (Metodo metodo : metodosOrdenados) {
             if (!metodo.getEsStatic() && !metodo.esConstructor()) {
                 if (bandera) {
                     toReturn.append(",");

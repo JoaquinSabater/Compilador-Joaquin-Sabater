@@ -101,7 +101,7 @@ public class LlamadaEncadenada extends Encadenado{
         }
         gcf.agregarInstruccion("DUP");
         gcf.agregarInstruccion("LOADREF 0; Apilo el offset de la VT en la CIR (Siempre es 0)");
-        gcf.agregarInstruccion("LOADREF "+metodo.getOffset()+"; Apilo el offset del metdo mc en la VT"); //TODO esto tambien es temporal
+        gcf.agregarInstruccion("LOADREF "+metodo.getOffset()+"; Apilo el offset del metodo "+metodo.getNombre().getLexema()+" en la VT"); //TODO esto tambien es temporal
         gcf.agregarInstruccion("CALL    ; Llamar al método " + token.getLexema());
     }
 

@@ -5,16 +5,15 @@ import AnalizadorLexico.Token;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class TS {
 
     //TODO cambiar la etiqueta de los metodos staticos
 
     private HashMap<String, Clase> Clases;
+
+    private ArrayList<Clase> ClasesOrdenadas;
 
     private static HashMap<String,Tipo> variablesYTipos = new HashMap<>();
 
@@ -35,6 +34,7 @@ public class TS {
     public TS() throws ExcepcionSemantica {
         Clases = new HashMap<>();
         variablesYTipos = new HashMap<>();
+        ClasesOrdenadas = new ArrayList<>();
         claseActual = null;
         metodoActual = null;
         bloqueActual = null;
@@ -112,6 +112,7 @@ public class TS {
             throw new ExcepcionSemantica(tokenActual, "La clase con el nombre " + tokenActual.getLexema() + " ya existe.");
         }
         Clases.put(tokenActual.getLexema(), c);
+        ClasesOrdenadas.add(c);
         claseActual = c;
         //System.out.println("-------------------------------------------------------------------");
         //System.out.println("Clase " + tokenActual.getLexema() + " insertada.");
@@ -193,6 +194,7 @@ public class TS {
         }
         Atributo a = new Atributo(t, nombre);
         a.setEsStatic(esStatic);
+        a.setClasePadre(claseActual);
         claseActual.insertarAtributo(nombre.getLexema(), a);
         //System.out.println("A la clase "+claseActual.getNombre().getLexema()+"  Atributo " + nombre.getLexema() + " ");
     }
@@ -352,20 +354,21 @@ public class TS {
     }
 
     public void chequeoDeSentencias() throws ExcepcionSemantica {
-        for (Clase c : Clases.values()) {
+        for (Clase c : ClasesOrdenadas) {
             claseActual = c;
             c.chequeoDeSentencias();
+            if(!c.getNombre().getLexema().equals("Object") && !c.getNombre().getLexema().equals("String") && !c.getNombre().getLexema().equals("System")){
+                c.generarOffsetMetodos();
+                c.generarOffsetAtributos();
+            }
         }
     }
 
     public void generar(GeneradorDeCodigoFuente gcf) throws IOException {
         gcf.generamosLlamadaMain();
         gcf.primitivasMalloc();
-        for (Clase c : Clases.values()) {
+        for (Clase c : ClasesOrdenadas) {
             claseActual = c;
-            if(!c.getNombre().getLexema().equals("Object") && !c.getNombre().getLexema().equals("String") && !c.getNombre().getLexema().equals("System")){
-                c.generarOffsetMetodos();
-            }
             c.generar(gcf);
         }
         gcf.generarCodigoPredefinido();
