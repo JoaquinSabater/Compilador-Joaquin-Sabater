@@ -8,7 +8,11 @@ class A{
     
     
       void setall(int p1){
-        a1 = p1;
+        if(true){
+            a1 = p1;
+        }else {
+            a1 = 0;
+        }
         a2 = a1*2;
         a3 = "hola";
     }
@@ -26,15 +30,19 @@ class B extends A{
      int a5;
     
     
-      void seta4(){
-        a4 = 4000;
+     void seta4(){
+         if(true){
+             a4 = 4000;
+         }else {
+             a4 = 0;
+         }
         a5 = 55;
-    }
+     }
     
-      void m2(){
+     void m2(){
         debugPrint(a4);
         debugPrint(a5);
-    }
+     }
 }
 
 

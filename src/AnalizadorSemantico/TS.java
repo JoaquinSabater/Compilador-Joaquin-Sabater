@@ -27,6 +27,10 @@ public class TS {
 
     int labelIfElse = 0;
 
+    int etiqueta = 0;
+
+    int inicioNumeroLabel = 0;
+
     private int finWhileNumeroLabel = 0;
     private int inicioWhileNumeroLabel = 0;
 
@@ -395,6 +399,30 @@ public class TS {
     public String generarEtiquetaInicioWhile() {
         String nombreLabel = "while_begin_label_"+inicioWhileNumeroLabel;
         inicioWhileNumeroLabel += 1;
+        return nombreLabel;
+    }
+
+    public String generarEtiquetaCase() {
+        String nombreLabel = "Swich_Case_label_"+etiqueta;
+        etiqueta += 1;
+        return nombreLabel;
+    }
+
+    public String getEtiquetaDefault() {
+        String nombreLabel = "Swich_Default_label_"+inicioNumeroLabel;
+        inicioNumeroLabel += 1;
+        return nombreLabel;
+    }
+
+    public String getEtiquetaFin() {
+        String nombreLabel = "Swich_Fin_label_"+inicioNumeroLabel;
+        inicioNumeroLabel += 1;
+        return nombreLabel;
+    }
+
+    public String getEtiquetaInicio() {
+        String nombreLabel = "Swich_Inicio_label_"+inicioNumeroLabel;
+        inicioNumeroLabel += 1;
         return nombreLabel;
     }
 

@@ -4,6 +4,7 @@ import AST.Expresiones.NodoExpresion;
 import AST.Expresiones.NodoOperandoLiteral;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.TS;
 import AnalizadorSemantico.Tipo;
 import GeneradorDeCodigoFuente.GeneradorDeCodigoFuente;
 
@@ -30,8 +31,11 @@ public class NodoSwitch extends NodoSentencia {
 
     int etiqueta = 0;
 
-    public NodoSwitch(Token token) {
+    TS ts;
+
+    public NodoSwitch(Token token,TS ts) {
         super(token);
+        this.ts = ts;
         casos = new HashMap<NodoOperandoLiteral,NodoSentencia>();
         operandosOrdenados = new ArrayList<NodoOperandoLiteral>();
         casosOrdenados = new ArrayList<NodoSentencia>();

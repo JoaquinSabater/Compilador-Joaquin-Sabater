@@ -400,7 +400,7 @@ public class AnalizadorSintactico {
 
     // <Switch> ::= switch ( <Expresion> ) { <ListaSentenciasSwitch> }
     private NodoSentencia Switch() throws ExcepcionSintactica, ExcepcionLexica {
-        NodoSwitch nodoSwitch = new NodoSwitch(tokenActual);
+        NodoSwitch nodoSwitch = new NodoSwitch(tokenActual,ts);
         NodoExpresion nodoExpresion = null;
 
         nodoSwitchActual = nodoSwitch;
